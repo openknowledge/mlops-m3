@@ -1,0 +1,4 @@
+namePrefix: m3-
+
+resources:
+  - observability
