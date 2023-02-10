@@ -1,0 +1,3 @@
+resources:
+  - github.com/coreos/prometheus-operator/releases/download/v0.63.0/prometheus-operator.yaml
+  - prometheus.yaml
