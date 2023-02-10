@@ -1,0 +1,14 @@
+grafana:
+  enabled: true
+  defaultDashboardsEnabled: true
+  adminUser: admin
+  adminPassword: admin
+  ingress:
+    enabled: true
+    hosts:
+      - grafana.localhost
+prometheus:
+  ingress:
+    enabled: true
+    hosts:
+      - prometheus.localhost
