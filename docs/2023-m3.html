@@ -302,32 +302,24 @@ Architect@OpenKnowledge
 
 10:00 Uhr: Beginn
 
-Intro
-- Vorstellung
-- Übersicht MLOps
-- Unser Beispiel
-
-10:45 - 11:00 Uhr: Kaffeepause
-
-Professionalisierung
-1. 
-
-1. Umwandlung eines bestehenden Notebooks in Libraries, Tests, Scripte und ein resilientes Modell
-
 12:30 - 13:30 Uhr: Mittagspause
 
 15:00 - 15:15 Uhr: Kaffeepause
 
-
-### Block II - Produktivsetzung
-1. Erstellen eines OpenAPI Server
-1. Betrieb mit Docker und Kubernetes
-
-### Block III - Monitoring
-1. 
-1. Drift Detection mit Prometheus, Evidently und Grafana 
+16:15 - 16:30 Uhr: Kaffeepause
 
 ca. 17:00 Uhr: Ende
+
+
+Vorbereitung
+Dieser Workshop geht davon aus, dass du bereits Git und Docker auf deinem Rechner lauffähig hast.
+Sollte das nicht der Fall sein, installiere bitte zuerst:
+* Git: https://git-scm.com/downloads
+* Docker: https://docs.docker.com/get-docker/`
+
+Wir werden auf einem Beispielprojekt arbeiten. Hab bitte bereits vor dem Workshop
+das Projekt https://github.com/openknowledge/mlops-m3 geklont und wie im Readme beschrieben installiert.
+
 	</textarea>
 </section>
 
@@ -336,80 +328,67 @@ ca. 17:00 Uhr: Ende
 	<textarea data-template>
 ## Agenda
 
-### Block I - Intro und Professionalisierung
+### Block I - Intro
 1. Übersicht MLOps
 1. Unser Beispiel
+
+### Block II - Professionalisierung
 1. Umwandlung eines bestehenden Notebooks in Libraries, Tests, Scripte und ein resilientes Modell
 
-### Block II - Produktivsetzung
+### Block III - Produktivsetzung
 1. Erstellen eines OpenAPI Server
 1. Betrieb mit Docker und Kubernetes
 
-### Block III - Monitoring
+### Block IV - Monitoring
 1. 
 1. Drift Detection mit Prometheus, Evidently und Grafana 
 	</textarea>
 </section>
 
-	<section data-markdown>
-		<textarea data-template>
-# Agenda
-
-* Grundlagen MLOps, 
-* Ein lauffähiges ML System
-* Betrieb
-* Abschluss / Rückblick
-
-</textarea>
-	</section>
-
-
-
-	<section data-markdown>
-		<textarea data-template>
-# Agenda
-
-* _Grundlagen MLOps, Unser Beispiel_
-* Ein lauffähiges ML System
-* Betrieb
-* Abschluss / Rückblick
-
-</textarea>
-	</section>
-
-  <section data-markdown>
-    <textarea data-template>
-  ### MLOps
-  
-  * KI ist keine Magie
-  * KI ist eher "künftig Informatik"
-  * Machine Learning is die zur Zeit wichtigste Technik im Bereich KI
-  * Machine Learning ist eine alternative Art, Software zu entwickeln
-  * Software soll in Produktion gebracht und dort gehalten werden 
-  * Daher sollten wir die bekannten Techniken der Software Entwicklung auf Machine Learning anwenden
-  
-  </textarea>
-  </section>
-  
- <section data-markdown>
-  <textarea data-template>
-### Machine Learning Anwendungen brauchen Wartung
-
-<img src='img/verfall-1.PNG'>
-
-Das gilt nicht nur für ML Anwendungen, aber bei diesen ist es offensichtlicher
-</textarea>
-</section>
-
 <section data-markdown>
-  <textarea data-template>
-### Machine Learning Anwendungen brauchen Wartung
+	<textarea data-template>
+## Agenda
 
-<img src='img/verfall-2.PNG'>
+### Block I - Intro
+1. *Übersicht MLOps*
+1. Unser Beispiel
 
-Das gilt nicht nur für ML Anwendungen, aber bei diesen ist es offensichtlicher
-</textarea>
+### Block II - Professionalisierung
+1. Umwandlung eines bestehenden Notebooks in Libraries, Tests, Scripte und ein resilientes Modell
+
+### Block III - Produktivsetzung
+1. Erstellen eines OpenAPI Server
+1. Betrieb mit Docker und Kubernetes
+
+### Block IV - Monitoring
+1. 
+1. Drift Detection mit Prometheus, Evidently und Grafana 
+	</textarea>
 </section>
+
+<section data-markdown class="fragments">
+### Was ist MLOps?
+
+* MLOps ist abgeleitet von DevOps
+* Durch MLOps kommt ML in Produktion und wird in Betrieb gehalten
+* Dazu kommen eine Reihe von Werkzeugen und Praktiken zum Einsatz
+* Überschneidung aus
+  * Softwareentwicklung
+  * Operations
+  * Data Science
+</section>
+
+<section data-markdown class="fragments">
+### Warum MLOps?
+
+* im akademischen Leben zählt für einen Wettbewerb häufig nur der Score (Güte) des Modells
+* dieser Ansatz hat sich im Bereich des Data Science auch in der Praxis breit gemacht
+* die Praxis ist aber keine Kaggle Competition
+* In-Sample Evaluation (auch wenn wir die vorher abgetrennt haben) sagt nur bedingt etwas für Eignung in
+einer praktsichen Anwendung aus
+* Out-Of-Sample Evaluation häufig erst im produktiven Betrieb möglich (evtl nur mitlaufen lassen)
+</section>
+
 
 <section data-markdown>
 	<textarea data-template>
@@ -430,121 +409,25 @@ https://twitter.com/sh_reya/status/1539420163480489984?
 </textarea>
 </section>
 
-
 <section data-markdown>
 	<textarea data-template>
-### Typische Werkzeuge für Workflows und Orchestrierung
+## Agenda
 
-* Java, allgemein: https://www.jenkins.io/
-* TensorFlow, Tfx: https://www.tensorflow.org/tfx
-  * https://www.tensorflow.org/tfx/guide/beam_orchestrator
-  * https://www.tensorflow.org/tfx/guide/airflow
-  * https://www.tensorflow.org/tfx/guide/kubeflow
-* Schießen wie Pilze aus dem Boden
+### Block I - Intro
+1. Übersicht MLOps
+1. *Unser Beispiel*
 
+### Block II - Professionalisierung
+1. Umwandlung eines bestehenden Notebooks in Libraries, Tests, Scripte und ein resilientes Modell
+
+### Block III - Produktivsetzung
+1. Erstellen eines OpenAPI Server
+1. Betrieb mit Docker und Kubernetes
+
+### Block IV - Monitoring
+1. 
+1. Drift Detection mit Prometheus, Evidently und Grafana 
 	</textarea>
-</section>
-
-<section data-markdown>
-	<textarea data-template>
-### Große Dateien versionieren
-
-Sinnvoll für Trainingsdaten und Modell 
-
-* git lfs: https://git-lfs.github.com/
-* DVC: https://dvc.org/
-	</textarea>
-</section>
-
-<section data-markdown>
-### MLOps Is a Mess But That's to be Expected
-
-* MLOps today is in a very messy state with regards to tooling, practices, and standards. 
-* However, this is to be expected given that we are still in the early phases of broader enterprise machine learning adoption. 
-* As this transformation continues over the coming years, expect the dust to settle while ML-driven value becomes more widespread.
-
-https://www.mihaileric.com/posts/mlops-is-a-mess/
-</section>
-		
-	
-<section data-markdown>
-    <textarea data-template>
-## Die Tool-Landschaft ist divers und meist (noch) Inhouse
-
-<img src='img/mlops/mltools-ih.jpg' style="height: 400px;">
-
-<small>
-
-* https://towardsdatascience.com/lessons-on-ml-platforms-from-netflix-doordash-spotify-and-more-f455400115c7
-* Diskussion: 
-  * https://twitter.com/adamlaiacano/status/1458124198166122503
-  * https://twitter.com/rahulj51/status/1455431014671699971
-
-</small>
-
-</textarea>
-    </section>
-
-<section data-markdown class="fragments">
-### Ansatz des Workshops
-
-* Der Bereich MLOps ist bisher weder im Bereich Framework noch konzeptionell standardisiert
-* Wir spezialisieren uns nicht auf eine Art der Workflow Ausführung
-* Für diesen Workshop sind wir selbst der Orchestrator und führen die einzelnen Schritte händisch aus
-
-</section>
-
-<section data-markdown>
-  <textarea data-template>
-### Was ist Docker?
-
-* Einheitliche, leichtgewichtige Form der Virtualisierung
-* Es werden Images gebaut, die die benötigte Software beinhalten und diese werden in einem Container ausgeführt
-* Container isolieren die Software von der Umgebung und sind unabhängig von der Infrastruktur
-* "docker compose" lässt uns mehrere Container gleichzeitig starten
-
-<img src='img/docker-vm-vergleich.png'  style="height: 250px;">
-
-https://www.docker.com/resources/what-container/
-
-  </textarea>
-
-</section>
-
-<section data-markdown style="font-size: large;" class="hands-on">
-	<textarea data-template>
-## Hands-On 0 - Docker Installation überprüfen oder herstellen
-
-Helft bitte euren Nachbarn, falls eure Installation schon läuft
-
-1. Wir empfehlen: arbeitet zusammen mit euren direkten Nachbarn
-1. Stellt sicher, dass zumindest einer eurer Rechner eine lauffähige Installation hat 
-1. Sagt kurz Hallo
-1. Installieren (falls noch nicht passiert)
-   1. Git : https://git-scm.com/downloads
-   1. Docker: https://docs.docker.com/get-docker/
-1. Projekt klonen
-   * https://github.com/openknowledge/mlops-data2day
-   * `git clone git@github.com:openknowledge/mlops-data2day.git`
-1. Docker images starten
-   * Im Projekt-Verzeichnis: `docker compose up`
-   * Wir brauchen die Ports: 8000, 8080, 9090, 8085, 8888, 8889, 9090, 3000
-   * Das kann (gerade bei überlastetem Netz) lange dauern
-   * sobald das Docker-Kommando abgesetzt ist können wir weiter im Stoff
-   * Zwingend brauchen wir die Services erst in Hands-On IIb 
-1. Nachdem Docker alle Container gestartet hat überprüfen, dass Jupyter erreichbar ist: http://localhost:8888/   
-
-</textarea>
-</section>
-
-<section data-markdown>
-	<textarea data-template>
-### Übersicht Container
-
-<img src="img/containers-desktop.png">
-
-Das sollte bei dir laufen
-</textarea>
 </section>
 
 
@@ -589,15 +472,6 @@ Das sollte bei dir laufen
 
 Die Ground Truth (GT) kommt verzögert und kann sich über die Zeit noch verändern
 
-</textarea>
-</section>
-
-<section data-markdown>
-	<textarea data-template>
-## Daten entstehen über die Zeit
-
-Die Ground Truth (GT) kommt verzögert und kann sich über die Zeit noch verändern
-
 <img src="img/ground-truth-zeitstrahl.png">    
 
 </textarea>
@@ -606,14 +480,23 @@ Die Ground Truth (GT) kommt verzögert und kann sich über die Zeit noch veränd
 
 <section data-markdown>
 	<textarea data-template>
-# Agenda
+## Agenda
 
-* Grundlagen MLOps, Unser Beispiel
-* _Ein lauffähiges ML System_
-* Betrieb
-* Abschluss / Rückblick
+### Block I - Intro
+1. Übersicht MLOps
+1. Unser Beispiel
 
-</textarea>
+### Block II - Professionalisierung
+1. *Umwandlung eines bestehenden Notebooks in Libraries, Tests, Scripte und ein resilientes Modell*
+
+### Block III - Produktivsetzung
+1. Erstellen eines OpenAPI Server
+1. Betrieb mit Docker und Kubernetes
+
+### Block IV - Monitoring
+1. 
+1. Drift Detection mit Prometheus, Evidently und Grafana 
+	</textarea>
 </section>
 
 <section data-markdown>
@@ -729,7 +612,7 @@ Colab Fallback (falls die Installation noch läuft): https://colab.research.goog
 
 </section>
 
-<!-- <section data-markdown>
+<section data-markdown>
 	<textarea data-template>
 ### CI/CD bei klassischem DevOps
 
@@ -747,7 +630,7 @@ https://www.redhat.com/en/topics/devops/what-is-ci-cd
 <img src="img/devops-vs-mlops.png" style="height: 600px">
 </textarea>
 </section>
- -->
+
 <section data-markdown class="hands-on">
 	<textarea data-template>
 ## Hands-On IIa - wie wollen wir das Modell validieren?
@@ -781,6 +664,82 @@ _Wir führen unsere Pipeline aus und sehen uns gemeinsam die Scripte an_
 1. Ergänz das Validation Script mit euren Validierungen, wenn sie einfach umzusetzen sind
 </textarea>
 </section>
+
+<section data-markdown>
+	<textarea data-template>
+## Agenda
+
+### Block I - Intro
+1. Übersicht MLOps
+1. Unser Beispiel
+
+### Block II - Professionalisierung
+1. Umwandlung eines bestehenden Notebooks in Libraries, Tests, Scripte und ein resilientes Modell
+
+### Block III - Produktivsetzung
+1. Erstellen eines OpenAPI Server
+1. *Betrieb mit Docker und Kubernetes*
+
+### Block IV - Monitoring
+1. 
+1. Drift Detection mit Prometheus, Evidently und Grafana 
+	</textarea>
+</section>
+
+
+<section data-markdown>
+  <textarea data-template>
+### Was ist Docker?
+
+* Einheitliche, leichtgewichtige Form der Virtualisierung
+* Es werden Images gebaut, die die benötigte Software beinhalten und diese werden in einem Container ausgeführt
+* Container isolieren die Software von der Umgebung und sind unabhängig von der Infrastruktur
+* "docker compose" lässt uns mehrere Container gleichzeitig starten
+
+<img src='img/docker-vm-vergleich.png'  style="height: 250px;">
+
+https://www.docker.com/resources/what-container/
+
+  </textarea>
+
+</section>
+
+<section data-markdown style="font-size: large;" class="hands-on">
+	<textarea data-template>
+## Hands-On 0 - Docker Installation überprüfen oder herstellen
+
+Helft bitte euren Nachbarn, falls eure Installation schon läuft
+
+1. Wir empfehlen: arbeitet zusammen mit euren direkten Nachbarn
+1. Stellt sicher, dass zumindest einer eurer Rechner eine lauffähige Installation hat 
+1. Sagt kurz Hallo
+1. Installieren (falls noch nicht passiert)
+   1. Git : https://git-scm.com/downloads
+   1. Docker: https://docs.docker.com/get-docker/
+1. Projekt klonen
+   * https://github.com/openknowledge/mlops-data2day
+   * `git clone git@github.com:openknowledge/mlops-data2day.git`
+1. Docker images starten
+   * Im Projekt-Verzeichnis: `docker compose up`
+   * Wir brauchen die Ports: 8000, 8080, 9090, 8085, 8888, 8889, 9090, 3000
+   * Das kann (gerade bei überlastetem Netz) lange dauern
+   * sobald das Docker-Kommando abgesetzt ist können wir weiter im Stoff
+   * Zwingend brauchen wir die Services erst in Hands-On IIb 
+1. Nachdem Docker alle Container gestartet hat überprüfen, dass Jupyter erreichbar ist: http://localhost:8888/   
+
+</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+### Übersicht Container
+
+<img src="img/containers-desktop.png">
+
+Das sollte bei dir laufen
+</textarea>
+</section>
+
 
 
 <section data-markdown>
@@ -882,14 +841,24 @@ in der dritten Phase wird die Lösung in Betrieb genommen
 
 
 <section data-markdown>
-    <textarea data-template>
-### Wir erinnern uns: ML Modelle brauchen permanentes Monitoring und Wartung
+  <textarea data-template>
+### Machine Learning Anwendungen brauchen Wartung
 
-<img src='img/verfall-2.PNG'>
+<img src='img/verfall-1.PNG'>
 
+Das gilt nicht nur für ML Anwendungen, aber bei diesen ist es offensichtlicher
 </textarea>
 </section>
 
+<section data-markdown>
+  <textarea data-template>
+### Machine Learning Anwendungen brauchen Wartung
+
+<img src='img/verfall-2.PNG'>
+
+Das gilt nicht nur für ML Anwendungen, aber bei diesen ist es offensichtlicher
+</textarea>
+</section>
 
 	<section data-markdown class="fragments">
 		<textarea data-template>
