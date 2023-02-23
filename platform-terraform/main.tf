@@ -44,3 +44,11 @@ provider "helm" {
 provider "docker" {
   host = "unix:///var/run/docker.sock"
 }
+
+module "observability" {
+  source = "./observability"
+}
+
+module "cicd" {
+  source = "./cicd"
+}

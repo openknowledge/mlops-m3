@@ -12,6 +12,6 @@ resource "helm_release" "prometheus-operator" {
   }
 
   values = [
-    "${file("prometheus-operator-values.yml")}"
+    "${file("observability/prometheus-operator-values.yml")}"
   ]
 }
