@@ -1,0 +1,34 @@
+# Setting up your local kind cluster for this Workshop
+
+
+## Creating a Cluster
+
+```
+    cd setup-kind
+    kind create cluster --config=kind-config.yml
+    
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+```
+! TODO: installation of ingress-nginx should be done with terraform
+
+## Changing the terraform.tfvars
+
+```
+    kubectl config view --minify --flatten
+```
+
+Define the variables in a terraform.tfvars file.
+
+- `host` corresponds with `clusters.cluster.server`.
+- `client_certificate` corresponds with `users.user.client-certificate-data`.
+- `client_key` corresponds with `users.user.client-key-data`.
+- `cluster_ca_certificate` corresponds with `clusters.cluster.certificate-authority-data`.
+
+## Adding routes to /etc/hosts
+
+Add some routes like this to your /etc/hosts so that you dont have to bother with port-forwards
+
+```
+    127.0.0.1       prometheus.localhost
+    127.0.0.1       grafana.localhost
+```

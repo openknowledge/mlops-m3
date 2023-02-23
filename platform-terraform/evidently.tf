@@ -17,6 +17,7 @@ resource "kubernetes_deployment" "evidently" {
         }
       }
       spec {
+        // TODO: Currently needs to be build manually. As soon as we have the App in this Repo, we can let terraform build the image on its own.
         container {
           image = "evidently"
           image_pull_policy = "Never"

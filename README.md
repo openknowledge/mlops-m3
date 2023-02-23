@@ -6,3 +6,5 @@ An MLOps Plattform for a local k8s minikube setup to demo a Machine Learning App
 You can use k3s or minikube if you are on linux or macos if you are familiar with it.
 For Windows we recommend to use KinD (Kubernetes in Docker).
 
+## Setup
+
