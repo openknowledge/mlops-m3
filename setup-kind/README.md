@@ -37,6 +37,8 @@ Add some routes like this to your /etc/hosts so that you dont have to bother wit
 ```
     127.0.0.1       prometheus.localhost
     127.0.0.1       grafana.localhost
+    127.0.0.1       gitea.localhost
+    127.0.0.1       evidently.localhost
 ```
 
 ## Installing the platform with terraform
@@ -47,4 +49,12 @@ Now we can apply the rest of the stack with terraform on to our created kind clu
     > cd platform-terraform
     platform-terraform> terraform init
     platform-terraform> terraform apply
+```
+
+###
+
+As long as the evidently image is not built automatically by terraform execute this.
+- Assuming the image is locally present and called evidently with latest tag
+```
+    kind load docker-image evidently
 ```
