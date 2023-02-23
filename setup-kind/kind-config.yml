@@ -14,4 +14,4 @@ nodes:
         protocol: TCP
       - containerPort: 443
         hostPort: 443
-        protocol: TCP
+        protocol: TCPN

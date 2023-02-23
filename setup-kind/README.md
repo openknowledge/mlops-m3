@@ -4,17 +4,23 @@
 ## Creating a Cluster
 
 ```
-    cd setup-kind
-    kind create cluster --config=kind-config.yml
+    >cd setup-kind
+    > kind create cluster --config=kind-config.yml
     
-    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+    # Check that context is set to kind-kind
+    > kubectl config current-context
+    
+    # Switch if necessary
+    > kubectl config use-context kind-kind
+    
+    > kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 ```
 ! TODO: installation of ingress-nginx should be done with terraform
 
 ## Changing the terraform.tfvars
 
 ```
-    kubectl config view --minify --flatten
+    > kubectl config view --minify --flatten
 ```
 
 Define the variables in a terraform.tfvars file.
@@ -31,4 +37,14 @@ Add some routes like this to your /etc/hosts so that you dont have to bother wit
 ```
     127.0.0.1       prometheus.localhost
     127.0.0.1       grafana.localhost
+```
+
+## Installing the platform with terraform
+
+Now we can apply the rest of the stack with terraform on to our created kind cluster.
+
+```
+    > cd platform-terraform
+    platform-terraform> terraform init
+    platform-terraform> terraform apply
 ```
