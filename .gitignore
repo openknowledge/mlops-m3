@@ -135,6 +135,7 @@ dmypy.json
 *.lock.hcl
 *.tfstate
 *.tfstate.backup
+*.tfstate.lock.info
 .terraform/
 
 .DS_Store

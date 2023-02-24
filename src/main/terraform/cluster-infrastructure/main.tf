@@ -7,36 +7,40 @@ terraform {
     kubernetes = {
       source = "hashicorp/kubernetes"
     }
+    kind = {
+      source = "tehcyx/kind"
+      version = "0.0.16"
+    }
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = ">= 1.7.0"
+    }
   }
 }
 
-variable "host" {
-  type = string
+provider "kind" {
 }
 
-variable "client_certificate" {
-  type = string
-}
+provider "kubectl" {
+  host                   = kind_cluster.m3-demo-cluster.endpoint
+  cluster_ca_certificate = kind_cluster.m3-demo-cluster.cluster_ca_certificate
+  client_certificate     = kind_cluster.m3-demo-cluster.client_certificate
+  client_key             = kind_cluster.m3-demo-cluster.client_key
 
-variable "client_key" {
-  type = string
-}
-
-variable "cluster_ca_certificate" {
-  type = string
-}
-
-provider "kubernetes" {
-  host = var.host
-
-  client_certificate     = base64decode(var.client_certificate)
-  client_key             = base64decode(var.client_key)
-  cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
+  load_config_file       = false
 }
 
 provider "helm" {
   kubernetes {
-    config_path = "~/.kube/config"
-    config_context = "kind-kind"
+    config_path = kind_cluster.m3-demo-cluster.kubeconfig_path
+    config_context = jsondecode(jsonencode(yamldecode(kind_cluster.m3-demo-cluster.kubeconfig).contexts))[0].name
   }
+}
+
+provider "kubernetes" {
+  host = kind_cluster.m3-demo-cluster.endpoint
+
+  client_certificate     = kind_cluster.m3-demo-cluster.client_certificate
+  client_key             = kind_cluster.m3-demo-cluster.client_key
+  cluster_ca_certificate = kind_cluster.m3-demo-cluster.cluster_ca_certificate
 }
