@@ -1,11 +1,11 @@
 terraform {
   required_providers {
+    helm = {
+      source = "hashicorp/helm"
+      version = "2.9.0"
+    }
     kubernetes = {
       source = "hashicorp/kubernetes"
-    }
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "3.0.1"
     }
   }
 }
@@ -35,20 +35,8 @@ provider "kubernetes" {
 }
 
 provider "helm" {
-    kubernetes {
-      config_path = "~/.kube/config"
-      config_context = "kind-kind"
+  kubernetes {
+    config_path = "~/.kube/config"
+    config_context = "kind-kind"
   }
-}
-
-provider "docker" {
-  host = "unix:///var/run/docker.sock"
-}
-
-module "observability" {
-  source = "./observability"
-}
-
-module "cicd" {
-  source = "./cicd"
 }

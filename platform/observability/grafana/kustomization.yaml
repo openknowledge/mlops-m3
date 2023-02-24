@@ -1,3 +1,0 @@
-resources:
-  - github.com/grafana-operator/grafana-operator.git/deploy/manifests
-  - grafana.yaml

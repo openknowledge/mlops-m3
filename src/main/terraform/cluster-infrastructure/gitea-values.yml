@@ -1,0 +1,12 @@
+ingress:
+  enabled: true
+  hosts:
+    - host: gitea.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+gitea:
+  admin:
+    username: ok-admin
+    password: ok-admin

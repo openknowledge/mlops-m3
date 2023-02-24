@@ -1,6 +1,6 @@
-resource "helm_release" "prometheus-operator" {
+resource "helm_release" "gitea-registry" {
   name             = "gitea"
-  namespace        = "cicd"
+  namespace        = "infrastructure"
   create_namespace = false
 
   repository = "https://dl.gitea.io/charts"
@@ -12,6 +12,6 @@ resource "helm_release" "prometheus-operator" {
   }
 
   values = [
-    "${file("cicd/gitea-values.yml")}"
+    file("gitea-values.yml")
   ]
 }
