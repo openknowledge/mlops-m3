@@ -306,7 +306,7 @@ Architect@OpenKnowledge
 - Unser Beispiel
 - Die Phasen eines Machine Learning Projekts
 - Professionalisierung
-  - Unser Ausgangspunkt: Notebooks 
+  - Unser Ausgangspunkt: Notebooks
   - Container mit Docker
   - Umwandlung eines bestehenden Notebooks in Libraries, Tests und Scripte
   - Erstellen eines OpenAPI Server
@@ -317,8 +317,7 @@ Betrieb
 - Skalierung mit Docker und Kubernetes
 - Betrieb des Servers
 - Die Trainings-Pipeline
-- Deployment eines neuen Modells
-
+- Deployment eines neuen Servers und Modells
 
 15:00 - 15:15 Uhr: Kaffeepause
 
@@ -332,14 +331,25 @@ Abschluss
 
 ca. 17:00 Uhr: Ende
 
-
 Vorbereitung
+Es gibt zwei Ebenen, auf denen du am Workshop teilnehmen kannst. 
+
+Die technischere Ebene es mehr hands-on und du brauchst Root-Zugänge auf deinem Rechner. 
+Für die konzeptionellere Ebene ist das nicht notwendig, allerdings kannst du dann bestimmte Schritte nicht selbst 
+auf deinem Rechner ausführen. Es ist allerdings auch möglich, am Workshop komplett ohne hands-on Teile, also nur
+konzeptionell teilzunehmen.
+
+Für den einfachen Hands-On Teil brauchst du
+- Einen aktuellen Chrome Browser und ein Google Login
+- git: https://git-scm.com/downloads
+- kubectl: https://kubernetes.io/de/docs/tasks/tools/install-kubectl/
+
 Die Software dieses Workshops wird virtualisiert in Docker Containern ablaufen. 
 Zur Erstellung eines lokalen Kubernetes Clusters werden wir kind nutzen. 
 Du brauchst dafür einen zeitgemäßen Laptop auf dem eine jeweils aktuelle Version von git, docker und kind installiert ist: 
-* git: https://git-scm.com/downloads
 * docker: https://docs.docker.com/get-docker/`
 * kind: https://kind.sigs.k8s.io/docs/user/quick-start#installation
+* terraform: https://developer.hashicorp.com/terraform/downloads?product_intent=terraform
 
 Wir werden auf einem Beispielprojekt arbeiten. Hab bitte bereits vor dem Workshop
 das Projekt https://github.com/openknowledge/mlops-m3 mit git geklont und wie im Readme beschrieben installiert.
@@ -354,13 +364,14 @@ das Projekt https://github.com/openknowledge/mlops-m3 mit git geklont und wie im
 
 1. Entwicklung
 1. Build / Deployment
-1. Betrieb / Monitoring    
+1. Betrieb / Monitoring 
 	</textarea>
 </section>
 
 <section data-markdown class="hide" style="font-size: xx-small">
 	<textarea data-template>
 ### Story
+
 1. MLOps Grundlagen
 1. Problemstellung: innovative Kfz-Versicherungsgesellschaft
 1. Ausgangspunkt mit Colab: notebooks/exploration.ipynb
