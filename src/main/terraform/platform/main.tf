@@ -10,34 +10,26 @@ terraform {
   }
 }
 
-variable "host" {
-  type = string
-}
+data "terraform_remote_state" "m3-kind-cluster" {
+  backend = "local"
 
-variable "client_certificate" {
-  type = string
-}
-
-variable "client_key" {
-  type = string
-}
-
-variable "cluster_ca_certificate" {
-  type = string
+  config = {
+    path = "../cluster-infrastructure/terraform.tfstate"
+  }
 }
 
 provider "kubernetes" {
-  host = var.host
+  host = data.terraform_remote_state.m3-kind-cluster.outputs.m3-demo-cluster.endpoint
 
-  client_certificate     = base64decode(var.client_certificate)
-  client_key             = base64decode(var.client_key)
-  cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
+  client_certificate     = data.terraform_remote_state.m3-kind-cluster.outputs.m3-demo-cluster.client_certificate
+  client_key             = data.terraform_remote_state.m3-kind-cluster.outputs.m3-demo-cluster.client_key
+  cluster_ca_certificate = data.terraform_remote_state.m3-kind-cluster.outputs.m3-demo-cluster.cluster_ca_certificate
 }
 
 provider "helm" {
     kubernetes {
-      config_path = "~/.kube/config"
-      config_context = "kind-kind"
+      config_path = data.terraform_remote_state.m3-kind-cluster.outputs.m3-demo-cluster.kubeconfig_path
+      config_context = data.terraform_remote_state.m3-kind-cluster.outputs.m3-demo-cluster.kube_context
   }
 }
 

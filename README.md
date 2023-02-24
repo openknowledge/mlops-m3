@@ -9,41 +9,11 @@ For Windows we recommend to use KinD (Kubernetes in Docker).
 ## Setting up your local kind cluster for this Workshop
 
 We are using a two staged terraform stack to apply all the infrastructure and services that we need.
-But, first of all we need a cluster.
-! TODO: This should be done by terraform as well!
-
-### Creating a Cluster
-
-```
-    > kind create cluster --config=setup-kind/kind-config.yml
-    
-    # Check that context is set to kind-kind (Look out if thats also the context that your kind cluster is using!
-    > kubectl config current-context
-    
-    # Switch if necessary
-    > kubectl config use-context kind-kind
-    
-    > kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
-```
-! TODO: installation of ingress-nginx should be done with terraform
-
-### Changing the terraform.tfvars
-
-```
-    > kubectl config view --minify --flatten
-```
-
-Define the variables in a terraform.tfvars file.
-An example is already commited in the repository under the resources folder, which you are welcome
-to change and use if you want.
-
-- `host` corresponds with `clusters.cluster.server`.
-- `client_certificate` corresponds with `users.user.client-certificate-data`.
-- `client_key` corresponds with `users.user.client-key-data`.
-- `cluster_ca_certificate` corresponds with `clusters.cluster.certificate-authority-data`.
+First Stage is to create a cluster and some infrastructure parts.
+Second Stage will apply platform services that allow observability and CICD.
 
 ### Adding routes to /etc/hosts
-
+The Cluster will expose some ingresses.
 Add some routes like this to your /etc/hosts so that you don't have to bother with port-forwards.
 
 ```
@@ -53,22 +23,32 @@ Add some routes like this to your /etc/hosts so that you don't have to bother wi
     127.0.0.1       evidently.localhost
 ```
 
-### Installing the platform with terraform
+### HINT!
 
-Now we can apply the rest of the stack with terraform on to our created kind cluster.
+Currently the Terraform Execution expects an evidently to exist in the local docker registry.
+So please make sure to create it before executing the following commands.
+!TODO This will be resolved as soon as we have the ML Application in this Repo.
 
-HINT: you can omit the -var-file option, if you create your own terraform.tfvars in the same directory
-as the main.tf that you are applying or if you want to get the input prompts by terraform during the
-apply command.
+You don't need to load the image to kind on your own - Terraform is doing it for you!
+
+### Creating a Cluster and its Infrastructure
+
+To create the Kind cluster and some infrastructure parts we are using Terraform.
 
 ```
     > cd src/main/terraform/cluster-infrastructure
     cluster-infrastructure > terraform init
-    cluster-infrastructure > terraform apply -var-file=../../resources/terraform.tfvars
-    
+    cluster-infrastructure > terraform apply
+```
+
+### Installing the platform with terraform
+
+Now we can apply the rest of the stack with terraform on to our created kind cluster.
+
+``` 
     > cd ../platform
     platform > terraform init
-    platform > terraform apply -var-file=../../resources/terraform.tfvars
+    platform > terraform apply
 ```
 
 ###
