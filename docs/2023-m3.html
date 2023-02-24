@@ -304,14 +304,17 @@ Architect@OpenKnowledge
 
 - Übersicht MLOps
 - Unser Beispiel
+- Die Phasen eines Machine Learning Projekts
 - Professionalisierung
+  - Unser Ausgangspunkt: Notebooks 
+  - Container mit Docker
   - Umwandlung eines bestehenden Notebooks in Libraries, Tests und Scripte
   - Erstellen eines OpenAPI Server
 
 12:30 - 13:30 Uhr: Mittagspause
 
 Betrieb
-- Container und Skalierung mit Docker und Kubernetes
+- Skalierung mit Docker und Kubernetes
 - Betrieb des Servers
 - Die Trainings-Pipeline
 - Deployment eines neuen Modells
@@ -331,15 +334,82 @@ ca. 17:00 Uhr: Ende
 
 
 Vorbereitung
-Dieser Workshop geht davon aus, dass du bereits Git und Docker auf deinem Rechner lauffähig hast.
-Sollte das nicht der Fall sein, installiere bitte zuerst:
-* Git: https://git-scm.com/downloads
-* Docker: https://docs.docker.com/get-docker/`
+Die Software dieses Workshops wird virtualisiert in Docker Containern ablaufen. 
+Zur Erstellung eines lokalen Kubernetes Clusters werden wir kind nutzen. 
+Du brauchst dafür einen zeitgemäßen Laptop auf dem eine jeweils aktuelle Version von git, docker und kind installiert ist: 
+* git: https://git-scm.com/downloads
+* docker: https://docs.docker.com/get-docker/`
+* kind: https://kind.sigs.k8s.io/docs/user/quick-start#installation
 
 Wir werden auf einem Beispielprojekt arbeiten. Hab bitte bereits vor dem Workshop
-das Projekt https://github.com/openknowledge/mlops-m3 geklont und wie im Readme beschrieben installiert.
+das Projekt https://github.com/openknowledge/mlops-m3 mit git geklont und wie im Readme beschrieben installiert.
 
 	</textarea>
+</section>
+
+
+<section data-markdown class="todo">
+	<textarea data-template>
+### Wie passen die 3 Teile der Software zum Prozess?
+
+1. Entwicklung
+1. Build / Deployment
+1. Betrieb / Monitoring    
+	</textarea>
+</section>
+
+<section data-markdown class="hide" style="font-size: xx-small">
+	<textarea data-template>
+### Story
+1. MLOps Grundlagen
+1. Problemstellung: innovative Kfz-Versicherungsgesellschaft
+1. Ausgangspunkt mit Colab: notebooks/exploration.ipynb
+   1. Features
+   1. Was wollen wir vorhersagen?
+   1. Tests, Training, 
+1. Überblick über die 3 Phasen, wieso kann ich damit nicht in Prod gehen
+1. Professionalisierung
+   1. Intro Docker
+   1. Notebook in Libs und Scripte
+1. Build: Scripte im Docker Container laufen lassen
+   1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day/scripts$ ./train.py -d ../data/reference.csv -m classifier`
+   1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day/scripts$ ./validate.py -d ../data/reference.csv -m classifier`
+   1. Modell in model Ordner schieben
+1. Server
+   1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day/app$ ./app.py`
+   1. `http://localhost:8080/ping`
+   1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day$ python -m http.server`
+   1. `http://localhost:8000/app/client.html`
+   1. in `app/client.html` Werte anpassen und herumspielen damit
+1. Produktion in Docker
+   1. Notwendig: Volumes von Prometheus und Grafana platt machen, um von 0 zu starten???
+   1. `(base) olli@DESKTOP-BEN73DP:~/mlops-data2day$ docker compose up --build`
+   1. `http://localhost:8085/metrics`
+   1. `http://localhost:9090`
+   1. `http://localhost:3000/`
+1. Produktion simulieren
+   1. Story:
+      1. die Performance des Modells degradiert
+	  1. aber wir haben erst nach Jahren eine Ground Truth, die uns das anhand der Metrik zeigt
+	  1. wir simulieren 3 Jahre Betrieb mit
+         1. Leute werden immer Älter, das passiert aber langsam (age)
+	     1. Es wird immer weniger Auto gefahren, Leute steigen um auf die Bahn und öffentliche Verkehrsmittel (miles)
+	     1. Die Sicherheit der Autos wird immer besser und der Einfluss der individuellen Fahrleistung wird verringert (emergency_braking, pred) 
+   1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day$ ./scripts/example_run_request.py` 
+   1. `http://localhost:8085/metrics`
+   1. `http://localhost:3000/d/U54hsxv7k/evidently-data-drift-dashboard?orgId=1&refresh=5s`
+1. Analyse   
+  1. Drift ist offensichtlich, aber gibt es überhaupt ein Problem?
+  1. Letztlich bekommen wir GT rein von Daten, die 2 Jahre alt sind
+  1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day/scripts$ ./validate.py -d ../data/month-12.csv -m classifier`
+  1. Performance des Modells ist stark zurück gegangen
+  1. Wir sollten neu trainieren: zurück zu Phase II 
+  1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day/scripts$ ./train.py -d ../data/month-12.csv -m classifier`
+  1. Neues Modell erfüllt nicht mehr unsere Anforderungen: zurück zu Phase I
+     1. http://localhost:8888/notebooks/notebooks/analysis.ipynb
+     1. Anforderungen ändern?
+	 1. Modell tunen?
+</textarea>
 </section>
 
 
