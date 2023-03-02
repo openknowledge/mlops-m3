@@ -20,7 +20,7 @@ terraform {
 
 provider "gitea" {
   insecure = true
-  base_url = "http://gitea.local"
+  base_url = "http://gitea.localhost"
   username = "ok-admin"
   password= "ok-admin"
 }

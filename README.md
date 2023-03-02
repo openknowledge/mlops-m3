@@ -19,7 +19,7 @@ Add some routes like this to your /etc/hosts so that you don't have to bother wi
 ```
     127.0.0.1       prometheus.localhost
     127.0.0.1       grafana.localhost
-    127.0.0.1       gitea.local
+    127.0.0.1       gitea.localhost
     127.0.0.1       evidently.localhost
 ```
 
