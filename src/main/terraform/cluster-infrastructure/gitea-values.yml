@@ -1,7 +1,7 @@
 ingress:
   enabled: true
   hosts:
-    - host: gitea.local
+    - host: gitea.localhost
       paths:
         - path: /
           pathType: Prefix
