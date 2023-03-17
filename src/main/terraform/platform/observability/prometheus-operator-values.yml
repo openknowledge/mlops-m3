@@ -12,3 +12,11 @@ prometheus:
     enabled: true
     hosts:
       - prometheus.localhost
+  prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: 'pushgateway'
+        honor_labels: true
+        static_configs:
+          - targets: [ 'pushgateway-service:9091' ]
+            labels:
+              pushgateway_instance: pushgateway
