@@ -53,48 +53,12 @@ vorausgesetzt. Alles andere wird - soweit nötig - im Workshop eingeführt.
 
 Lernziel:
 Teilnehmer sollen anhand eines in sich stimmigen Satzes von Werkzeugen die Konzepte und Ansätze im Bereich MLOps kennen lernen und diskutieren können.
-
----
-
-Talk
-- https://dsco.usfdatainstitute.org/abstracts
-
-
-MLOps - Tools and Principles
-
-"Fit a model on a given dataset sampled from a distribution that represents our problem" could be a casual way of describing the classic idea of machine learning.
- 
-This, however, does not reflect the challenges of a machine learning projects that goes into production. 
-Data does not simply exist and the sample people are working on often is not static, but rather gets generated 
-incrementally in smaller batches. Also, the distribution the data is sampled from can change with the domain it comes from.
-So, the question of MLOps rather is: how do you get a machine learning model into production and keep it there? 
-
-In this talk we will go through all the stages of a machine learning project and will look at the typical tools as well as the principles.
-
-Oliver is a software developer and architect from Hamburg, Germany. He has been developing software with different approaches and programming languages for more than 3 decades. Lately, he has been focusing on Machine Learning and its interactions with humans.
----
-
-Original von Lars wie bei der M3 eingereicht
-
-Die „5 goldenen Regeln“ zur Vermeidung von Bias
-Künstliche Intelligenz gewinnt in wichtigen Geschäftsprozessen mehr und mehr an Bedeutung. Entsprechend müssen Unternehmen lernen, wie sie eine potenzielle „Voreingenommenheit“ der eigenen AI-Lösung verhindern können.
-Einfacher gesagt als getan, denn unerwünschter Bias kann sich an verschiedenen Stellen und in unterschiedlichsten Formen innerhalb des AI/ML-Lifecycles einschleichen – vom initialen Design bis hin zum produktiven Einsatz des Modells. Diese Stellen gilt es zu identifizieren und im Detail zu verstehen.
-Die Session beschreibt 5 goldene Regeln, die jedes Team bei der Umsetzung einer AI-basierten Lösung zur Vermeidung von unerwünschter Voreingenommenheit berücksichtigen sollte.
-
-
-
 -->
 
 <section data-markdown class="preparation">
 	<textarea data-template>
 ### Vorbereitung
 
-* Stift einsatzbereit (geladen)
-* Probelauf Drift Detection
-* Installation einmal platt machen: `docker compose down --volumes --rmi all`
-* Und wieder hoch fahren dabei alles neu bauen und alle images neu ziehen: `docker compose up --build`
-* Kopie von Workshop Miro machen und RW und mit allen teilen auf erster Folie
-* WLAN eintragen
 </textarea>
 </section>
 `
@@ -119,120 +83,6 @@ _Bei Problemen den Nachbar oder Yannick oder Tobias und Olli fragen_
 </textarea>
 </section>
 
-<!-- 
-MLOps mit Python
-
-https://www.data2day.de/veranstaltung-15183-0-mlops-mit-python.html
-
-Agenda:
-
-09:00 Uhr: Beginn
-
-Einführung
-- MLOps: Phasen und Workflow in einem ML Projekt
-- Daten entstehen über die Zeit
-- Unser Fallbeispiel und Datenbasis
-
-10:45 - 11:00 Uhr: Kaffeepause
-
-Ein lauffähiges ML System
-- Installation und Start des ML Systems
-  - Docker
-  - Flask
-- wichtige Metriken
-- Was kann man wie testen? 
-
-12:30 - 13:30 Uhr: Mittagspause
-
-Betrieb
-* Benutzung des Modells simulieren
-* Drifts, Monitoring, Alerting
-* Evidently, Prometheus, Grafana
-* Bewertung von Drift
-
-15:00 - 15:15 Uhr: Kaffeepause
-
-Abschluss / Rückblick
-* Ausblick: was passiert nach Produktivsetzung?
-* Offene Fragen
-
-ca. 16:00 Uhr: Ende
-
-
-TECHNISCHE ANFORDERUNGEN
-Falls ihr ein Gerät eurer Firma verwendet, überprüft vorher bitte, ob eines der folgenden, gelegentlich vorkommenden Probleme bei euch auftreten könnte.
-Workshop-Teilnehmer:in hat keine Administrator-Rechte.
-Corporate Laptops mit übermäßig penibler Sicherheitssoftware
-Gesetzte Corporate-Proxies, über die man in der Firma kommunizieren muss, die aber in einer anderen Umgebung entsprechend nicht erreicht werden.
-
-Vorbereitung
-Dieser Workshop geht davon aus, dass du bereits eine Python-Entwicklungsumgebung mit IDE, Python Distribution und Git 
-auf deinem Rechner lauffähig hast.
-Sollte das nicht der Fall sein und du nicht sicher bist, welche Software passt, installiere bitte:
-* Anaconda: https://www.anaconda.com/products/individual
-* Visual Studio Code: https://code.visualstudio.com/
-* Git: https://git-scm.com/downloads
-* Docker: https://docs.docker.com/get-docker/
-
-Wir werden auf einem Beispielprojekt arbeiten. Hab bitte bereits vor dem Workshop
-das Projekt https://github.com/openknowledge/mlops-data2day geklont und wie im Readme beschrieben installiert.
- -->
-
-<!-- <section data-markdown class="hide" style="font-size: xx-small">
-	<textarea data-template>
-### Story (auch für Talk mit Schwerpunkt auf hinteren Teil)
-
-Orchestrierung hier händisch, es geht um das Konzept und welches Tool das richtige ist hängt vom Projekt und der Umgebung ab.
-
-1. Problemstellung: innovative Kfz-Versicherungsgesellschaft
-1. Notebook Server Starten
-1. Exploration durchgehen: http://localhost:8888/notebooks/notebooks/exploration.ipynb
-   1. Features
-   1. Was wollen wir vorhersagen?
-1. Überblick über die 3 Phasen, wieso kann ich damit nicht in Prod gehen
-1. Professionalisierung: Notebook in Libs und Scripte
-1. Build: Scripte manuell laufen lassen
-   1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day/scripts$ ./train.py -d ../data/reference.csv -m classifier`
-   1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day/scripts$ ./validate.py -d ../data/reference.csv -m classifier`
-   1. Modell in model Ordner schieben
-   1. Diskussion: Modell und Daten sind groß oder Binary, versionieren, aber nicht in Git
-1. Produktion
-   1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day/app$ ./app.py`
-   1. `http://localhost:8080/ping`
-   1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day$ python -m http.server`
-   1. `http://localhost:8000/app/client.html`
-   1. in `app/client.html` Werte anpassen und herumspielen damit
-1. Produktion in Docker
-   1. Notwendig: Volumes von Prometheus und Grafana platt machen, um von 0 zu starten???
-   1. `(base) olli@DESKTOP-BEN73DP:~/mlops-data2day$ docker compose up --build`
-   1. `http://localhost:8085/metrics`
-   1. `http://localhost:9090`
-   1. `http://localhost:3000/`
-1. Produktion simulieren
-   1. Story:
-      1. die Performance des Modells degradiert
-	  1. aber wir haben erst nach Jahren eine Ground Truth, die uns das anhand der Metrik zeigt
-	  1. wir simulieren 3 Jahre Betrieb mit
-         1. Leute werden immer Älter, das passiert aber langsam (age)
-	     1. Es wird immer weniger Auto gefahren, Leute steigen um auf die Bahn und öffentliche Verkehrsmittel (miles)
-	     1. Die Sicherheit der Autos wird immer besser und der Einfluss der individuellen Fahrleistung wird verringert (emergency_braking, pred) 
-   1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day$ ./scripts/example_run_request.py` 
-   1. `http://localhost:8085/metrics`
-   1. `http://localhost:3000/d/U54hsxv7k/evidently-data-drift-dashboard?orgId=1&refresh=5s`
-1. Analyse   
-  1. Drift ist offensichtlich, aber gibt es überhaupt ein Problem?
-  1. Letztlich bekommen wir GT rein von Daten, die 2 Jahre alt sind
-  1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day/scripts$ ./validate.py -d ../data/month-12.csv -m classifier`
-  1. Performance des Modells ist stark zurück gegangen
-  1. Wir sollten neu trainieren: zurück zu Phase II 
-  1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day/scripts$ ./train.py -d ../data/month-12.csv -m classifier`
-  1. Neues Modell erfüllt nicht mehr unsere Anforderungen: zurück zu Phase I
-     1. http://localhost:8888/notebooks/notebooks/analysis.ipynb
-     1. Anforderungen ändern?
-	 1. Modell tunen?
-</textarea>
-</section>
- -->
 
 			<section data-markdown>
 				<textarea data-template>
@@ -314,24 +164,30 @@ ML Architekt
 </textarea>
 </section>
 
-<section data-markdown style="font-size: x-large;">
+<section data-markdown style="font-size: large;">
 	<textarea data-template>
 ## Agenda
 
-### Block I - Grundlagen
-1. 
-1. 
+### Block I - Einleitung / Grundlagen
+1. Unser Beispiel
+1. Unser Ausgangspunkt: Notebooks
+1. Übersicht MLOps
 
 ### Block II - Professionalisierung
-1. 
-1. 
+1. Container mit Docker
+1. Umwandlung des bestehenden Notebooks in Libraries, Tests und Scripte
+1. Erstellen eines OpenAPI Server
 
 ### Block III - Betrieb
-1. 
+1. Skalierung mit Docker und Kubernetes
+1. Betrieb des Servers
+1. Die Trainings-Pipeline
+1. Deployment eines neuen Servers und Modells
+
 
 ### Block IV - Monitoring
-1. 
-1. 
+1. Drift verstehen und detektieren
+1. Drift Detection mit Prometheus, Evidently und Grafana
 	</textarea>
 </section>
 
@@ -339,16 +195,19 @@ ML Architekt
 	<textarea data-template>
 ## Zeitplan
 
+ab 09:00 Uhr: Wer noch Hilfe bei der Installation braucht, kann bereits jetzt erscheinen
+
 10:00 Uhr: Beginn
 
+Einleitung / Grundlagen 
 - Unser Beispiel
-- Die Phasen eines Machine Learning Projekts
+- Unser Ausgangspunkt: Notebooks
 - Übersicht MLOps
-- Professionalisierung
-  - Unser Ausgangspunkt: Notebooks
-  - Container mit Docker
-  - Umwandlung eines bestehenden Notebooks in Libraries, Tests und Scripte
-  - Erstellen eines OpenAPI Server
+
+Professionalisierung
+- Container mit Docker
+- Umwandlung des bestehenden Notebooks in Libraries, Tests und Scripte
+- Erstellen eines OpenAPI Server
 
 12:30 - 13:30 Uhr: Mittagspause
 
@@ -423,8 +282,8 @@ das Projekt https://github.com/openknowledge/mlops-m3 mit git geklont und wie im
    1. Intro Docker
    1. Notebook in Libs und Scripte
 1. Build: Scripte im Docker Container laufen lassen
-   1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day/scripts$ ./train.py -d ../data/reference.csv -m classifier`
-   1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day/scripts$ ./validate.py -d ../data/reference.csv -m classifier`
+   1. `~/scripts$ ./train.py -d ../data/reference.csv -m classifier`
+   1. `~/scripts$ ./validate.py -d ../data/reference.csv -m classifier`
    1. Modell in model Ordner schieben
 1. Server
    1. `(mlops-workshop-d2d) olli@DESKTOP-BEN73DP:~/mlops-data2day/app$ ./app.py`
@@ -463,48 +322,6 @@ das Projekt https://github.com/openknowledge/mlops-m3 mit git geklont und wie im
 </textarea>
 </section>
 
-
-<section data-markdown>
-	<textarea data-template>
-## Agenda
-
-### Block I - Intro
-1. Übersicht MLOps
-1. Unser Beispiel
-
-### Block II - Professionalisierung
-1. Umwandlung eines bestehenden Notebooks in Libraries, Tests, Scripte und ein resilientes Modell
-
-### Block III - Produktivsetzung
-1. Erstellen eines OpenAPI Server
-1. Betrieb mit Docker und Kubernetes
-
-### Block IV - Monitoring
-1. 
-1. Drift Detection mit Prometheus, Evidently und Grafana 
-	</textarea>
-</section>
-
-<section data-markdown>
-	<textarea data-template>
-## Agenda
-
-### Block I - Intro
-1. *Übersicht MLOps*
-1. Unser Beispiel
-
-### Block II - Professionalisierung
-1. Umwandlung eines bestehenden Notebooks in Libraries, Tests, Scripte und ein resilientes Modell
-
-### Block III - Produktivsetzung
-1. Erstellen eines OpenAPI Server
-1. Betrieb mit Docker und Kubernetes
-
-### Block IV - Monitoring
-1. 
-1. Drift Detection mit Prometheus, Evidently und Grafana 
-	</textarea>
-</section>
 
 <section data-markdown class="fragments">
 ### Was ist MLOps?
