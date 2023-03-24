@@ -6,7 +6,7 @@ import logging
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
-sys.path.append('../lib')
+sys.path.append('../modules')
 # print(sys.path)
 
 from data import InsuranceData
