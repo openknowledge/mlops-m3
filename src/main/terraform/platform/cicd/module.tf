@@ -11,6 +11,10 @@ terraform {
       source  = "Lerentis/gitea"
       version = "0.12.2"
     }
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = ">= 1.7.0"
+    }
   }
 }
 

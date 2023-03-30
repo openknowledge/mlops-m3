@@ -9,7 +9,7 @@ resource "gitea_user" "ok-user" {
 resource "gitea_repository" "ok-gitea-repository" {
   username     = gitea_user.ok-user.username
   name         = "ok-gitea-repository"
-  private      = true
+  private      = false
   issue_labels = "Default"
   license      = "MIT"
 }
