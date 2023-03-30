@@ -18,7 +18,12 @@ uvicorn = ">=0.21, < 0.22"
 
 [tool.poetry.dev-dependencies]
 pylint = ">= 2.17, < 3.0.0"
+pandas = ">= 1.5, < 1.6"
+lrcurve = ">= 2.2, < 2.3"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+insurance-prediction-train = 'insurance_prediction.train:main'
