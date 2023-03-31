@@ -5,4 +5,10 @@ resource "kubernetes_namespace" "observability" {
     }
     name = "observability"
   }
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["operator.tekton.dev/prune.hash"]
+    ]
+  }
 }
