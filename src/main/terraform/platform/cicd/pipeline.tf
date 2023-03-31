@@ -83,7 +83,7 @@ spec:
       secretName: ${kubernetes_secret.git_credentials.metadata.0.name}
   params:
   - name: repo-url
-    value: http://gitea.local/ok-user/ok-gitea-repository.git
+    value: http://gitea-http.infrastructure:3000/ok-user/ok-gitea-repository.git
 YAML
 }
 
@@ -95,10 +95,10 @@ resource "kubernetes_secret" "git_credentials" {
 
   data = {
     ".gitconfig" = <<EOT
-[credential "https://gitea.local"]
+[credential "http://gitea-http.infrastructure:3000"]
   helper = store
 EOT
-    ".git-credentials" = "http://${gitea_user.ok-user.username}:${gitea_user.ok-user.password}@gitea.local"
+    ".git-credentials" = "http://${gitea_user.ok-user.username}:${gitea_user.ok-user.password}@gitea-http.infrastructure:3000"
   }
 
   type = "Opaque"
