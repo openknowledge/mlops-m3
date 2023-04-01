@@ -17,10 +17,10 @@ class _InsuranceModel(BasePredictor):
         self.power_range = power_range
         self.min_probability_threshold = min_probability_threshold
 
-        self.model = tf.saved_model.load(model_path)
+        self.model = tf.keras.models.load_model(model_path)
 
     def can_predict(self, prediction_input: RiskPredictionInput) -> bool:
-        in_range = prediction_input.age in self.age_range and prediction_input.power in self.power_range
+        in_range = prediction_input.driver.age in self.age_range and prediction_input.vehicle.power in self.power_range
         if not in_range:
             _InsuranceModel.logger.warning('Input out of range for ML model - falling back to baseline model')
         return in_range
@@ -31,9 +31,9 @@ class _InsuranceModel(BasePredictor):
                 out of range age_range={self.age_range}, power_range={self.power_range}.')
 
         model_input = [
-            [prediction_input.driver.training,
+            [int(prediction_input.driver.training),
              prediction_input.driver.age,
-             prediction_input.vehicle.emergency_breaking,
+             int(prediction_input.vehicle.emergency_braking),
              prediction_input.vehicle.braking_distance,
              prediction_input.vehicle.power,
              prediction_input.driver.miles]
@@ -45,8 +45,8 @@ class _InsuranceModel(BasePredictor):
             raise InfeasiblePredictionError(f'Result of model is not confident enough, as it is below {self.min_probability_threshold}')
 
         return Prediction(
-            prediction=Risk[result.argmax()],
-            probabilities=result,
+            prediction=Risk.of(result.argmax()),
+            probabilities={Risk.of(i): p for i, p in enumerate(result)},
             predictor_type=PredictorType.MODEL
         )
 

@@ -9,6 +9,9 @@
             "type": "python",
             "request": "launch",
             "module": "uvicorn",
+            "env": {
+                "MODEL_PATH": "model.h5"
+            },
             "args": [
                 "insurance_prediction.app.main:app",
                 "--reload"

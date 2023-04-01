@@ -1,6 +1,6 @@
 
 from dataclasses import dataclass
-from enum import StrEnum, auto
+from enum import auto, Enum
 from typing import Dict, Optional
 
 @dataclass
@@ -11,7 +11,7 @@ class DriverInformation:
 
 @dataclass
 class VehicleInformation:
-    emergency_braking: int
+    emergency_braking: bool
     braking_distance: float
     power: float
 
@@ -20,14 +20,18 @@ class RiskPredictionInput:
     driver: DriverInformation
     vehicle: VehicleInformation
 
-class PredictorType(StrEnum):
+class PredictorType(Enum):
     MODEL = auto()
     RULES = auto()
 
-class Risk(StrEnum):
-    LOW = auto()
-    MEDIUM = auto()
+class Risk(Enum):
     HIGH = auto()
+    MEDIUM = auto()
+    LOW = auto()
+
+    @classmethod
+    def of(cls, value: int):
+        return [Risk.HIGH, Risk.MEDIUM, Risk.LOW][value]
 
 @dataclass
 class Prediction:
