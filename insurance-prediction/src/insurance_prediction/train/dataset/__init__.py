@@ -1,27 +1,31 @@
 from collections import namedtuple
-from pydantic import BaseModel, root_validator
+from dataclasses import dataclass
 import tensorflow as tf
 
-Dataset = namedtuple('Dataset', [('num_features', int), ('tf', tf.data.Dataset)])
+@dataclass
+class Dataset:
+    num_features: int
+    tf: tf.data.Dataset
 
-class Split(BaseModel):
-    # pylint: disable=E0213
-    train: int
-    test: int
+@dataclass
+class Split:
+    train: int = 80
+    test: int = 20
 
-    @root_validator
-    def check_split(cls, values):
-        train, test = values.get('train'), values.get('test')
-        if train + test != 100:
+    def __post_init__(self):
+        if self.train + self.test != 100:
             raise ValueError("Split does not add up to 100%")
-        return values
 
-SplittedDataset = namedtuple('SplittedDataset', [('train', tf.data.Dataset), ('test', tf.data.Dataset)])
+    def dataset(self, dataset: tf.data.Dataset):
+        length = dataset.reduce(0, lambda x,_: x+1).numpy()
 
-def split(dataset: tf.data.Dataset, split: Split = Split(80, 20)) -> SplittedDataset:
-    # TODO: write unit test (0-X, every number unique)
-    shift = split.train + split.test
-    return SplittedDataset(
-        train=dataset.window(split.train, shift).flat_map(lambda ds: ds),
-        test=dataset.skip(split.train).window(split.test, shift).flat_map(lambda ds: ds)
-    )
+        take = length*self.train/100.
+        return SplittedDataset(
+            train=dataset.take(take),
+            test=dataset.skip(take)
+        )
+
+@dataclass
+class SplittedDataset:
+    train: tf.data.Dataset
+    test: tf.data.Dataset

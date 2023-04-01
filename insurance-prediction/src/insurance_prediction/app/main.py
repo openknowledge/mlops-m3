@@ -1,7 +1,7 @@
 import uvicorn
 
 from fastapi import FastAPI
-from insurance_prediction.app.application.insurance import router as prediction_router
+from insurance_prediction.app.application import router as prediction_router
 
 app = FastAPI()
 

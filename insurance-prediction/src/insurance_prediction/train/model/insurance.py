@@ -1,5 +1,6 @@
-from typing import Any
 import tensorflow as tf
+
+from insurance_prediction.train.dataset import SplittedDataset
 
 def create_normalization(X: tf.data.Dataset) -> tf.keras.layers.Normalization:
     normalizer = tf.keras.layers.Normalization(axis=-1)
@@ -38,3 +39,17 @@ def create_insurance_model(
     model.add(tf.keras.layers.Dense(name='output', units=num_categories, activation='softmax'))
 
     return model
+
+
+def train(dataset: SplittedDataset, model: tf.keras.Model, epochs: int = 50, batch_size: int = 32, plot_curve: bool = False) -> None:
+    model.compile(loss='sparse_categorical_crossentropy',
+                           optimizer='adam',
+                           metrics=['accuracy'])
+
+    callbacks = []
+
+    model.fit(dataset.train.batch(batch_size),
+              validation_data=dataset.test.batch(batch_size),
+              epochs=epochs,
+              callbacks=callbacks,
+              )
