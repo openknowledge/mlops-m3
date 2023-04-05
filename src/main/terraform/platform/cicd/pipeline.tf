@@ -1,45 +1,5 @@
 resource "kubectl_manifest" "ci_pipeline" {
-  yaml_body = <<YAML
-apiVersion: tekton.dev/v1beta1
-kind: Pipeline
-metadata:
-  name: clone-read
-  namespace: cicd
-spec:
-  description: |
-    This pipeline clones a git repo, then echoes the README file to the stdout.
-  params:
-  - name: repo-url
-    type: string
-    description: The git repo URL to clone from.
-  workspaces:
-  - name: shared-data
-    description: |
-      This workspace contains the cloned repo files, so they can be read by the
-      next task.
-  - name: basic-auth
-    description: |
-      This workspace contains the basic-auth for gitea
-  tasks:
-  - name: fetch-source
-    taskRef:
-      name: git-clone
-    workspaces:
-    - name: output
-      workspace: shared-data
-    - name: basic-auth
-      workspace: basic-auth
-    params:
-    - name: url
-      value: $(params.repo-url)
-  - name: show-readme
-    runAfter: ["fetch-source"]
-    taskRef:
-      name: show-readme
-    workspaces:
-    - name: source
-      workspace: shared-data
-YAML
+  yaml_body = file("${path.module}/tekton/ci-pipeline.yaml")
 }
 
 data "http" "git_clone_task" {
@@ -51,17 +11,16 @@ resource "kubectl_manifest" "git_clone_task" {
   yaml_body = data.http.git_clone_task.response_body
 }
 
-resource "random_id" "ci_pipeline_run_id" {
-  byte_length = 8
-}
+resource "random_uuid" "ci_pipeline_run_uuid" {}
 
 resource "kubectl_manifest" "ci_pipeline_run" {
-  depends_on = [gitea_repository.ok-gitea-repository, kubectl_manifest.git_clone_task]
+  depends_on = [random_uuid.ci_pipeline_run_uuid, gitea_repository.ok-gitea-repository, kubectl_manifest.git_clone_task]
+
   yaml_body = <<YAML
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: clone-read-run-${random_id.ci_pipeline_run_id.hex}
+  name: clone-read-run-${random_uuid.ci_pipeline_run_uuid.result}
   namespace: cicd
 spec:
   pipelineRef:
@@ -106,21 +65,5 @@ EOT
 
 resource "kubectl_manifest" "ci_show_readme_task" {
   depends_on = [gitea_repository.ok-gitea-repository]
-  yaml_body = <<YAML
-apiVersion: tekton.dev/v1beta1
-kind: Task
-metadata:
-  name: show-readme
-  namespace: cicd
-spec:
-  description: Read and display README file.
-  workspaces:
-  - name: source
-  steps:
-  - name: read
-    image: alpine:latest
-    script: |
-      #!/usr/bin/env sh
-      cat $(workspaces.source.path)/README.md
-YAML
+  yaml_body = file("${path.module}/tekton/show-readme-task.yaml")
 }
