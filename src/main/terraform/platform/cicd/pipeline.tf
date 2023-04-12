@@ -13,6 +13,7 @@ resource "kubectl_manifest" "git_clone_task" {
 
 resource "random_uuid" "ci_pipeline_run_uuid" {}
 
+# to re-run the pipeline-run with the next apply, just use terraform apply -replace=module.cicd.kubectl_manifest.ci_pipeline_run
 resource "kubectl_manifest" "ci_pipeline_run" {
   depends_on = [random_uuid.ci_pipeline_run_uuid, gitea_repository.ok-gitea-repository, kubectl_manifest.git_clone_task]
 
