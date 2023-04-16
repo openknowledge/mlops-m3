@@ -12,7 +12,7 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.10, <3.11"
 tensorflow = { version = ">=2.11,<2.12", markers = "sys_platform != 'darwin'" }
-tensorflow-macos = { version = ">=2.11,<2.12", markers = "sys_platform == 'darwin'" }
+tensorflow-macos = { version = ">=2.11,<2.12", markers = "sys_platform == 'darwin'" } # TODO: check for m1
 fastapi = ">=0.92, < 0.93"
 uvicorn = ">=0.21, < 0.22"
 StrEnum = ">=0.4, < 1.0"
