@@ -69,7 +69,7 @@ def main() -> None:
 
     train_evaluation = evaluate(model, dataset.train)
     test_evaluation = evaluate(model, dataset.test)
-    
+
     print(f"Model trained to train / test accuracy: {train_evaluation.accuracy} / {test_evaluation.accuracy}")
 
     # TODO: test trained model
