@@ -35,7 +35,7 @@ resource "kind_cluster" "m3-demo-cluster" {
 }
 
 variable "repository-path" {
-  default = "../../../../app"
+  default = "../../../../insurance-prediction"
 }
 
 resource "null_resource" "load_evidently_to_kind" {
