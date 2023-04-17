@@ -10,6 +10,11 @@ resource "kind_cluster" "m3-demo-cluster" {
     node {
       role = "control-plane"
 
+      extra_mounts {
+          host_path      = var.repository-path
+          container_path = "/m3-demo"
+      }
+
       kubeadm_config_patches = [
         "kind: InitConfiguration\nnodeRegistration:\n  kubeletExtraArgs:\n    node-labels: \"ingress-ready=true\"\n"
       ]
@@ -27,6 +32,10 @@ resource "kind_cluster" "m3-demo-cluster" {
       }
     }
   }
+}
+
+variable "repository-path" {
+  default = "../../../../app"
 }
 
 resource "null_resource" "load_evidently_to_kind" {

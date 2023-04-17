@@ -13,3 +13,4 @@ spec:
       script: |
         #!/usr/bin/env sh
         cat $(workspaces.source.path)/README.md
+        ls -l $(workspaces.source.path)

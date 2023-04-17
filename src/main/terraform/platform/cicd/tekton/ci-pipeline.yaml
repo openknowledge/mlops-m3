@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: clone-read
+  name: clone-read-and-push
   namespace: cicd
 spec:
   description: |
@@ -18,6 +18,9 @@ spec:
     - name: basic-auth
       description: |
         This workspace contains the basic-auth for gitea
+    - name: input
+      description: |
+        This workspace contains the input files to be pushed to the repo
   tasks:
     - name: fetch-source
       taskRef:
@@ -30,8 +33,32 @@ spec:
       params:
         - name: url
           value: $(params.repo-url)
-    - name: show-readme
+    - name: push-app
       runAfter: ["fetch-source"]
+      taskRef:
+        name: git-cli
+      workspaces:
+        - name: source
+          workspace: shared-data
+        - name: basic-auth
+          workspace: basic-auth
+        - name: input
+          workspace: input
+      params:
+        - name: GIT_USER_NAME
+          value: "ok-user"
+        - name: GIT_USER_EMAIL
+          value: "ok-user@user.dev"
+        - name: GIT_SCRIPT
+          value: |
+            git fetch
+            git checkout origin/main
+            cp -r $(workspaces.input.path)/. .
+            git add .
+            git commit -m "chore(ml-app): automated initial commit by tekton during task run"
+            git push origin HEAD:main
+    - name: show-readme
+      runAfter: ["push-app"]
       taskRef:
         name: show-readme
       workspaces:

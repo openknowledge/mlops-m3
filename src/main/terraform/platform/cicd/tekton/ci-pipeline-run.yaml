@@ -5,7 +5,7 @@ metadata:
   namespace: cicd
 spec:
   pipelineRef:
-    name: clone-read
+    name: clone-read-and-push
   podTemplate:
     securityContext:
       fsGroup: 65532
@@ -18,6 +18,9 @@ spec:
           resources:
             requests:
               storage: 1Gi
+    - name: input
+      persistentVolumeClaim:
+        claimName: ${kubernetes_persistent_volume_claim.input.metadata.0.name}
     - name: basic-auth
       secret:
         secretName: ${kubernetes_secret.git_credentials.metadata.0.name}
