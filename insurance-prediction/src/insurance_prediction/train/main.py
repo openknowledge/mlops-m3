@@ -58,7 +58,9 @@ def main() -> None:
     model = create_insurance_model(
         num_features=full_dataset.num_features,
         num_categories=3,
-        normalization=normalization
+        normalization=normalization,
+        # TODO: uncomment to make model capacity smaller and quality gate fail
+        # neurons_per_layer = 50
     )
 
     train(

@@ -11,7 +11,8 @@ def create_insurance_model(
     num_features: int,
     num_categories: int,
     normalization: tf.keras.layers.Normalization = None,
-    dropout: float = 0.7
+    dropout: float = 0.7,
+    neurons_per_layer: int = 100
     ) -> tf.keras.Model:
 
     model = tf.keras.Sequential()
@@ -21,17 +22,17 @@ def create_insurance_model(
     if normalization:
         model.add(normalization)
 
-    model.add(tf.keras.layers.Dense(100, name='hidden1'))
+    model.add(tf.keras.layers.Dense(neurons_per_layer, name='hidden1'))
     model.add(tf.keras.layers.Activation('relu'))
     model.add(tf.keras.layers.BatchNormalization())
     model.add(tf.keras.layers.Dropout(dropout))
 
-    model.add(tf.keras.layers.Dense(100, name='hidden2'))
+    model.add(tf.keras.layers.Dense(neurons_per_layer, name='hidden2'))
     model.add(tf.keras.layers.Activation('relu'))
     model.add(tf.keras.layers.BatchNormalization())
     model.add(tf.keras.layers.Dropout(dropout))
 
-    model.add(tf.keras.layers.Dense(100, name='hidden3'))
+    model.add(tf.keras.layers.Dense(neurons_per_layer, name='hidden3'))
     model.add(tf.keras.layers.Activation('relu'))
     model.add(tf.keras.layers.BatchNormalization())
     model.add(tf.keras.layers.Dropout(dropout))
