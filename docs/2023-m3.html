@@ -556,6 +556,23 @@ funktionsfähiges Modell entwickelt.
 </textarea>
 </section>
 
+<section data-markdown class="fragments">
+	<textarea data-template>
+### Warum Ensemble/Fallback?
+
+* Ein ML Modell ist mit Daten eines bestimmten Bereichs trainiert
+  * manche Anfragen sind nicht in diesem Bereich
+  * die meisten Modelle haben keine Ahnung wann sie keine Ahnung haben
+  * daher müssen wir festlegen, welche Anfrage wohin geleitet wird
+* Auch nach der Vorhersage kann entschieden werden, dass die Wahrscheinlichkeit nicht hoch genug ist
+  * Dann ein anderes Modell befragen
+  * Manche Modelle sind teurer im Betrieb als andere, diese eher später nutzen
+* Oft ist ein einfaches heuristisches Regelsystem eine gute Alternative / Fallback
+* Bei mehreren passenden Modellen ist auch eine Mehrheitsentscheidung denkbar
+* Mehr Vorschläge: https://twitter.com/ChristophMolnar/status/1647881654873063426
+  
+</textarea>
+</section>
 
 
 <section data-markdown>
