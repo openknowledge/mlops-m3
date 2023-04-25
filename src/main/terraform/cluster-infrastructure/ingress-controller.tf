@@ -23,6 +23,8 @@ resource "null_resource" "wait_for_ingress_nginx" {
         --for=condition=ready pod \
         --selector=app.kubernetes.io/component=controller \
         --timeout=90s
+      printf "\nNow waiting for the nginx ingress validatingwebhookconfigurations...\n"
+      for i in 1 2 3 4 5; do kubectl create --filename test-ingress.yaml && kubectl delete --filename test-ingress.yaml && break || sleep 15; done
     EOF
   }
 

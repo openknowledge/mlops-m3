@@ -35,12 +35,17 @@ resource "kubectl_manifest" "tekton_operator" {
   yaml_body = each.value
 }
 
+resource "kubectl_manifest" "tekton_operator_config" {
+  depends_on = [kubectl_manifest.tekton_operator]
+  yaml_body = file("${path.module}/tekton-config.yaml")
+}
+
 resource "kubernetes_ingress_v1" "tekton_dashboard" {
   depends_on = [kubectl_manifest.tekton_operator, null_resource.wait_for_ingress_nginx]
 
   metadata {
-    name      = "tekton-dashboard"
-    namespace = "tekton-pipelines"
+    name      = "tekton-dashboard-ingress"
+    namespace = kubernetes_namespace.tekton-pipelines.metadata.0.name
   }
 
   spec {
