@@ -883,10 +883,34 @@ Das gilt nicht nur für ML Anwendungen, aber bei diesen ist es offensichtlicher
    * Dafür braucht man die Ground Truth der Daten aus Produktion
    * Manchmal bekommt man diese unmittelbar nach der Vorhersage durch die Reaktion eines menschlichen Benutzers
    * Oft aber auch erst nach nennenswerter Verzögerung 
-1. *Wenn sich die Verteilung der Daten der Anfragen oder Vorhersagen deutlich von denen des Trainings unterscheiden* 
-
 </textarea>
 	</section>
+
+  <section data-markdown class="fragments">
+	<textarea data-template>
+### Wann liegt Ground Truth vor?
+
+*Menschliche Experten können die Ground Truth*
+* *bestimmen* 
+  * sobald ein Mensch die Entscheidungen nachprüft / revidiert
+  * bei einem Proposal-System kann das sehr schnell sein
+  * bei Dunkelverarbeitung sollte dies in regelmäßigen Abständen passieren
+* *nicht bestimmen*
+  * wir müssen Realitäten abwarten
+  * bei Zeitreihen wird auf die nahe Zukunft vorhergesagt, sobald diese Eintritt kann überprüft werden
+  * oft sind solche Realitäten erst nach einiger Zeit wahrnehmbar und unterliegen statistischen Schwankungen (wie bei uns)
+</textarea>
+</section>
+
+
+<section data-markdown>
+  <textarea data-template>
+## Ohne Ground Truth braucht man eine Ersatzmetrik
+
+*Wenn sich die Verteilung der Daten der Anfragen oder Vorhersagen deutlich von denen des Trainings unterscheiden* 
+</textarea>
+</section>
+
 
 <section data-markdown>
 <textarea data-template>
@@ -948,16 +972,22 @@ Das Alter der Versicherten zum Zeitpunkt des Trainings
 </textarea>
 </section>
 
-<section data-markdown class="fragments">
+<!-- <section data-markdown class="fragments">
 <textarea data-template>
-### Wie erkennen wir Drift?
+### Wie erkennen wir Drift automatisch?
 
 * Es wird ein statistischer Test auf den Verteilungen ausgeführt
 * Die Anfragen in Produktion werden verglichen mit dem Referenz-Datensatz, den wir zum Training benutzt haben
 
 </textarea>
-</section>
+</section> -->
 
+<section data-markdown>
+<textarea data-template>
+## Auflösung folgt...
+
+</textarea>
+</section>
 
 
 <section data-markdown>
@@ -1183,7 +1213,7 @@ https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence
 
   </textarea>
 </section>
-
+<!-- 
 <section data-markdown>
 ## Alarm bei Data Drift
 
@@ -1196,11 +1226,11 @@ https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence
   * Wichtigkeit der driftenden Features
   * Anzahl der driftenden Features
   * Ausmaß des Drifts
-<!-- * Dafür wichtig
+* Dafür wichtig
   * Vernünftige Tests anhand der Metriken
-  * Vernünftige Konfidenzintervalle -->
+  * Vernünftige Konfidenzintervalle
 
-</section>
+</section> -->
 
 <section data-markdown style="font-size: x-large;">
 	<textarea data-template>
@@ -1237,6 +1267,26 @@ Wenn die Welt sich ändert, ist Drift zu erwarten und damit ok
   </textarea>
 </section>
 
+<section data-markdown class="fragments">
+	<textarea data-template>
+### Ausblick: Unsere Vorhersage selbst erzeugt Drift
+
+* Ein Deployment ändert das unsere Rolle von Beobachter zu Akteur
+* Wir versichern nur Leute mit einer guten Risiko Prognose
+  * Wenn nicht, warum sollten wir dann eine überhaupt eine Prognose machen?
+* Unsere GT wird mehr und mehr gute Fahrer haben
+  * Zumindest ist das unsere Hoffnung (sonst hätte die Prognose nicht geklappt)
+* Falls nicht (False Negative, Type II Fehler)
+  * haben Menschen gelernt, unser System auszutricksen?
+  * "Dann versichert eben meine Tochter den Wagen"
+* Haben wir gute Fahrer aus verstehen nicht versichert (False Positive, Type I Fehler)
+  * Möglichkeit: *epsilon-greedy* meistens der Vorhersage glauben, aber manchmal (epsilon) auch einen Fahrer mit schlechter Prognose versichern 
+  * Vorhersage mit allen Wahrscheinlichkeiten geht in unsere Datenbank ein
+
+https://twitter.com/ChristophMolnar/status/1569644089724764160
+</textarea>
+</section>
+
 <section data-markdown>
 ## Maßnahmen bei Drift
 
@@ -1263,11 +1313,11 @@ Wenn die Welt sich ändert, ist Drift zu erwarten und damit ok
 * Eine Kombination von Visual Studio Code und Jupyer Notebooks ist ebenso möglich
 * Rückkehr in Phase I muss nicht radikal sein
   * wenn Ansatz vergleichbar kann Phase II so erhalten bleiben
-  * neue Ergebnisse fliesen dann iterativ in die Professionalisierung ein
+  * neue Ergebnisse fließen dann iterativ in die Professionalisierung ein
 </textarea>
 </section>
 
-<section data-markdown class="fragments">
+<!-- <section data-markdown class="fragments">
 	<textarea data-template>
 ### Rückkehr in Phase II: Wie trainiert man neu/nach/weiter?
 
@@ -1275,7 +1325,7 @@ Wenn die Welt sich ändert, ist Drift zu erwarten und damit ok
 
 </textarea>
 </section>
-
+ -->
 
 <section data-markdown>
 	<textarea data-template>
@@ -1304,44 +1354,8 @@ Wenn die Welt sich ändert, ist Drift zu erwarten und damit ok
 
 <section data-markdown>
 <textarea data-template>
-## Zeit für offene Fragen
+## Wir gehen alle Themen nochmal durch und Zeit für offene Fragen
 
-</textarea>
-</section>
-
-<section data-markdown class="fragments">
-	<textarea data-template>
-### Ausblick: Wann liegt Ground Truth vor?
-
-*Menschliche Experten können die Ground Truth*
-* *bestimmen* 
-  * sobald ein Mensch die Entscheidungen nachprüft / revidiert
-  * bei einem Proposal-System kann das sehr schnell sein
-  * bei Dunkelverarbeitung sollte dies in regelmäßigen Abständen passieren
-* *nicht bestimmen*
-  * wir müssen Realitäten abwarten
-  * bei Zeitreihen wird auf die nahe Zukunft vorhergesagt, sobald diese Eintritt kann überprüft werden
-  * oft sind solche Realitäten erst nach einiger Zeit wahrnehmbar und unterliegen statistischen Schwankungen (wie bei uns)
-</textarea>
-</section>
-
-<section data-markdown class="fragments">
-	<textarea data-template>
-### Ausblick: Unsere Vorhersage selbst erzeugt Drift
-
-* Ein Deployment ändert das unsere Rolle von Beobachter zu Akteur
-* Wir versichern nur Leute mit einer guten Risiko Prognose
-  * Wenn nicht, warum sollten wir dann eine überhaupt eine Prognose machen?
-* Unsere GT wird mehr und mehr gute Fahrer haben
-  * Zumindest ist das unsere Hoffnung (sonst hätte die Prognose nicht geklappt)
-* Falls nicht (False Negative, Type II Fehler)
-  * haben Menschen gelernt, unser System auszutricksen?
-  * "Dann versichert eben meine Tochter den Wagen"
-* Haben wir gute Fahrer aus verstehen nicht versichert (False Positive, Type I Fehler)
-  * Möglichkeit: *epsilon-greedy* meistens der Vorhersage glauben, aber manchmal (epsilon) auch einen Fahrer mit schlechter Prognose versichern 
-  * Vorhersage mit allen Wahrscheinlichkeiten geht in unsere Datenbank ein
-
-https://twitter.com/ChristophMolnar/status/1569644089724764160
 </textarea>
 </section>
 
