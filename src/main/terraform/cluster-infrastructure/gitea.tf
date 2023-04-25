@@ -1,6 +1,6 @@
 resource "helm_release" "gitea-registry" {
   name             = "gitea"
-  namespace        = "infrastructure"
+  namespace        = kubernetes_namespace.infrastructure.metadata.0.name
   create_namespace = false
 
   repository = "https://dl.gitea.io/charts"

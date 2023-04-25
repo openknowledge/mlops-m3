@@ -1,7 +1,7 @@
 resource "gitea_user" "ok-user" {
   username             = "ok-user"
   login_name           = "ok-user"
-  password             = "Password1234!"
+  password             = ""
   email                = "ok-user@user.dev"
   must_change_password = false
 }
