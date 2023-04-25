@@ -10,7 +10,10 @@
             "request": "launch",
             "module": "uvicorn",
             "env": {
-                "MODEL_PATH": "model.h5"
+                "MODEL_PATH": "model.h5",
+                "PROMETHEUS_MULTIPROC_DIR": "./tmp",
+                "REFERENCE_PATH": "../datasets/insurance_prediction/reference.csv",
+                "METRICS_WINDOW_SIZE": "1"
             },
             "args": [
                 "insurance_prediction.app.main:app",

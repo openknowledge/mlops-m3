@@ -1,7 +1,7 @@
 
 from dataclasses import dataclass
 from enum import auto, Enum
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 
 @dataclass
 class DriverInformation:

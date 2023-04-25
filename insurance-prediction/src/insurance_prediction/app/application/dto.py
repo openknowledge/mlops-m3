@@ -10,7 +10,6 @@ from insurance_prediction.model.domain.insurance import (DriverInformation,
                                                          RiskPredictionInput,
                                                          VehicleInformation)
 
-
 class PredictorTypeDto(StrEnum):
     MODEL = auto()
     RULES = auto()

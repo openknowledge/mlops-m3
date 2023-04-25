@@ -1,8 +1,8 @@
-from typing import Callable
 from fastapi import APIRouter
 
 from insurance_prediction.app.application.dto import PredictionDto, RiskPredictionInputDto
 from insurance_prediction.app.usecase.insurance import predict_risk
+import insurance_prediction.monitoring.data_drift as data_drift
 
 router = APIRouter(
     prefix='/predict'

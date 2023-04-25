@@ -1,0 +1,7 @@
+# Ignore the poetry configuration as it results in new virtualenvironment at .venv/
+poetry.toml
+# Also ignore the lock file. During this workshop, we cannot have a consistent environment with all different oses and architectures.
+# Therefore the packages to be installed can slightly differ.
+poetry.lock
+
+.venv

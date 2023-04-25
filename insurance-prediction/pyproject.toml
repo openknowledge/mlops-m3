@@ -5,8 +5,9 @@ description = ""
 authors = ["Yannick Habecker <yannick.habecker@openknowledge.de>"]
 readme = "README.md"
 packages = [
-    {include = "insurance_prediction/model", from = "src"},
     {include = "insurance_prediction/app", from = "src"},
+    {include = "insurance_prediction/model", from = "src"},
+    {include = "insurance_prediction/monitoring", from = "src"},
 ]
 
 [tool.poetry.dependencies]
@@ -14,14 +15,16 @@ python = ">=3.10, <3.11"
 tensorflow = { version = "2.11.1", markers = "platform_machine == 'x86_64' or platform_machine == 'amd64'" }
 tensorflow-aarch64 = { version = "2.11.1", markers = "platform_machine == 'aarch64'" }
 tensorflow-macos = { version = "2.11.0", markers = "platform_machine == 'arm64'" }
-
+evidently = { version = "0.3.0" }
+prometheus_client = { version = "0.16.0"}
 fastapi = ">=0.92, < 0.93"
 uvicorn = ">=0.21, < 0.22"
 StrEnum = ">=0.4, < 1.0"
+pandas = ">= 1.5, < 1.6"
 
 [tool.poetry.dev-dependencies]
 pylint = ">= 2.17, < 3.0.0"
-pandas = ">= 1.5, < 1.6"
+pytest = ">= 7, < 8"
 
 [build-system]
 requires = ["poetry-core"]
