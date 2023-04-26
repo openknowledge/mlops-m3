@@ -12,23 +12,24 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.10, <3.11"
-tensorflow = { version = "2.11.1", markers = "platform_machine == 'x86_64' or platform_machine == 'amd64'" }
-tensorflow-aarch64 = { version = "2.11.1", markers = "platform_machine == 'aarch64'" }
-tensorflow-macos = { version = "2.11.0", markers = "platform_machine == 'arm64'" }
+tensorflow = { version = "2.12.0", markers = "platform_machine == 'x86_64' or platform_machine == 'amd64'" }
+tensorflow-aarch64 = { version = "2.12.0", markers = "platform_machine == 'aarch64'" }
+tensorflow-macos = { version = "2.12.0", markers = "platform_machine == 'arm64'" }
 evidently = { version = "0.3.0" }
 prometheus_client = { version = "0.16.0"}
-fastapi = ">=0.92, < 0.93"
-uvicorn = ">=0.21, < 0.22"
-StrEnum = ">=0.4, < 1.0"
-pandas = ">= 1.5, < 1.6"
+fastapi = "0.95.1"
+uvicorn = "0.21.1"
+StrEnum = "0.4.10"
+pandas = "2.0.1"
 
 [tool.poetry.dev-dependencies]
-pylint = ">= 2.17, < 3.0.0"
-pytest = ">= 7, < 8"
+pylint = "2.17.3"
+pytest = "7.3.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-insurance-prediction-train = 'insurance_prediction.train:main'
+train = 'insurance_prediction.train:train'
+validate = 'insurance_prediction.train:validate'

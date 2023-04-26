@@ -42,7 +42,7 @@ def create_insurance_model(
     return model
 
 
-def train(dataset: SplittedDataset, model: tf.keras.Model, epochs: int = 50, batch_size: int = 32, plot_curve: bool = False) -> None:
+def train(dataset: SplittedDataset, model: tf.keras.Model, epochs: int = 50, batch_size: int = 32) -> None:
     model.compile(loss='sparse_categorical_crossentropy',
                            optimizer='adam',
                            metrics=['accuracy'])

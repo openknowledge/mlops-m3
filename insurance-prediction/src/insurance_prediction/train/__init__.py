@@ -1,3 +1,4 @@
-from insurance_prediction.train.main import main
+from insurance_prediction.train.train import main as train
+from insurance_prediction.train.validate import main as validate
 
-__all__ = ['main']
+__all__ = ['train', 'validate']

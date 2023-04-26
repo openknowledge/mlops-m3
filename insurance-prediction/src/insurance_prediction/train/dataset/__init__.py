@@ -2,9 +2,9 @@ from dataclasses import dataclass
 import tensorflow as tf
 
 @dataclass
-class Dataset:
-    num_features: int
-    tf: tf.data.Dataset
+class SplittedDataset:
+    train: tf.data.Dataset
+    test: tf.data.Dataset
 
 @dataclass
 class Split:
@@ -25,6 +25,10 @@ class Split:
         )
 
 @dataclass
-class SplittedDataset:
-    train: tf.data.Dataset
-    test: tf.data.Dataset
+class Dataset:
+    num_features: int
+    tf: tf.data.Dataset
+
+    def split(self, seed: int = 42, train: int = 80, test: int = 20) -> SplittedDataset:
+        dataset = self.tf.shuffle(buffer_size=10_000, seed=seed, reshuffle_each_iteration=False)
+        return Split(train, test).dataset(dataset)

@@ -51,5 +51,5 @@ class _InsuranceModel(BasePredictor):
         )
 
 model = _InsuranceModel(
-    model_path = os.getenv('MODEL_PATH', "classifier")
+    model_path = os.getenv('MODEL_PATH')
 )

@@ -7,7 +7,7 @@ import tensorflow as tf
 
 from insurance_prediction.train.dataset import Dataset
 
-def load_dataset_from_archive(archive_path: Path, csv_file: str, encoding:str = 'utf-8'):
+def load_dataset_from_archive(archive_path: Path, csv_file: str, encoding:str = 'utf-8') -> Dataset:
     with tarfile.open(archive_path, "r:*") as tar:
         csv_path = next(filter(lambda name: name.endswith(f'/{csv_file}'), tar.getnames()))
         with tar.extractfile(csv_path) as f:
