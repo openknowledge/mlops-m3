@@ -30,7 +30,7 @@ All of the services required and listed above are also exposed via NodePorts and
 in the KinD Cluster. So you can also use the following URLs to access the services.
 
 ```
-    For Prometheus: http://localhost:30080
+    For Prometheus: http://localhost:30090
     For Gitea: http://localhost:30030
     For Grafana http://localhost:30031
     For Tekton Dashboard: http://localhost:30097
