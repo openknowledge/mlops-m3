@@ -24,6 +24,10 @@ Add some routes like this to your /etc/hosts so that you don't have to bother wi
     127.0.0.1       tekton.localhost
 ```
 
+#### Hosts on Windows (including WSL)
+
+Add those routes to `C:/WINDOWS/system32/drivers/etc/hosts` as admin (e.g. by starting PowerShell as Admin and start editor from there). It is safest to reboot Windows after doing so. Routes will automatically be added to WSL `/etc/hosts` as well.
+
 #### If you dont have Admin permissions or dont want to edit your hosts file
 
 All of the services required and listed above are also exposed via NodePorts and extra Portmappings
