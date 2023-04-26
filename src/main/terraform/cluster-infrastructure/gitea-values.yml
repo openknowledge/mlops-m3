@@ -10,3 +10,8 @@ gitea:
   admin:
     username: ok-admin
     password: ok-admin
+
+service:
+  http:
+    type: NodePort
+    nodePort: 30030

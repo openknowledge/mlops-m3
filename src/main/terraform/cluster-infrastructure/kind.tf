@@ -30,6 +30,18 @@ resource "kind_cluster" "m3-demo-cluster" {
         host_port      = 443
         protocol       = "TCP"
       }
+
+      extra_port_mappings {
+        container_port = 30030
+        host_port      = 30030
+        protocol       = "TCP"
+      }
+
+      extra_port_mappings {
+        container_port = 30097
+        host_port      = 30097
+        protocol       = "TCP"
+      }
     }
   }
 }

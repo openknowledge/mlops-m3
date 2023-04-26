@@ -37,7 +37,30 @@ resource "kubectl_manifest" "tekton_operator" {
 
 resource "kubectl_manifest" "tekton_operator_config" {
   depends_on = [kubectl_manifest.tekton_operator]
-  yaml_body = file("${path.module}/tekton-config.yaml")
+  yaml_body  = file("${path.module}/tekton-config.yaml")
+}
+
+resource "kubernetes_service_v1" "tekton_dashboard" {
+  metadata {
+    name      = "tekton-dashboard"
+    namespace = kubernetes_namespace.tekton-pipelines.metadata.0.name
+  }
+
+  spec {
+    selector = {
+      "app.kubernetes.io/component" = "dashboard"
+      "app.kubernetes.io/instance" = "default"
+      "app.kubernetes.io/name" = "dashboard"
+      "app.kubernetes.io/part-of" = "tekton-dashboard"
+    }
+    port {
+      name        = "http"
+      port        = 9097
+      node_port   = 30097
+      target_port = 9097
+    }
+    type = "NodePort"
+  }
 }
 
 resource "kubernetes_ingress_v1" "tekton_dashboard" {
