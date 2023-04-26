@@ -45,11 +45,12 @@ resource "kubernetes_service" "evidently" {
       app = kubernetes_deployment.evidently.metadata.0.labels.app
     }
 
-    type = "ClusterIP"
+    type = "NodePort"
 
     port {
       port = 80
       target_port = 8085
+      node_port = 30085
     }
   }
 }

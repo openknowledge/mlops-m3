@@ -3,6 +3,9 @@ grafana:
   defaultDashboardsEnabled: true
   adminUser: admin
   adminPassword: admin
+  service:
+    type: NodePort
+    nodePort: 30031
   ingress:
     enabled: true
     hosts:
@@ -12,6 +15,9 @@ prometheus:
     enabled: true
     hosts:
       - prometheus.localhost
+  service:
+    type: NodePort
+    nodePort: 30090
   prometheusSpec:
     additionalScrapeConfigs:
       - job_name: 'pushgateway'

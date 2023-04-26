@@ -31,15 +31,38 @@ resource "kind_cluster" "m3-demo-cluster" {
         protocol       = "TCP"
       }
 
+      # Extra port mappings for Gitea
       extra_port_mappings {
         container_port = 30030
         host_port      = 30030
         protocol       = "TCP"
       }
 
+      # Extra port mappings for Tekton Dashboard
       extra_port_mappings {
         container_port = 30097
         host_port      = 30097
+        protocol       = "TCP"
+      }
+
+      # Extra port mappings for Prometheus
+      extra_port_mappings {
+        container_port = 30090
+        host_port      = 30090
+        protocol       = "TCP"
+      }
+
+      # Extra port mappings for Grafana
+      extra_port_mappings {
+        container_port = 30031
+        host_port      = 30031
+        protocol       = "TCP"
+      }
+
+      # Extra port mappings for Evidently
+      extra_port_mappings {
+        container_port = 30085
+        host_port      = 30085
         protocol       = "TCP"
       }
     }
