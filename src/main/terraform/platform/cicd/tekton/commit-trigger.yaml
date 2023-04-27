@@ -1,45 +1,4 @@
 apiVersion: triggers.tekton.dev/v1alpha1
-kind: TriggerTemplate
-metadata:
-  name: ci-triggertemplate
-  namespace: cicd
-spec:
-  params:
-    - name: gitrevision
-      description: The git revision
-      default: master
-    - name: gitrepositoryurl
-      description: The git repository url
-    - name: namespace
-      description: The namespace to create the resources
-  resourcetemplates:
-    - apiVersion: tekton.dev/v1beta1
-      kind: PipelineRun
-      metadata:
-        name: ci-pipeline-run
-        namespace: $(tt.params.namespace)
-      spec:
-        serviceAccountName: tekton-triggers-example-sa
-        pipelineRef:
-          name: ci-pipeline
-        params:
-          - name: git-revision
-            value: $(tt.params.gitrevision)
-          - name: git-url
-            value: $(tt.params.gitrepositoryurl)
-          - name: url
-            value: DOCKERREPO-REPLACEME # docker-repo-location.com/repo:getting-started
-        workspaces:
-          - name: git-source
-            volumeClaimTemplate:
-              spec:
-                accessModes:
-                  - ReadWriteOnce
-                resources:
-                  requests:
-                    storage: 1Gi
----
-apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerBinding
 metadata:
   name: ci-pipelinebinding
@@ -59,7 +18,7 @@ metadata:
   name: ci-listener
   namespace: cicd
 spec:
-  serviceAccountName: tekton-triggers-example-sa
+  serviceAccountName: m3-sa
   triggers:
     - bindings:
         - ref: ci-pipelinebinding

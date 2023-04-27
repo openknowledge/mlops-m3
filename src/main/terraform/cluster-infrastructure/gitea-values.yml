@@ -10,6 +10,9 @@ gitea:
   admin:
     username: ok-admin
     password: ok-admin
+  config:
+    webhook:
+      ALLOWED_HOST_LIST: "*,10.96.207.247,el-ci-listener.cicd.svc.cluster.local"
 
 service:
   http:

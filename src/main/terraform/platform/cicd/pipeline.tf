@@ -2,6 +2,10 @@ resource "kubectl_manifest" "ci_pipeline" {
   yaml_body = file("${path.module}/tekton/ci-pipeline.yaml")
 }
 
+resource "kubectl_manifest" "ci_build_pipeline" {
+  yaml_body = file("${path.module}/tekton/ci-build-pipeline.yaml")
+}
+
 data "http" "git_clone_task" {
   url = "https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.6/git-clone.yaml"
 }
@@ -9,7 +13,6 @@ data "http" "git_clone_task" {
 data "http" "git_cli_task" {
   url = "https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-cli/0.4/git-cli.yaml"
 }
-
 
 resource "kubectl_manifest" "git_cli_task" {
   override_namespace = kubernetes_namespace.cicd.metadata.0.name
@@ -117,4 +120,61 @@ resource "kubernetes_persistent_volume_claim" "m3-demo-files" {
     }
     volume_name = kubernetes_persistent_volume.m3-demo-files.metadata.0.name
   }
+}
+
+resource "kubectl_manifest" "commit_trigger_template" {
+  yaml_body = <<YAML
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: ci-triggertemplate
+  namespace: ${kubernetes_namespace.cicd.metadata.0.name}
+spec:
+  params:
+    - name: gitrevision
+      description: The git revision
+      default: main
+    - name: gitrepositoryurl
+      description: The git repository url
+    - name: namespace
+      description: The namespace to create the resources
+      default: ${kubernetes_namespace.cicd.metadata.0.name}
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: commit-triggered-run-
+        namespace: $(tt.params.namespace)
+      spec:
+        serviceAccountName: ${kubernetes_service_account_v1.m3-sa.metadata.0.name}
+        pipelineRef:
+          name: clone-read-and-build
+        podTemplate:
+          securityContext:
+            fsGroup: 65532
+        params:
+        - name: repo-url
+          value: $(tt.params.gitrepositoryurl)
+        workspaces:
+        - name: shared-data
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 1Gi
+        - name: basic-auth
+          secret:
+            secretName: ${kubernetes_secret.git_credentials.metadata.0.name}
+YAML
+}
+
+data "kubectl_file_documents" "commit_trigger" {
+  content = file("${path.module}/tekton/commit-trigger.yaml")
+}
+
+resource "kubectl_manifest" "commit_trigger" {
+  for_each = data.kubectl_file_documents.commit_trigger.manifests
+  yaml_body = each.value
 }
