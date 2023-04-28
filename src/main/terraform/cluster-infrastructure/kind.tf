@@ -74,10 +74,6 @@ variable "repository-path" {
 }
 
 resource "null_resource" "load_evidently_to_kind" {
-  triggers = {
-    key = uuid()
-  }
-
   provisioner "local-exec" {
     command = <<EOF
       printf "\nWaiting for the cluster to be created...\n"

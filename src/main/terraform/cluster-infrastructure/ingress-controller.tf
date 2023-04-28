@@ -12,10 +12,6 @@ resource "helm_release" "ingress_nginx" {
 }
 
 resource "null_resource" "wait_for_ingress_nginx" {
-  triggers = {
-    key = uuid()
-  }
-
   provisioner "local-exec" {
     command = <<EOF
       printf "\nWaiting for the nginx ingress controller...\n"
