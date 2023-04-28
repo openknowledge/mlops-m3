@@ -5,7 +5,7 @@ import numpy as np
 import tensorflow as tf
 
 from insurance_prediction.train.dataset.insurance import \
-    load_dataset_from_archive
+    load_dataset
 from insurance_prediction.train.evaluation import evaluate
 
 
@@ -16,16 +16,9 @@ def main() -> None:
     parser.add_argument(
         '--dataset',
         type=str,
-        metavar='ARCHIVE',
+        metavar='DIRECTORY',
         required=True,
-        help='Path to the dataset archive'
-    )
-    parser.add_argument(
-        '--csv_file',
-        type=str,
-        metavar='CSV',
-        required=True,
-        help='Name of the csv file file to use from the archive'
+        help='Path to the dataset directory'
     )
     parser.add_argument(
         '--model',
@@ -37,13 +30,14 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    dataset_archive_path = Path(args.dataset)
-    csv_file_name = args.csv_file
+    dataset_path = Path(args.dataset)
     model_path = Path(args.model)
 
-    full_dataset = load_dataset_from_archive(archive_path=dataset_archive_path, csv_file=csv_file_name)
-    dataset = full_dataset.split()
 
+    dataset = load_dataset(
+        train_csv_path = dataset_path / 'train.csv',
+        test_csv_path = dataset_path / 'test.csv'
+    )
     model = tf.keras.models.load_model(model_path)
 
     # Basic metrics
@@ -68,7 +62,8 @@ def main() -> None:
 
     # Output distributions
     print('Checking output distribution')
-    X = full_dataset.tf.map(lambda x, y: x)
+    # TODO: train + test?
+    X = dataset.test.map(lambda x, y: x)
     y_pred = model.predict(X, verbose=0).argmax(axis=1)
     _, counts = np.unique(y_pred, return_counts=True)
 
@@ -77,7 +72,7 @@ def main() -> None:
     expected_count = len(X) / 3
     for count in counts:
         assert count in range(
-            int(expected_count * (1 - tolerance)), int(expected_count * (1 + tolerance)))
+int(expected_count * (1 - tolerance)), int(expected_count * (1 + tolerance)))
     print(f'Counts {counts} are within {tolerance} of {expected_count}')
 
     # Certainty distribution

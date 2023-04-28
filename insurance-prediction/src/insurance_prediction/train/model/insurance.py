@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-from insurance_prediction.train.dataset import SplittedDataset
+from insurance_prediction.train.dataset import Dataset
 
 def create_normalization(X: tf.data.Dataset) -> tf.keras.layers.Normalization:
     normalizer = tf.keras.layers.Normalization(axis=-1)
@@ -42,7 +42,7 @@ def create_insurance_model(
     return model
 
 
-def train(dataset: SplittedDataset, model: tf.keras.Model, epochs: int = 50, batch_size: int = 32) -> None:
+def train(dataset: Dataset, model: tf.keras.Model, epochs: int = 50, batch_size: int = 32) -> None:
     model.compile(loss='sparse_categorical_crossentropy',
                            optimizer='adam',
                            metrics=['accuracy'])
