@@ -70,9 +70,13 @@ def main() -> None:
     # Equal distribution around classes expected
     tolerance = 0.15
     expected_count = len(X) / 3
+    lower_bound = int(expected_count * (1 - tolerance))
+    upper_bound = int(expected_count * (1 + tolerance))
+    print(f'Counts should be within {lower_bound}-{upper_bound}')
+                  
     for count in counts:
-        assert count in range(
-int(expected_count * (1 - tolerance)), int(expected_count * (1 + tolerance)))
+        print(count)
+        assert count in range(lower_bound, upper_bound)
     print(f'Counts {counts} are within {tolerance} of {expected_count}')
 
     # Certainty distribution
