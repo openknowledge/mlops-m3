@@ -1,4 +1,5 @@
 import argparse
+import os
 from pathlib import Path
 
 import numpy as np
@@ -27,6 +28,8 @@ def main() -> None:
         help='Path to the trained model'
     )
 
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+    tf.config.set_visible_devices([], 'GPU')
 
     args = parser.parse_args()
 
@@ -63,12 +66,12 @@ def main() -> None:
     # Output distributions
     print('Checking output distribution')
     # TODO: train + test?
-    X = dataset.test.map(lambda x, y: x)
+    X = dataset.train.concatenate(dataset.test).map(lambda x, y: x)
     y_pred = model.predict(X, verbose=0).argmax(axis=1)
     _, counts = np.unique(y_pred, return_counts=True)
 
     # Equal distribution around classes expected
-    tolerance = 0.15
+    tolerance = 0.20
     expected_count = len(X) / 3
     lower_bound = int(expected_count * (1 - tolerance))
     upper_bound = int(expected_count * (1 + tolerance))

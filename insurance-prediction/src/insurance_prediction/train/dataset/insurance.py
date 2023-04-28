@@ -15,7 +15,6 @@ def load_dataset(train_csv_path: Path, test_csv_path: Path) -> Dataset:
     )
 
 def _load_dataset_from_df(df: pd.DataFrame) -> tf.data.Dataset:
-    print(df.columns)
     features = df.drop(['risk', 'group', 'group_name'], axis='columns').values
     label = df.pop('group')
 

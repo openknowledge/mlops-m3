@@ -1,6 +1,6 @@
 import argparse
+import os
 from pathlib import Path
-import numpy as np
 
 import tensorflow as tf
 
@@ -9,8 +9,6 @@ from insurance_prediction.train.evaluation import evaluate
 from insurance_prediction.train.model.insurance import (create_insurance_model,
                                                         create_normalization, train)
 
-tf.random.set_seed(42)
-
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Training Script"
@@ -18,6 +16,7 @@ def main() -> None:
     parser.add_argument(
         "--dataset",
         type=str,
+        metavar='DIRECTORY',
         required=True,
         help="Path to the dataset folder"
     )
@@ -33,21 +32,16 @@ def main() -> None:
         action='store_true',
         help="Whether or not the training is run in headless mode"
     )
-    parser.add_argument(
-        "--no-gpu",
-        default=False,
-        action='store_true',
-        help="Disables the usage of gpus"
-    )
 
     args = parser.parse_args()
 
     dataset_path = Path(args.dataset)
     model_path = Path(args.model)
-    no_gpu = bool(args.no_gpu)
 
-    if no_gpu:
-        tf.config.set_visible_devices([], 'GPU')
+    tf.random.set_seed(42)
+
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+    tf.config.set_visible_devices([], 'GPU')
 
     dataset = load_dataset(
         train_csv_path = dataset_path / 'train.csv',

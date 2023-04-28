@@ -18,9 +18,9 @@ poetry install
 ## Training and validation
 
 ```
-poetry run train --dataset ../datasets/insurance_prediction/causal.tar.gz --csv_file reference.csv --model ./model.h5
+poetry run train --dataset ../datasets/insurance_prediction/ --model ./model.h5
 ```
 
 ```
-poetry run validate --dataset ../datasets/insurance_prediction/causal.tar.gz --csv_file reference.csv --model ./model.h5
+poetry run validate --dataset ../datasets/insurance_prediction/ --model ./model.h5
 ```
