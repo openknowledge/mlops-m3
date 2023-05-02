@@ -80,16 +80,6 @@ variable "repository-path" {
   default = "../../../../insurance-prediction"
 }
 
-resource "null_resource" "load_evidently_to_kind" {
-  provisioner "local-exec" {
-    command = <<EOF
-      printf "\nWaiting for the cluster to be created...\n"
-      kind load docker-image -n m3-demo-cluster evidently
-    EOF
-  }
-
-  depends_on = [kind_cluster.m3-demo-cluster]
-}
 
 output "m3-demo-cluster" {
   value = {

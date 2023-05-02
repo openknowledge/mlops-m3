@@ -1,23 +1,17 @@
-FROM python:3.10.11-bullseye AS base
-RUN apt update && apt install -y python3-dev gcc libffi-dev
-RUN pip install poetry
+FROM habecker/tensorflow_poetry:py3.10.11-tf2.12.0-slim AS base
 COPY ./ /
 RUN poetry install
-RUN poetry build
-
 
 FROM base AS build
 RUN poetry build
 
-
 FROM base AS training
 COPY ./datasets/insurance_prediction/reference.csv.gz /
-RUN poetry run train --dataset ./datasets/insurance_prediction/ --model /model.h5
-RUN poetry run validate --dataset ./datasets/insurance_prediction/ --model /model.h5
+RUN poetry run train --dataset /datasets/insurance_prediction/ --model /model.h5
+RUN poetry run validate --dataset /datasets/insurance_prediction/ --model /model.h5
 
 
-FROM python:3.10.11-bullseye
-
+FROM habecker/tensorflow_poetry:py3.10.11-tf2.12.0-slim
 EXPOSE 80
 ENV MODEL_PATH=/model.h5
 ENV REFERENCE_PATH=/reference.csv.gz

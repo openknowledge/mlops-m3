@@ -9,3 +9,6 @@ poetry.lock
 .*/
 
 model.h5
+
+*.Dockerfile
+.Dockerfile
