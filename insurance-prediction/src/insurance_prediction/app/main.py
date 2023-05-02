@@ -1,7 +1,7 @@
 import uvicorn
 
 from fastapi import FastAPI
-from insurance_prediction.app.application import router as prediction_router
+from insurance_prediction.app.application.router import router as prediction_router
 from insurance_prediction.monitoring import metrics_app
 
 

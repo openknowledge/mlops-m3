@@ -11,8 +11,7 @@
             "module": "uvicorn",
             "env": {
                 "MODEL_PATH": "model.h5",
-                "PROMETHEUS_MULTIPROC_DIR": "./tmp",
-                "REFERENCE_PATH": "../datasets/insurance_prediction/reference.csv",
+                "REFERENCE_PATH": "./datasets/insurance_prediction/reference.csv.gz",
                 "METRICS_WINDOW_SIZE": "1"
             },
             "args": [

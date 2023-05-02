@@ -5,3 +5,7 @@ poetry.toml
 poetry.lock
 
 .venv
+
+.*/
+
+model.h5

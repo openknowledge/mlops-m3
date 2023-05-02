@@ -26,6 +26,9 @@ pandas = "2.0.1"
 pylint = "2.17.3"
 pytest = "7.3.1"
 
+# Used only for the simulate-drift demo
+httpx = "0.24.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
@@ -33,3 +36,4 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.scripts]
 train = 'insurance_prediction.train:train'
 validate = 'insurance_prediction.train:validate'
+simulate-drift = 'insurance_prediction.demo:simulate_drift'

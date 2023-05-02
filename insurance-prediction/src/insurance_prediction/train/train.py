@@ -44,8 +44,8 @@ def main() -> None:
     tf.config.set_visible_devices([], 'GPU')
 
     dataset = load_dataset(
-        train_csv_path = dataset_path / 'train.csv',
-        test_csv_path = dataset_path / 'test.csv'
+        train_csv_path = dataset_path / 'train.csv.gz',
+        test_csv_path = dataset_path / 'test.csv.gz'
     )
 
     X = dataset.train.map(lambda x, y: x)

@@ -12,7 +12,7 @@ from insurance_prediction.train.evaluation import evaluate
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description='Training Script'
+        description='Validation Script'
     )
     parser.add_argument(
         '--dataset',
@@ -38,8 +38,8 @@ def main() -> None:
 
 
     dataset = load_dataset(
-        train_csv_path = dataset_path / 'train.csv',
-        test_csv_path = dataset_path / 'test.csv'
+        train_csv_path = dataset_path / 'train.csv.gz',
+        test_csv_path = dataset_path / 'test.csv.gz'
     )
     model = tf.keras.models.load_model(model_path)
 

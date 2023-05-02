@@ -1,11 +1,12 @@
 import logging
 import os
+from typing import Optional
 import tensorflow as tf
 
-from insurance_prediction.model import BasePredictor, InfeasiblePredictionError
+from insurance_prediction.model import InsurancePredictor, InfeasiblePredictionError
 from insurance_prediction.model.domain.insurance import Prediction, PredictorType, Risk, RiskPredictionInput
 
-class _InsuranceModel(BasePredictor):
+class _InsuranceModel(InsurancePredictor):
     logger = logging.getLogger('insurance_model')
 
     def __init__(self, model_path: str,
@@ -50,6 +51,7 @@ class _InsuranceModel(BasePredictor):
             predictor_type=PredictorType.MODEL
         )
 
-model = _InsuranceModel(
-    model_path = os.getenv('MODEL_PATH')
-)
+def load_model(model_path: str = os.getenv('MODEL_PATH')) -> InsurancePredictor:
+    return _InsuranceModel(
+        model_path = os.getenv('MODEL_PATH')
+    )

@@ -5,7 +5,7 @@ from insurance_prediction.model.domain.insurance import Prediction, RiskPredicti
 class InfeasiblePredictionError(Exception):
     ...
 
-class BasePredictor:
+class InsurancePredictor:
     @abstractmethod
     def can_predict(self, prediction_input: RiskPredictionInput) -> bool:
         """ Checks if the given predictor can predict tine given input.

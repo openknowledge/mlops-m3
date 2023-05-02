@@ -1,9 +1,9 @@
 
-from insurance_prediction.model import BasePredictor
+from insurance_prediction.model import InsurancePredictor
 from insurance_prediction.model.domain.insurance import Prediction, PredictorType, Risk, RiskPredictionInput
 
 
-class _RulesBasedPredictor(BasePredictor):
+class _RulesBasedPredictor(InsurancePredictor):
     def can_predict(self, prediction_input: RiskPredictionInput) -> bool:
         return True
 
@@ -36,4 +36,5 @@ class _RulesBasedPredictor(BasePredictor):
             predictor_type=PredictorType.RULES
         )
 
-model = _RulesBasedPredictor()
+def load_model() -> InsurancePredictor:
+    return _RulesBasedPredictor()

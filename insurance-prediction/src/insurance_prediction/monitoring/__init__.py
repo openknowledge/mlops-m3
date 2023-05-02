@@ -1,6 +1,3 @@
-import multiprocessing
-from fastapi import APIRouter
-
 from prometheus_client import CollectorRegistry, make_asgi_app
 
 collector_registry = CollectorRegistry()
