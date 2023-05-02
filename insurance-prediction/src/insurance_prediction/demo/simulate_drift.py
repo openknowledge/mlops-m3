@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+from time import sleep
 
 import pandas as pd
 
@@ -19,21 +20,24 @@ def main():
         required=True,
         help="Path to the dataset folder"
     )
+
     parser.add_argument(
         "--base_url",
         type=str,
         metavar='DIRECTORY',
         help="Path to the dataset folder",
         default="http://localhost:8000/"
-    )   
+    )
+
     parser.add_argument(
         "--timeout",
         type=int,
-        help="Timeout between each batch",
+        help="Timeout between each batch in seconds",
         default=0
-    )   
+    )
 
     args = parser.parse_args()
+    timeout = int(args.timeout)
 
     dataset_path = Path(args.dataset)
 
@@ -57,4 +61,5 @@ def main():
                         braking_distance=float(row['braking_distance'])
                     )
                 )
-                http_client.post('/predict', content=prediction_input.json())
+                http_client.post('/predict/mock', content=prediction_input.json())
+            sleep(timeout)

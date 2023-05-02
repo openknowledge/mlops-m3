@@ -12,11 +12,10 @@
             "env": {
                 "MODEL_PATH": "model.h5",
                 "REFERENCE_PATH": "./datasets/insurance_prediction/reference.csv.gz",
-                "METRICS_WINDOW_SIZE": "1"
             },
             "args": [
                 "insurance_prediction.app.main:app",
-                "--reload"
+                //"--reload"
             ],
             "jinja": true,
             "justMyCode": true

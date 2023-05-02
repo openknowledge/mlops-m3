@@ -16,3 +16,10 @@ def predict_risk(prediction_input: RiskPredictionInput) -> Prediction:
             return rule_based_model.predict(prediction_input)
     except InfeasiblePredictionError:
         return rule_based_model.predict(prediction_input)
+
+@data_drift.risk_prediction
+def predict_mock(_: RiskPredictionInput) -> None:
+    """ Mocks the prediction by just receiving the input.
+        This is used only for the monitoring show-case where
+        we don't want to predict every single input element.
+    """

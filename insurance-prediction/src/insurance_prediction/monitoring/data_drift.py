@@ -30,7 +30,7 @@ column_mapping = ColumnMapping(
 
 dataset_drift_metric = DatasetDriftMetric(columns=column_mapping.categorical_features + column_mapping.numerical_features)
 
-window: MutableSequence[RiskPredictionInput] = deque(maxlen=window_size)
+window: MutableSequence[RiskPredictionInput] = deque(maxlen=int(window_size))
 gauges: MutableMapping[str, Gauge] = dict()
 
 def _to_dataframe(current_data: Sequence[RiskPredictionInput]) -> pd.DataFrame:
@@ -44,14 +44,14 @@ def _to_dataframe(current_data: Sequence[RiskPredictionInput]) -> pd.DataFrame:
             'miles': risk_input.driver.miles
         }
 
-    current_data = map(_to_dict, current_data)
+    current_data = list(map(_to_dict, current_data))
     return pd.DataFrame.from_records(current_data)
 
 def risk_prediction(fun: Callable[[RiskPredictionInput], Prediction]) -> Callable[[RiskPredictionInput], Prediction]:
     def _wrapper(prediction_input: RiskPredictionInput) -> Prediction:
         prediction = fun(prediction_input)
         window.append(prediction_input)
-        if len(window) == window_size:
+        if len(window) >= window_size:
             input_data = InputData(
                 reference_data=reference_dataset.copy(),
                 current_data=_to_dataframe(window),
