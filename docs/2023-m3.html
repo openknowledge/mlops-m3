@@ -275,6 +275,63 @@ Notwendige Software
 </textarea>
 </section>
 
+<section data-markdown class="todo" style="font-size: small;">
+	<textarea data-template>
+
+### Hands On: Professionalisierung
+
+#### Modell clonen
+
+
+```
+git clone git@github.com:openknowledge/mlops-m3.git
+cd mlops-m3/insurance-prediction
+```
+
+#### Modell bauen und validieren
+
+Wir brauchen noch ein Dev-Image 
+- Started nur shell oder führt train und validate aus?
+- Würde wie der Server die Volumes mounten
+
+
+```
+poetry run train --dataset /datasets/insurance_prediction --model /model/model.h5
+poetry run validate --dataset datasets/insurance_prediction/ --model /model/model.h5
+
+```
+#### Docker container starten
+```
+cd insurance-prediction
+
+docker build -t insurance-prediction .
+bash: docker run -d -p 8080:80 -e MODEL_PATH=/model/model.h5 -v $(pwd):/model -v $(pwd)/../datasets:/datasets -e REFERENCE_PATH=/datasets/insurance_prediction/reference.csv insurance-prediction
+cmd: docker run -d -p 8080:80 -e MODEL_PATH=/model/model.h5 -v %cd%:/model -v %cd%/../datasets:/datasets -e REFERENCE_PATH=/datasets/insurance_prediction/reference.csv insurance-prediction
+PS: docker run -d -p 8080:80 -e MODEL_PATH=/model/model.h5 -v "$(Get-Location):/model" -v "$(Get-Location)/../datasets:/datasets" -e REFERENCE_PATH=/datasets/insurance_prediction/reference.csv insurance-prediction
+```
+
+#### Requests über Swagger UI absetzen 
+
+http://localhost:8080/docs
+http://localhost:8080/docs#/default/put_predict_risk_predict__put
+
+
+<img src="img/mlops/swagger-sample-request.png" style="height: 200px;">
+
+```
+{
+  "prediction": "LOW",
+  "probabilities": {
+    "HIGH": 0.0003246392006985843,
+    "MEDIUM": 0.022435296326875687,
+    "LOW": 0.9772400259971619
+  },
+  "predictor_type": "MODEL"
+}
+```
+</textarea>
+</section>
+
 
 <section data-markdown style="font-size: xx-large;">
 	<textarea data-template>
