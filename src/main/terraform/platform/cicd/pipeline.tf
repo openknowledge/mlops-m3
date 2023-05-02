@@ -14,6 +14,10 @@ data "http" "git_cli_task" {
   url = "https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-cli/0.4/git-cli.yaml"
 }
 
+data "http" "kaniko_task" {
+  url = "https://raw.githubusercontent.com/tektoncd/catalog/main/task/kaniko/0.6/kaniko.yaml"
+}
+
 resource "kubectl_manifest" "git_cli_task" {
   override_namespace = kubernetes_namespace.cicd.metadata.0.name
   yaml_body          = data.http.git_cli_task.response_body
@@ -22,6 +26,11 @@ resource "kubectl_manifest" "git_cli_task" {
 resource "kubectl_manifest" "git_clone_task" {
   override_namespace = kubernetes_namespace.cicd.metadata.0.name
   yaml_body          = data.http.git_clone_task.response_body
+}
+
+resource "kubectl_manifest" "kaniko_task" {
+  override_namespace = kubernetes_namespace.cicd.metadata.0.name
+  yaml_body          = data.http.kaniko_task.response_body
 }
 
 resource "random_uuid" "ci_pipeline_run_uuid" {}
@@ -139,6 +148,9 @@ spec:
     - name: namespace
       description: The namespace to create the resources
       default: ${kubernetes_namespace.cicd.metadata.0.name}
+    - name: imagereference
+      description: The image reference to use
+      default: localhost:5001/insurance-prediction
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
@@ -155,6 +167,8 @@ spec:
         params:
         - name: repo-url
           value: $(tt.params.gitrepositoryurl)
+        - name: image-reference
+          value: $(tt.params.imagereference)
         workspaces:
         - name: shared-data
           volumeClaimTemplate:

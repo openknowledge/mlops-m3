@@ -10,6 +10,8 @@ spec:
     - name: repo-url
       type: string
       description: The git repo URL to clone from.
+    - name: image-reference
+      type: string
   workspaces:
     - name: shared-data
       description: |
@@ -30,10 +32,18 @@ spec:
       params:
         - name: url
           value: $(params.repo-url)
-    - name: show-readme
+    - name: build-app
       runAfter: ["fetch-source"]
-      taskRef:
-        name: show-readme
       workspaces:
         - name: source
           workspace: shared-data
+      taskRef:
+        name: kaniko
+      params:
+        - name: IMAGE
+          value: $(params.image-reference)
+        - name: EXTRA_ARGS
+          value:
+          - "--insecure"
+          - "--insecure-pull"
+          - "--insecure-registry=registry-service.infrastructure:5000"

@@ -65,6 +65,13 @@ resource "kind_cluster" "m3-demo-cluster" {
         host_port      = 30085
         protocol       = "TCP"
       }
+
+      # Extra port mappings for Docker Registry
+      extra_port_mappings {
+        container_port = 30050
+        host_port      = 30050
+        protocol       = "TCP"
+      }
     }
   }
 }

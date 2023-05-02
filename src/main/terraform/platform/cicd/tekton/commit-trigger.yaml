@@ -11,6 +11,8 @@ spec:
       value: cicd
     - name: gitrepositoryurl
       value: "http://gitea-http.infrastructure:3000/$(body.repository.full_name)"
+    - name: imagereference
+      value: "registry-service.infrastructure:5000/insurance-prediction:$(body.head_commit.id)"
 ---
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: EventListener
