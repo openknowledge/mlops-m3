@@ -55,7 +55,7 @@ spec:
             git checkout origin/main
             cp -r $(workspaces.input.path)/. .
             git add .
-            git commit -m "chore(ml-app): automated initial commit by tekton during task run"
+            git commit -m "chore: automated initial commit by tekton during task run"
             git push origin HEAD:main
     - name: show-readme
       runAfter: ["push-app"]

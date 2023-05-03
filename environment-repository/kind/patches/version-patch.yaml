@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: insurance-prediction-deployment
+  labels:
+    app: insurance-prediction
+spec:
+  template:
+    spec:
+      containers:
+        - name: insurance-prediction
+          image: localhost:30050/insurance-prediction:ed848ece3640338e48caa8ec5728c6e155158796
+          ports:
+            - containerPort: 80

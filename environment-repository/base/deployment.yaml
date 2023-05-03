@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: insurance-prediction-deployment
+  labels:
+    app: insurance-prediction
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: insurance-prediction
+  template:
+    metadata:
+      labels:
+        app: insurance-prediction
+    spec:
+      containers:
+        - name: insurance-prediction
+          image: insurance-prediction:latest
+          ports:
+            - containerPort: 80

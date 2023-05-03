@@ -1,19 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minimal-ingress
-  namespace: blah
+  name: insurance-prediction-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx-example
+  ingressClassName: nginx
   rules:
-    - http:
+    - host: insurance-prediction.localhost
+      http:
         paths:
-          - path: /testpath
+          - path: /
             pathType: Prefix
             backend:
               service:
-                name: test
+                name: insurance-prediction-service
                 port:
                   number: 80

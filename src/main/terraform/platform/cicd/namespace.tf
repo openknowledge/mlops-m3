@@ -16,7 +16,7 @@ resource "kubernetes_namespace" "cicd" {
 resource "kubernetes_limit_range" "limit_range_for_tekton" {
   metadata {
     name = "tekton-limit-range"
-    namespace = "cicd"
+    namespace = kubernetes_namespace.cicd.metadata.0.name
   }
   spec {
     limit {

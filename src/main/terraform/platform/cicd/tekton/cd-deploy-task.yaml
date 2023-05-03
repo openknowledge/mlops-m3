@@ -7,15 +7,12 @@ spec:
     - name: git-source
       description: The git repo
   params:
-    - name: pathToYamlFile
-      description: The path to the yaml file to deploy within the git source
-    - name: imageUrl
-      description: Image name including repository
-    - name: imageTag
-      description: Image tag
-      default: "latest"
-    - name: imageDigest
-      description: Digest of the image to be used.
+    - name: path-to-patch-file
+      description: The path to the yaml patch file
+    - name: image-reference
+      type: string
+    - name: stage
+      description: Stage of the
   steps:
     - name: update-yaml
       image: alpine
@@ -23,14 +20,12 @@ spec:
       args:
         - "-i"
         - "-e"
-        - "s;__IMAGE__;$(params.imageUrl):$(params.imageTag);g"
-        - "-e"
-        - "s;__DIGEST__;$(params.imageDigest);g"
-        - "$(workspaces.git-source.path)/$(params.pathToYamlFile)"
+        - "s;{{IMAGE_REF}};$(params.image-reference);g"
+        - "$(workspaces.git-source.path)/$(params.stage)/$(params.path-to-patch-file)"
     - name: run-kubectl
       image: lachlanevenson/k8s-kubectl
       command: ["kubectl"]
       args:
         - "apply"
-        - "-f"
-        - "$(workspaces.git-source.path)/$(params.pathToYamlFile)"
+        - "-k"
+        - "$(workspaces.git-source.path)/$(params.stage)/"

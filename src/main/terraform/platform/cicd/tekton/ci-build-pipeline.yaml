@@ -10,7 +10,15 @@ spec:
     - name: repo-url
       type: string
       description: The git repo URL to clone from.
+    - name: env-repo-url
+      type: string
+      description: The git repo URL to clone from.
     - name: image-reference
+      type: string
+    - name: stage
+      type: string
+      description: Stage that will be deployed to
+    - name: path-to-patch-file
       type: string
   workspaces:
     - name: shared-data
@@ -50,9 +58,8 @@ spec:
           value:
           - "--insecure"
           - "--insecure-pull"
-          - "--insecure-registry=registry-service.infrastructure:5000"
+          - "--insecure-registry=registry-service.blah:5000"
     - name: fetch-env-source
-      runAfter: ["build-app"]
       taskRef:
         name: git-clone
       workspaces:
@@ -62,17 +69,18 @@ spec:
           workspace: basic-auth
       params:
         - name: url
-          value: "http://gitea-http.infrastructure:3000/$(params.env-repo-url)"
-    - name: deploy-to-cluster
+          value: "$(params.env-repo-url)"
+    - name: kustomize-deployment
+      runAfter: ["fetch-env-source", "build-app"]
       taskRef:
         name: cd-deploy-task
       workspaces:
         - name: git-source
           workspace: env-repo
       params:
-        - name: pathToYamlFile
-          value: $(params.pathToYamlFile)
+        - name: path-to-patch-file
+          value: $(params.path-to-patch-file)
         - name: image-reference
-          type: string
-        - name: imageDigest
-          value: $(tasks.build-app.results.IMAGE-DIGEST)
+          value: $(params.image-reference)
+        - name: stage
+          value: $(params.stage)
