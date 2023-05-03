@@ -40,13 +40,6 @@ in the KinD Cluster. So you can also use the following URLs to access the servic
     For Tekton Dashboard: http://localhost:30097
     For the Evidently Demo Service: http://localhost:30085
 ```
-### HINT!
-
-Currently the Terraform Execution expects an evidently to exist in the local docker registry.
-So please make sure to create it before executing the following commands.
-!TODO This will be resolved as soon as we have the ML Application in this Repo.
-
-You don't need to load the image to kind on your own - Terraform is doing it for you!
 
 ### Creating a Cluster and its Infrastructure
 
@@ -66,12 +59,4 @@ Now we can apply the rest of the stack with terraform on to our created kind clu
     > cd ../platform
     platform > terraform init
     platform > terraform apply
-```
-
-###
-
-As long as the evidently image is not built automatically by terraform execute this.
-- Assuming the image is locally present and called evidently with latest tag
-```
-    kind load docker-image evidently
 ```
