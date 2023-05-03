@@ -23,7 +23,7 @@ resource "kubernetes_limit_range" "limit_range_for_tekton" {
       type = "Container"
       min = {
         cpu    = "100m"
-        memory = "6Gi"
+        memory = "1Gi"
       }
       max = {
         cpu    = "2000m"
@@ -31,11 +31,11 @@ resource "kubernetes_limit_range" "limit_range_for_tekton" {
       }
       default = {
         cpu    = "700m"
-        memory = "6Gi"
+        memory = "1Gi"
       }
       default_request = {
         cpu    = "700m"
-        memory = "6Gi"
+        memory = "1Gi"
       }
     }
   }

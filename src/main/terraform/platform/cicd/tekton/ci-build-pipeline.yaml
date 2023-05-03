@@ -20,6 +20,10 @@ spec:
     - name: basic-auth
       description: |
         This workspace contains the basic-auth for gitea
+    - name: env-repo
+      description: |
+        This workspace contains the env repo files, so they can be read by the
+        next task.
   tasks:
     - name: fetch-source
       taskRef:
@@ -47,3 +51,28 @@ spec:
           - "--insecure"
           - "--insecure-pull"
           - "--insecure-registry=registry-service.infrastructure:5000"
+    - name: fetch-env-source
+      runAfter: ["build-app"]
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: env-repo
+        - name: basic-auth
+          workspace: basic-auth
+      params:
+        - name: url
+          value: "http://gitea-http.infrastructure:3000/$(params.env-repo-url)"
+    - name: deploy-to-cluster
+      taskRef:
+        name: cd-deploy-task
+      workspaces:
+        - name: git-source
+          workspace: env-repo
+      params:
+        - name: pathToYamlFile
+          value: $(params.pathToYamlFile)
+        - name: image-reference
+          type: string
+        - name: imageDigest
+          value: $(tasks.build-app.results.IMAGE-DIGEST)
