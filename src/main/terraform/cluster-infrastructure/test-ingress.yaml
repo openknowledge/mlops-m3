@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: minimal-ingress
-  namespace: blah
+  namespace: infrastructure
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:

@@ -58,7 +58,7 @@ spec:
           value:
           - "--insecure"
           - "--insecure-pull"
-          - "--insecure-registry=registry-service.blah:5000"
+          - "--insecure-registry=registry-service.infrastructure:5000"
     - name: fetch-env-source
       taskRef:
         name: git-clone

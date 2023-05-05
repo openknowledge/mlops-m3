@@ -3,7 +3,7 @@ resource "kubernetes_namespace" "infrastructure" {
     annotations = {
       name = "infrastructure-namespace"
     }
-    name = "blah"
+    name = "infrastructure"
   }
 
   lifecycle {

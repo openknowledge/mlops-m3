@@ -76,7 +76,7 @@ spec:
       claimName: ${kubernetes_persistent_volume_claim.m3-demo-files.metadata.0.name}
   params:
   - name: repo-url
-    value: http://gitea-http.blah:3000/ok-user/ok-gitea-repository.git
+    value: http://gitea-http.infrastructure:3000/ok-user/ok-gitea-repository.git
 YAML
 }
 
@@ -112,7 +112,7 @@ spec:
       claimName: ${kubernetes_persistent_volume_claim.m3-env-files.metadata.0.name}
   params:
   - name: repo-url
-    value: http://gitea-http.blah:3000/ok-user/environment-repository.git
+    value: http://gitea-http.infrastructure:3000/ok-user/environment-repository.git
 YAML
 }
 
@@ -124,10 +124,10 @@ resource "kubernetes_secret" "git_credentials" {
 
   data = {
     ".gitconfig"       = <<EOT
-[credential "http://gitea-http.blah:3000"]
+[credential "http://gitea-http.infrastructure:3000"]
   helper = store
 EOT
-    ".git-credentials" = "http://${gitea_user.ok-user.username}:${gitea_user.ok-user.password}@gitea-http.blah:3000"
+    ".git-credentials" = "http://${gitea_user.ok-user.username}:${gitea_user.ok-user.password}@gitea-http.infrastructure:3000"
   }
 
   type = "Opaque"
