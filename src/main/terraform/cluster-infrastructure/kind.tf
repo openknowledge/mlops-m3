@@ -7,6 +7,13 @@ resource "kind_cluster" "m3-demo-cluster" {
     kind        = "Cluster"
     api_version = "kind.x-k8s.io/v1alpha4"
 
+    containerd_config_patches = [
+      <<-EOT
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:30050"]
+          endpoint = ["http://registry-service:5000"]
+      EOT
+    ]
+
     node {
       role = "control-plane"
 

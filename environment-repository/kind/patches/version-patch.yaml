@@ -9,6 +9,6 @@ spec:
     spec:
       containers:
         - name: insurance-prediction
-          image: localhost:30050/insurance-prediction:ed848ece3640338e48caa8ec5728c6e155158796
+          image: {{IMAGE_REF}}
           ports:
             - containerPort: 80

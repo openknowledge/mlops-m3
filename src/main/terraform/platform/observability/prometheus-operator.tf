@@ -56,3 +56,17 @@ resource "kubernetes_service" "pushgateway-service" {
     }
   }
 }
+
+resource "kubernetes_config_map_v1" "evidently_dashboard" {
+    metadata {
+        name      = "evidently-dashboard"
+        namespace = kubernetes_namespace.observability.metadata.0.name
+      labels = {
+        grafana_dashboard: 1
+      }
+    }
+
+    data = {
+      "evidently-dashboard.json" = file("${path.module}/dashboards/evidently-dashboard.json")
+    }
+}
