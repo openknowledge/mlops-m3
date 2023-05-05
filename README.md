@@ -20,7 +20,6 @@ Add some routes like this to your /etc/hosts so that you don't have to bother wi
     127.0.0.1       prometheus.localhost
     127.0.0.1       grafana.localhost
     127.0.0.1       gitea.local
-    127.0.0.1       evidently.localhost
     127.0.0.1       tekton.localhost
 ```
 
@@ -38,7 +37,6 @@ in the KinD Cluster. So you can also use the following URLs to access the servic
     For Gitea: http://localhost:30030
     For Grafana http://localhost:30031
     For Tekton Dashboard: http://localhost:30097
-    For the Evidently Demo Service: http://localhost:30085
 ```
 
 ### Creating a Cluster and its Infrastructure
