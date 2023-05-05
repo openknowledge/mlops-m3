@@ -3,7 +3,22 @@ resource "kubernetes_namespace" "infrastructure" {
     annotations = {
       name = "infrastructure-namespace"
     }
-    name = "infrastructure"
+    name = "blah"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["operator.tekton.dev/prune.hash"]
+    ]
+  }
+}
+
+resource "kubernetes_namespace" "production" {
+  metadata {
+    annotations = {
+      name = "production-namespace"
+    }
+    name = "production"
   }
 
   lifecycle {

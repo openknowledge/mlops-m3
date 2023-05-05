@@ -1,0 +1,3 @@
+{
+  "insecure-registries": ["http://registry-service.blah:5000", "localhost:30050"]
+}

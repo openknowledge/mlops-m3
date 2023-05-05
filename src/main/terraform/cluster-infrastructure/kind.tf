@@ -15,8 +15,23 @@ resource "kind_cluster" "m3-demo-cluster" {
           container_path = "/m3-demo"
       }
 
+      extra_mounts {
+        host_path      = var.env-repo-path
+        container_path = "/m3-env"
+      }
+
+      extra_mounts {
+        host_path      = "./docker-daemon.json"
+        container_path = "/etc/docker/daemon.json"
+      }
+
       kubeadm_config_patches = [
-        "kind: InitConfiguration\nnodeRegistration:\n  kubeletExtraArgs:\n    node-labels: \"ingress-ready=true\"\n"
+        <<-EOT
+          kind: InitConfiguration
+          nodeRegistration:
+            kubeletExtraArgs:
+              node-labels: "ingress-ready=true"
+        EOT
       ]
 
       extra_port_mappings {
@@ -72,6 +87,13 @@ resource "kind_cluster" "m3-demo-cluster" {
         host_port      = 30050
         protocol       = "TCP"
       }
+
+      # Extra port mappings for Insurance Prediction App
+      extra_port_mappings {
+        container_port = 30080
+        host_port      = 30080
+        protocol       = "TCP"
+      }
     }
   }
 }
@@ -80,6 +102,9 @@ variable "repository-path" {
   default = "../../../../insurance-prediction"
 }
 
+variable "env-repo-path" {
+  default = "../../../../environment-repository"
+}
 
 output "m3-demo-cluster" {
   value = {

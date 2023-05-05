@@ -1,0 +1,31 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: cd-deploy-task
+spec:
+  workspaces:
+    - name: git-source
+      description: The git repo
+  params:
+    - name: path-to-patch-file
+      description: The path to the yaml patch file
+    - name: image-reference
+      type: string
+    - name: stage
+      description: Stage of the
+  steps:
+    - name: update-yaml
+      image: alpine
+      command: ["sed"]
+      args:
+        - "-i"
+        - "-e"
+        - "s;{{IMAGE_REF}};$(params.image-reference);g"
+        - "$(workspaces.git-source.path)/$(params.stage)/$(params.path-to-patch-file)"
+    - name: run-kubectl
+      image: lachlanevenson/k8s-kubectl
+      command: ["kubectl"]
+      args:
+        - "apply"
+        - "-k"
+        - "$(workspaces.git-source.path)/$(params.stage)/"

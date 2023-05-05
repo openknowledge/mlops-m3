@@ -14,6 +14,14 @@ resource "gitea_repository" "ok-gitea-repository" {
   license      = "MIT"
 }
 
+resource "gitea_repository" "environment-repository" {
+  username     = gitea_user.ok-user.username
+  name         = "environment-repository"
+  private      = false
+  issue_labels = "Default"
+  license      = "MIT"
+}
+
 locals {
   basic_auth = base64encode("${gitea_user.ok-user.username}:${gitea_user.ok-user.password}")
 }
