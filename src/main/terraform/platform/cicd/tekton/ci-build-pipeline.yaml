@@ -53,7 +53,7 @@ spec:
         name: kaniko
       params:
         - name: IMAGE
-          value: $(params.image-reference)
+          value: registry-service.infrastructure:5000/$(params.image-reference)
         - name: EXTRA_ARGS
           value:
           - "--insecure"
@@ -81,6 +81,6 @@ spec:
         - name: path-to-patch-file
           value: $(params.path-to-patch-file)
         - name: image-reference
-          value: $(params.image-reference)
+          value: localhost:30050/$(params.image-reference)
         - name: stage
           value: $(params.stage)

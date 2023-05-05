@@ -53,3 +53,28 @@ resource "kubernetes_service" "registry" {
     }
   }
 }
+
+resource "kubernetes_ingress_v1" "registry" {
+  metadata {
+    name      = "registry-ingress"
+    namespace = kubernetes_namespace.infrastructure.metadata.0.name
+  }
+
+  spec {
+    rule {
+      host = "docker.localhost"
+      http {
+        path {
+          backend {
+            service {
+              name = kubernetes_service.registry.metadata.0.name
+              port {
+                number = kubernetes_service.registry.spec.0.port.0.port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
