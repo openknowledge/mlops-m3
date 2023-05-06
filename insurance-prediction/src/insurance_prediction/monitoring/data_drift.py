@@ -2,6 +2,11 @@ import os
 from evidently.metrics import DatasetDriftMetric
 from evidently.base_metric import InputData, ColumnMapping
 from evidently.runner.loader import DataLoader, DataOptions
+from evidently.calculations.data_drift import get_drift_for_columns
+from evidently.options import DataDriftOptions
+from evidently.utils.data_operations import process_columns
+from evidently.metric_results import DatasetColumns
+
 from collections import deque
 from typing import Any, Callable, Dict, MutableMapping, MutableSequence, Sequence
 
@@ -27,11 +32,19 @@ column_mapping = ColumnMapping(
     prediction=None,
     target=None,
 )
+columns = column_mapping.categorical_features + column_mapping.numerical_features
 
-dataset_drift_metric = DatasetDriftMetric(columns=column_mapping.categorical_features + column_mapping.numerical_features)
+dataset_drift_metric = DatasetDriftMetric(columns=columns)
+drift_share = 0.5
 
 window: MutableSequence[RiskPredictionInput] = deque(maxlen=int(window_size))
 gauges: MutableMapping[str, Gauge] = dict()
+
+number_of_columns_gauge = Gauge('number_of_columns', '', registry=collector_registry)
+number_of_drifted_columns_gauge = Gauge('number_of_drifted_columns', '', registry=collector_registry)
+share_of_drifted_columns_gauge = Gauge('share_of_drifted_columns', '', registry=collector_registry)
+dataset_drift_gauge = Gauge('dataset_drift', '', registry=collector_registry)
+drift_score_by_columns_gauge = Gauge('drift_score_by_columns', '', ['feature'], registry=collector_registry)
 
 def _to_dataframe(current_data: Sequence[RiskPredictionInput]) -> pd.DataFrame:
     def _to_dict(risk_input: RiskPredictionInput) -> Dict[str, Any]:
@@ -47,6 +60,7 @@ def _to_dataframe(current_data: Sequence[RiskPredictionInput]) -> pd.DataFrame:
     current_data = list(map(_to_dict, current_data))
     return pd.DataFrame.from_records(current_data)
 
+
 def risk_prediction(fun: Callable[[RiskPredictionInput], Prediction]) -> Callable[[RiskPredictionInput], Prediction]:
     def _wrapper(prediction_input: RiskPredictionInput) -> Prediction:
         prediction = fun(prediction_input)
@@ -61,10 +75,25 @@ def risk_prediction(fun: Callable[[RiskPredictionInput], Prediction]) -> Callabl
                 reference_additional_features=None
             )
             window.clear()
-            result = dataset_drift_metric.calculate(input_data)
-            for label, metric_value in result.dict().items():
-                if label not in gauges:
-                    gauges[label] = Gauge(label, '', registry=collector_registry)
-                gauges[label].set(metric_value)
+
+            dataset_columns = process_columns(input_data.reference_data, input_data.column_mapping)
+            result = get_drift_for_columns(
+                current_data=input_data.current_data,
+                reference_data=input_data.reference_data,
+                data_drift_options=DataDriftOptions(),
+                drift_share_threshold=drift_share,
+                dataset_columns=dataset_columns,
+                columns=column_mapping.categorical_features + column_mapping.numerical_features,
+            )
+
+            number_of_columns_gauge.set(result.number_of_columns)
+            number_of_drifted_columns_gauge.set(result.number_of_drifted_columns)
+            share_of_drifted_columns_gauge.set(result.share_of_drifted_columns)
+            dataset_drift_gauge.set(result.dataset_drift)
+
+            for column in columns:
+                drift = result.drift_by_columns[column]
+                drift_score_by_columns_gauge.labels(feature = column).set(drift.drift_score,)
+
         return prediction
     return _wrapper

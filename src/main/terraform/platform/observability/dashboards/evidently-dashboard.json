@@ -24,6 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -48,7 +49,7 @@
         "content": "# Evidently Data Drift Monitoring\n\n  Here can be your information about dashboard and its usage.\n",
         "mode": "markdown"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.4.7",
       "targets": [
         {
           "datasource": {
@@ -322,7 +323,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.4.7",
       "targets": [
         {
           "datasource": {
@@ -394,7 +395,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "9.4.7",
       "targets": [
         {
           "datasource": {
@@ -445,7 +446,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "F3N4YrEVk"
       },
       "fieldConfig": {
         "defaults": {
@@ -492,10 +493,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -521,11 +518,11 @@
               },
               {
                 "id": "custom.lineWidth",
-                "value": 8
+                "value": 2
               },
               {
                 "id": "custom.axisPlacement",
-                "value": "hidden"
+                "value": "auto"
               }
             ]
           }
@@ -554,33 +551,25 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "F3N4YrEVk"
           },
-          "exemplar": true,
-          "expr": "evidently:data_drift:p_value{dataset_name=\"${dataset_name:raw}\"}",
-          "interval": "",
-          "legendFormat": "{{feature}}",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "exemplar": true,
-          "expr": "evidently:reference_dataset_hash",
+          "editorMode": "builder",
+          "exemplar": false,
+          "expr": "drift_score_by_columns",
+          "format": "time_series",
           "hide": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "reference_hash",
+          "instant": false,
+          "legendFormat": "{{feature}}",
+          "range": true,
           "refId": "B"
         }
       ],
-      "title": "P-value of features",
+      "title": "Drift scores",
       "type": "timeseries"
     }
   ],
   "refresh": "10s",
+  "revision": 1,
   "schemaVersion": 38,
   "style": "dark",
   "tags": [],
@@ -592,6 +581,10 @@
           "selected": false,
           "text": "None",
           "value": ""
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "F3N4YrEVk"
         },
         "definition": "label_values(dataset_name)",
         "hide": 0,
@@ -619,6 +612,6 @@
   "timezone": "",
   "title": "Evidently Data Drift Dashboard",
   "uid": "U54hsxv7k",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }
