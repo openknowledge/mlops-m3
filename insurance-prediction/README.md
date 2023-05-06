@@ -24,3 +24,9 @@ poetry run train --dataset ./datasets/insurance_prediction/ --model ./model.h5
 ```
 poetry run validate --dataset ./datasets/insurance_prediction/ --model ./model.h5
 ```
+
+## Simluate requests in production for k8s cluster
+
+```
+poetry run simulate-drift --dataset ./datasets/insurance_prediction/ --base_url http://localhost:30080/
+```

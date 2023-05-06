@@ -66,7 +66,7 @@
 	  1. wir simulieren 3 Jahre Betrieb mit
          1. Leute werden immer Älter, das passiert aber langsam (age)
 	     1. Es wird immer weniger Auto gefahren, Leute steigen um auf die Bahn und öffentliche Verkehrsmittel (miles)
-	     1. Die Sicherheit der Autos wird immer besser und der Einfluss der individuellen Fahrleistung wird verringert (emergency_braking, pred) 
-   1. `(mlops-m3) olli@Surface8:~/mlops-m3/insurance-prediction$ poetry run simulate-drift --dataset ./datasets/insurance_prediction/ --base_url http://localhost:30080/` 
+	     1. Die Sicherheit der Autos wird immer besser und der Einfluss der individuellen Fahrleistung wird verringert (emergency_braking, pred)  
+   1. `./scripts/curl-drift.sh localhost:30080`
    1. `http://localhost:30080/metrics/`
    1. `http://localhost:30031/d/U54hsxv7k/evidently-data-drift-dashboard?orgId=1&refresh=5s`
