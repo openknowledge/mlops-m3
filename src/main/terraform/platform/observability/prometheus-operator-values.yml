@@ -27,6 +27,7 @@ prometheus:
             labels:
               pushgateway_instance: pushgateway
       - job_name: 'insurance-prediction'
+        scrape_interval: 5s
         honor_labels: true
         static_configs:
           - targets: [ 'insurance-prediction-service.production:80' ]
