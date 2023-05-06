@@ -83,11 +83,13 @@ def main() -> None:
     print(f'Counts {counts} are within {tolerance} of {expected_count}')
 
     # Certainty distribution
-    print('Checking certainty distribution of outputs')
+    min = .4
+    mean = 0.7
+    max = 0.99
+    print(f'Checking certainty distribution of outputs is within expected bounds min: {min}, mean: {mean}, max: {max}')
     y_pred_probas = model.predict(X, verbose=0).max(axis=1)
     print(
         f'Min: {y_pred_probas.min()}, mean: {y_pred_probas.mean()}, max: {y_pred_probas.max()}')
-    assert y_pred_probas.min() > .4
-    assert y_pred_probas.mean() > 0.7
-    assert y_pred_probas.max() > 0.99
-    print('Certainty distribution of outputs is within expected bounds')
+    assert y_pred_probas.min() > min
+    assert y_pred_probas.mean() > mean
+    assert y_pred_probas.max() > max

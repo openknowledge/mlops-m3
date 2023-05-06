@@ -7,13 +7,13 @@
 
 ## Docker
 * Start docker
-* cd into the insurance_prediction folder
+* cd into the insurance-prediction folder
 * `docker build -t insurance_prediction -f Dockerfile .`
 
 ## Running the interactive docker image
 * Start docker
-* cd into the insurance_prediction folder
-* `docker build -t insurance_prediction_interactive -f interactive.Dockerfile . `
+* cd into the insurance-prediction folder
+* `docker build -t insurance_prediction_interactive -f interactive.Dockerfile .`
 * `docker run -v "$(pwd)/output:/output" --rm -it insurance_prediction_interactive`
 
 ## First setup

@@ -12,18 +12,18 @@
 
 1. Intro Docker
 1. Notebook in Libs und Scripte
-1. Docker Container starten
-   1. `cd insurance-prediction`
-   1. `docker build -t insurance-prediction .`
-   1. Gucken welcher Port frei ist und den beim Mapping nach außen nutzen
-   1. `docker run -d -p 8080:80 insurance-prediction`
+1. `cd insurance-prediction`
 1. Build: Scripte im Docker Container laufen lassen
-   1. TODO: wie machen die ein Terminal auf?
-   1. TODO: wie starten wir das im Container?
+   1. Dev Server laufen lassen wie im Readme beschrieben
+   1. Training und Validation laufen lassen
    1. Validation diskutieren
       * was haben wir eingebaut
       * wie sinnvoll ist das, was kann man noch machen?
       * was für eine Art Test ist das?
+1. API server starten
+   1. `docker build -t insurance-prediction .`
+   1. Gucken welcher Port frei ist und den beim Mapping nach außen nutzen
+   1. `docker run -d -p 8080:80 insurance-prediction`
 1. Server ausprobieren
    1. `http://localhost:8080/`
    1. Für eigene Werte ausprobieren
