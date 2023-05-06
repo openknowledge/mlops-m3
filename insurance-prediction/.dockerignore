@@ -5,6 +5,7 @@ poetry.toml
 .*/
 
 model.h5
+/output
 
 *.Dockerfile
 .Dockerfile
