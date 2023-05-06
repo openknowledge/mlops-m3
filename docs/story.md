@@ -42,27 +42,31 @@
    - Selbst mit bestem Netz dauert das auf meinem Rechner 15 Minuten
    - Durchgehen, was da eigentlich alles passiert
    
-1. k9s
-   - Läuft da ein pod im production Namespace? Das ist unsere Anwendung
-
 1. Hier liegt unser Source-Code http://gitea.local/
    1. Login: ok-user / Password1234!
    1. http://gitea.local/ok-user/ok-gitea-repository/src/branch/main/src/insurance_prediction/train/train.py
    1. Hier die Kapazität herunter schrauben
    1. Hier müsste eine neue Pipeline anlaufen: http://tekton.localhost/#/namespaces/cicd/pipelineruns
+1. Service hier ausprobieren: http://localhost:30080/docs   
+1. k9s
+   - Läuft da ein pod im production Namespace? Das ist unsere Anwendung
+   - Platt machen und gucken, was passiert
+   - kommt man hier noch drauf: http://localhost:30080/docs
+
 
 ## Monitoring
-1. Evidently Metrics: http://localhost:8080/metrics/
+1. Evidently Metrics: http://localhost:30080/metrics/
 1. Prometheus Time Series: http://localhost:30090
-1. Grafana Dashboards: http://localhost:30031   
+1. Grafana Dashboards: http://localhost:30031
+   - login: admin/admin   
 1. Produktion simulieren
    1. Story:
-      1. die Performance des Modells degradiert
+     1. die Performance des Modells degradiert
 	  1. aber wir haben erst nach Jahren eine Ground Truth, die uns das anhand der Metrik zeigt
 	  1. wir simulieren 3 Jahre Betrieb mit
          1. Leute werden immer Älter, das passiert aber langsam (age)
 	     1. Es wird immer weniger Auto gefahren, Leute steigen um auf die Bahn und öffentliche Verkehrsmittel (miles)
 	     1. Die Sicherheit der Autos wird immer besser und der Einfluss der individuellen Fahrleistung wird verringert (emergency_braking, pred) 
-   1. `~/mlops-m3/insurance-prediction/scripts$ ./curl-drift.sh localhost:8080` 
-   1. `localhost:8080/metrics`
-   1. `http://localhost:3000/d/U54hsxv7k/evidently-data-drift-dashboard?orgId=1&refresh=5s`
+   1. `(mlops-m3) olli@Surface8:~/mlops-m3/insurance-prediction$ poetry run simulate-drift --dataset ./datasets/insurance_prediction/ --base_url http://localhost:30080/` 
+   1. `http://localhost:30080/metrics/`
+   1. `http://localhost:30031/d/U54hsxv7k/evidently-data-drift-dashboard?orgId=1&refresh=5s`
