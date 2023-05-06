@@ -5,6 +5,11 @@
  * [poetry](https://python-poetry.org/)
 
 
+## Docker
+* Start docker
+* cd into the insurance_prediction folder
+* `docker build -t insurance_prediction -f Dockerfile .`
+
 ## First setup
 
 ```

@@ -61,5 +61,6 @@ def main():
                         braking_distance=float(row['braking_distance'])
                     )
                 )
+                
                 http_client.post('/predict/mock', content=prediction_input.json())
             sleep(timeout)

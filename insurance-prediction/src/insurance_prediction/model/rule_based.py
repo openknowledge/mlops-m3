@@ -11,7 +11,7 @@ class _RulesBasedPredictor(InsurancePredictor):
         driver = prediction_input.driver
         vehicle = prediction_input.vehicle
 
-        if driver.training: 
+        if driver.training:
             return Risk.LOW
         if driver.age < 30:
             if vehicle.power > 130:
