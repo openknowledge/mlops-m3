@@ -5,7 +5,7 @@ from insurance_prediction.app.application.router import router as prediction_rou
 from insurance_prediction.monitoring import metrics_app
 
 
-app = FastAPI()
+app = FastAPI(docs_url='/')
 app.include_router(prediction_router)
 app.mount('/metrics', metrics_app)
 

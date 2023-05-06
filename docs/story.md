@@ -25,7 +25,7 @@
       * wie sinnvoll ist das, was kann man noch machen?
       * was für eine Art Test ist das?
 1. Server ausprobieren
-   1. `http://localhost:8080/docs`
+   1. `http://localhost:8080/`
    1. Für eigene Werte ausprobieren
    1. Was passiert bei komischen Werten
    1. Ensemble, ML als kompletter Service
@@ -47,11 +47,11 @@
    1. http://gitea.local/ok-user/ok-gitea-repository/src/branch/main/src/insurance_prediction/train/train.py
    1. Hier die Kapazität herunter schrauben
    1. Hier müsste eine neue Pipeline anlaufen: http://tekton.localhost/#/namespaces/cicd/pipelineruns
-1. Service hier ausprobieren: http://localhost:30080/docs   
+1. Service hier ausprobieren: http://localhost:30080/
 1. k9s
    - Läuft da ein pod im production Namespace? Das ist unsere Anwendung
    - Platt machen und gucken, was passiert
-   - kommt man hier noch drauf: http://localhost:30080/docs
+   - kommt man hier noch drauf: http://localhost:30080/
 
 
 ## Monitoring
