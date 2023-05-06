@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: demo-job
+spec:
+  template:
+    metadata:
+      name: demo-pod
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: demo-container
+          image: ghcr.io/habecker/insurance-prediction-drift-demo:latest
+          command: ["sh"]
+          args: ["/curl-drift.sh", "http://insurance-prediction-service.production"]

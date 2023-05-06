@@ -1,5 +1,5 @@
 FROM alpine
 
-COPY curl-drift.sh /curl-drift.sh
+RUN apk add curl
 
-ENTRYPOINT [ "/curl-drift.sh" ]
+COPY curl-drift.sh /curl-drift.sh
