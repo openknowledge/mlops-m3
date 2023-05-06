@@ -68,5 +68,10 @@
 	     1. Es wird immer weniger Auto gefahren, Leute steigen um auf die Bahn und öffentliche Verkehrsmittel (miles)
 	     1. Die Sicherheit der Autos wird immer besser und der Einfluss der individuellen Fahrleistung wird verringert (emergency_braking, pred)  
    1. `./scripts/curl-drift.sh localhost:30080`
+   1. oder ```
+cd drift_demo/
+kubectl delete -f job.yaml
+kubectl apply -f job.yaml
+   ```
    1. `http://localhost:30080/metrics/`
    1. `http://localhost:30031/d/U54hsxv7k/evidently-data-drift-dashboard?orgId=1&refresh=5s`
