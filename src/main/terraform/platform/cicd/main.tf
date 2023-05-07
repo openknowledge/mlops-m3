@@ -38,20 +38,17 @@ resource "kubectl_manifest" "cd_deploy_task" {
   yaml_body          = file("${path.module}/tekton/cd-deploy-task.yaml")
 }
 
-resource "random_uuid" "ci_pipeline_run_uuid" {}
-
-# to re-run the pipeline-run with the next apply, just use terraform apply -replace=module.cicd.kubectl_manifest.ci_pipeline_run
 resource "kubectl_manifest" "ci_pipeline_run" {
-  depends_on = [random_uuid.ci_pipeline_run_uuid,
-    gitea_repository.ok-gitea-repository,
+  depends_on = [
     kubectl_manifest.git_clone_task,
-    kubectl_manifest.cd_deploy_task]
+    kubectl_manifest.cd_deploy_task
+  ]
 
   yaml_body = <<YAML
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: clone-read-run-${random_uuid.ci_pipeline_run_uuid.result}
+  name: clone-read-run-initial
   namespace: cicd
 spec:
   pipelineRef:
@@ -76,12 +73,12 @@ spec:
       claimName: ${kubernetes_persistent_volume_claim.m3-demo-files.metadata.0.name}
   params:
   - name: repo-url
-    value: http://gitea-http.infrastructure:3000/ok-user/ok-gitea-repository.git
+    value: http://gitea-http.infrastructure:3000/${var.gitea_username}/${var.gitea_repository_name}.git
 YAML
 }
 
 resource "kubectl_manifest" "ci_pipeline_run_environment" {
-  depends_on = [gitea_repository.environment-repository, kubectl_manifest.git_clone_task, kubectl_manifest.ci_pipeline_run]
+  depends_on = [kubectl_manifest.git_clone_task, kubectl_manifest.ci_pipeline_run]
 
   yaml_body = <<YAML
 apiVersion: tekton.dev/v1beta1
@@ -112,14 +109,14 @@ spec:
       claimName: ${kubernetes_persistent_volume_claim.m3-env-files.metadata.0.name}
   params:
   - name: repo-url
-    value: http://gitea-http.infrastructure:3000/ok-user/environment-repository.git
+    value: http://gitea-http.infrastructure:3000/${var.gitea_username}/${var.gitea_env_repository_name}.git
 YAML
 }
 
 resource "kubernetes_secret" "git_credentials" {
   metadata {
     name      = "basic-auth"
-    namespace = "cicd"
+    namespace = kubernetes_namespace.cicd.metadata.0.name
   }
 
   data = {
@@ -127,14 +124,13 @@ resource "kubernetes_secret" "git_credentials" {
 [credential "http://gitea-http.infrastructure:3000"]
   helper = store
 EOT
-    ".git-credentials" = "http://${gitea_user.ok-user.username}:${gitea_user.ok-user.password}@gitea-http.infrastructure:3000"
+    ".git-credentials" = "http://${var.gitea_username}:${var.gitea_password}@gitea-http.infrastructure:3000"
   }
 
   type = "Opaque"
 }
 
 resource "kubectl_manifest" "ci_show_readme_task" {
-  depends_on = [gitea_repository.ok-gitea-repository]
   yaml_body  = file("${path.module}/tekton/show-readme-task.yaml")
 }
 
@@ -161,7 +157,7 @@ resource "kubernetes_persistent_volume" "m3-demo-files" {
 resource "kubernetes_persistent_volume_claim" "m3-demo-files" {
   metadata {
     name = "m3-demo-files-pvc"
-    namespace = "cicd"
+    namespace = kubernetes_namespace.cicd.metadata.0.name
   }
 
   spec {
@@ -198,7 +194,7 @@ resource "kubernetes_persistent_volume" "m3-env-files" {
 resource "kubernetes_persistent_volume_claim" "m3-env-files" {
   metadata {
     name = "m3-env-files-pvc"
-    namespace = "cicd"
+    namespace = kubernetes_namespace.cicd.metadata.0.name
   }
 
   spec {
@@ -286,11 +282,44 @@ spec:
 YAML
 }
 
-data "kubectl_file_documents" "commit_trigger" {
-  content = file("${path.module}/tekton/commit-trigger.yaml")
+resource "kubectl_manifest" "event_listener" {
+  yaml_body = <<YAML
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: ci-listener
+  namespace: cicd
+spec:
+  serviceAccountName: m3-sa
+  triggers:
+    - bindings:
+        - ref: ci-pipelinebinding
+      template:
+        ref: ci-triggertemplate
+
+YAML
 }
 
-resource "kubectl_manifest" "commit_trigger" {
-  for_each = data.kubectl_file_documents.commit_trigger.manifests
-  yaml_body = each.value
+resource "kubectl_manifest" "trigger_binding" {
+  yaml_body = <<YAML
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: ci-pipelinebinding
+  namespace: cicd
+spec:
+  params:
+    - name: gitrevision
+      value: $(body.head_commit.id)
+    - name: namespace
+      value: cicd
+    - name: gitrepositoryurl
+      value: "http://gitea-http.infrastructure:3000/$(body.repository.full_name)"
+    - name: envgitrepositoryurl
+      value: "http://gitea-http.infrastructure:3000/ok-user/environment-repository.git"
+    - name: imagereference
+      value: "insurance-prediction:$(body.head_commit.id)"
+    - name: path-to-patch-file
+      value: "patches/version-patch.yaml"
+YAML
 }

@@ -1,3 +1,18 @@
+resource "kubernetes_namespace" "observability" {
+  metadata {
+    annotations = {
+      name = "observability-namespace"
+    }
+    name = "observability"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["operator.tekton.dev/prune.hash"]
+    ]
+  }
+}
+
 resource "helm_release" "prometheus-operator" {
   name             = "prometheus-operator-controller"
   namespace        = kubernetes_namespace.observability.metadata.0.name
@@ -12,7 +27,7 @@ resource "helm_release" "prometheus-operator" {
   }
 
   values = [
-    "${file("observability/prometheus-operator-values.yml")}"
+    file("${path.module}/prometheus-operator-values.yml")
   ]
 }
 

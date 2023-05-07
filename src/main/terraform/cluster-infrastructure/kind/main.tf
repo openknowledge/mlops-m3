@@ -1,4 +1,4 @@
-resource "kind_cluster" "m3-demo-cluster" {
+resource "kind_cluster" "m3_demo_cluster" {
   name           = "m3-demo-cluster"
   wait_for_ready = true
   kubeconfig_path = pathexpand("~/.kube/config")

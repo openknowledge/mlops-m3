@@ -48,6 +48,8 @@ module "docker_registry" {
   depends_on = [module.kind_cluster]
 
   source = "./docker-registry"
+
+  namespace = kubernetes_namespace.infrastructure.metadata.0.name
 }
 
 module "ingress-controller" {
@@ -68,5 +70,6 @@ module "tekton_operator" {
   depends_on = [module.kind_cluster, module.ingress-controller]
 
   source = "./tekton-operator"
+
   tekton_operator_release = data.kubectl_file_documents.tekton_operator_release.manifests
 }
