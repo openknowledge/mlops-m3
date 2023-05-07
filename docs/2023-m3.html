@@ -99,6 +99,7 @@ M3 2023, https://www.m3-konferenz.de/veranstaltung-20093-0-mlops--wie-bringt-man
 _Yannick Habecker, Tobias Kurzydym, Oliver Zeigermann_
 
 Folien: https://bit.ly/m3-2023-mlops
+https://openknowledge.github.io/mlops-m3/2023-m3.html
     </textarea>
 			</section>
 
@@ -191,6 +192,15 @@ Fragen:
 </a>
 
 https://www.embarc.de/architektur-spicker/11-container-anwendungen
+</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+### Glossar / eingesetzte Werkzeuge
+
+https://github.com/openknowledge/mlops-m3/blob/main/docs/glossar.md
+
 </textarea>
 </section>
 
@@ -1149,27 +1159,6 @@ Wenn die Welt sich ändert, ist Drift zu erwarten und damit ok
 </section>
  -->
 
- <section data-markdown class="fragments">
-	<textarea data-template>
-### Ausblick: Unsere Vorhersage selbst erzeugt Drift
-
-* Ein Deployment ändert das unsere Rolle von Beobachter zu Akteur
-* Wir versichern nur Leute mit einer guten Risiko Prognose
-  * Wenn nicht, warum sollten wir dann eine überhaupt eine Prognose machen?
-* Unsere GT wird mehr und mehr gute Fahrer haben
-  * Zumindest ist das unsere Hoffnung (sonst hätte die Prognose nicht geklappt)
-* Falls nicht (False Negative, Type II Fehler)
-  * haben Menschen gelernt, unser System auszutricksen?
-  * "Dann versichert eben meine Tochter den Wagen"
-* Haben wir gute Fahrer aus verstehen nicht versichert (False Positive, Type I Fehler)
-  * Möglichkeit: *epsilon-greedy* meistens der Vorhersage glauben, aber manchmal (epsilon) auch einen Fahrer mit schlechter Prognose versichern 
-  * Vorhersage mit allen Wahrscheinlichkeiten geht in unsere Datenbank ein
-
-https://twitter.com/ChristophMolnar/status/1569644089724764160
-</textarea>
-</section>
-
-
 <section data-markdown>
 	<textarea data-template>
 ## Agenda
@@ -1199,6 +1188,57 @@ https://twitter.com/ChristophMolnar/status/1569644089724764160
 <textarea data-template>
 ## Wir gehen alle Themen nochmal durch und Zeit für offene Fragen
 
+</textarea>
+</section>
+
+<section data-markdown>
+<textarea data-template>
+## Ausblick
+
+</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+### Kubeflow
+
+_"The Machine Learning Toolkit for Kubernetes"_
+* Notebooks, Training, Serving und Pipelines für ML
+* Ausgereiftheit, Stabilität und Aktualität der Dokumentation nach wie vor problematisch
+* Trial im Thoughtworks Radar seit April 2023
+* Könnte in Zukunft bei uns 
+  * vor allem Tekton aber auch 
+  * Training-Scripte und 
+  * Teile des Servings ersetzen
+
+https://www.kubeflow.org/
+<br>
+https://www.thoughtworks.com/de-de/radar/tools/kubeflow
+<br>
+https://www.datarevenue.com/de-blog/kubeflow-noch-nicht-bereit-fur-produktion
+
+
+</textarea>
+</section>
+
+
+<section data-markdown class="fragments">
+	<textarea data-template>
+### Unsere Vorhersage selbst erzeugt Drift
+
+* Ein Deployment ändert das unsere Rolle von Beobachter zu Akteur
+* Wir versichern nur Leute mit einer guten Risiko Prognose
+  * Wenn nicht, warum sollten wir dann eine überhaupt eine Prognose machen?
+* Unsere GT wird mehr und mehr gute Fahrer haben
+  * Zumindest ist das unsere Hoffnung (sonst hätte die Prognose nicht geklappt)
+* Falls nicht (False Negative, Type II Fehler)
+  * haben Menschen gelernt, unser System auszutricksen?
+  * "Dann versichert eben meine Tochter den Wagen"
+* Haben wir gute Fahrer aus verstehen nicht versichert (False Positive, Type I Fehler)
+  * Möglichkeit: *epsilon-greedy* meistens der Vorhersage glauben, aber manchmal (epsilon) auch einen Fahrer mit schlechter Prognose versichern 
+  * Vorhersage mit allen Wahrscheinlichkeiten geht in unsere Datenbank ein
+
+https://twitter.com/ChristophMolnar/status/1569644089724764160
 </textarea>
 </section>
 

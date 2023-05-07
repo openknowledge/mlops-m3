@@ -5,3 +5,4 @@
 1. Im Konferenz-Netz am Anfang so viele komplette Installationen machen wir möglich
    - Wie lange dauert das in dem Netz, zumindest wenn man allein ist
 1. Eigenes Netz mit Handy sinnvoll möglich?
+1. Was kommt noch ins Glossar?
