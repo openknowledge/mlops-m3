@@ -1,6 +1,3 @@
-# TODO: logging
-
-
 from dataclasses import dataclass
 
 import tensorflow as tf

@@ -5,7 +5,6 @@ from evidently.runner.loader import DataLoader, DataOptions
 from evidently.calculations.data_drift import get_drift_for_columns
 from evidently.options import DataDriftOptions
 from evidently.utils.data_operations import process_columns
-from evidently.metric_results import DatasetColumns
 
 from collections import deque
 from typing import Any, Callable, Dict, MutableMapping, MutableSequence, Sequence

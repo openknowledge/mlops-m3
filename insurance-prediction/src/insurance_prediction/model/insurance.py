@@ -52,6 +52,9 @@ class _InsuranceModel(InsurancePredictor):
         )
 
 def load_model(model_path: str = os.getenv('MODEL_PATH')) -> InsurancePredictor:
+    if model_path is None:
+        return None
+
     return _InsuranceModel(
-        model_path = os.getenv('MODEL_PATH')
+        model_path = model_path
     )

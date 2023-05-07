@@ -65,7 +65,7 @@ def main() -> None:
 
     # Output distributions
     print('Checking output distribution')
-    # TODO: train + test?
+
     X = dataset.train.concatenate(dataset.test).map(lambda x, y: x)
     y_pred = model.predict(X, verbose=0).argmax(axis=1)
     _, counts = np.unique(y_pred, return_counts=True)

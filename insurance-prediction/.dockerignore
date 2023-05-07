@@ -8,4 +8,4 @@ model.h5
 /output
 
 *.Dockerfile
-.Dockerfile
+Dockerfile

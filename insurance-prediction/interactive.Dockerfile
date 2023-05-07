@@ -11,6 +11,8 @@ RUN echo "echo ICAgX18gIF9fIF8gICAgIF9fXyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI
 RUN echo "echo '\n\nWelcome to the insurance-prediction example'" >> /info.sh
 RUN echo "echo 'You can run the training using\n\tpoetry run train --dataset ./datasets/insurance_prediction/ --model /output/model.h5'" >> /info.sh
 RUN echo "echo 'You can run the validation using\n\tpoetry run validate --dataset ./datasets/insurance_prediction/ --model /output/model.h5'" >> /info.sh
+RUN echo "echo 'You can run the tests using\n\tpytest -q'" >> /info.sh
+RUN echo "echo 'You can run the linting using\n\tpylint ./src ./tests'" >> /info.sh
 RUN echo "echo;echo" >> /info.sh
 RUN echo "echo 'Your current directory is $(pwd)'" >> /info.sh
 RUN echo "echo" >> /info.sh
@@ -26,6 +28,7 @@ RUN chmod +x /info.sh
 RUN echo 'alias info=/info.sh' > /root/.bashrc
 
 RUN echo '#!/bin/bash' > /entrypoint.sh
+RUN echo 'export REFERENCE_PATH=./datasets/insurance_prediction/reference.csv.gz' >> /entrypoint.sh
 RUN echo '/info.sh' >> /entrypoint.sh
 RUN echo bash >> /entrypoint.sh
 RUN chmod +x /entrypoint.sh
