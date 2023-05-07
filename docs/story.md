@@ -16,6 +16,8 @@
 1. Build: Scripte im Docker Container laufen lassen
    1. Dev Server laufen lassen wie im Readme beschrieben
    1. Training und Validation laufen lassen
+      * `poetry run train --dataset ./datasets/insurance_prediction/ --model /output/model.h5`
+      * `poetry run validate --dataset ./datasets/insurance_prediction/ --model /output/model.h5`
    1. Validation diskutieren
       * was haben wir eingebaut
       * wie sinnvoll ist das, was kann man noch machen?
@@ -32,33 +34,37 @@
 
 ## Produktion
 1. Was ist Kubernetes?
-1. TODO: die Installation wird bei 24 Leuten ewig dauern und wahrscheinlich gar nicht möglich sein
+1. TODO: die Installation wird bei 24 Leuten wahrscheinlich sehr langsam laufen
    - nur einer im Team macht es?
    - am Anfang vor 10 schon so viele Rechner flott machen wie möglich
 1. Cluster und Services wie in README.md beschrieben
+   - Nach erzeugen des Clusters einmal in docker desktop oder so ansehen
    - Das kann alles bisschen dauern, insbesondere wenn wir uns das Netz mit allen teilen
 
 1. Beendigung der Tekton Pipelines in http://tekton.localhost/#/pipelineruns abwarten
    - Selbst mit bestem Netz dauert das auf meinem Rechner 15 Minuten
    - Durchgehen, was da eigentlich alles passiert
+1. Service hier ausprobieren: http://localhost:30080/
+1. k9s
+   - Läuft da ein pod im production Namespace? Das ist unsere Anwendung
+   - Platt machen und gucken, was passiert
+   - kommt man hier noch auf den Service drauf?
    
 1. Hier liegt unser Source-Code http://gitea.local/
    1. Login: ok-user / Password1234!
    1. http://gitea.local/ok-user/ok-gitea-repository/src/branch/main/src/insurance_prediction/train/train.py
    1. Hier die Kapazität herunter schrauben
    1. Hier müsste eine neue Pipeline anlaufen: http://tekton.localhost/#/namespaces/cicd/pipelineruns
-1. Service hier ausprobieren: http://localhost:30080/
-1. k9s
-   - Läuft da ein pod im production Namespace? Das ist unsere Anwendung
-   - Platt machen und gucken, was passiert
-   - kommt man hier noch drauf: http://localhost:30080/
+   1. Die müsste fehlschlagen nach ca. der hälfte der Zeit, weil schon das validieren fehlschlagen müsste
+   1. Dann Kapazität zurück drehen
+   1. Das bauen des neuen Images wird erneut getriggert, das Ergebnis müssen wir aber nicht mehr abwarten
 
 
 ## Monitoring
 1. Evidently Metrics: http://localhost:30080/metrics/
 1. Prometheus Time Series: http://localhost:30090
 1. Grafana Dashboards: http://localhost:30031
-   - login: admin/admin   
+   - login: admin/admin
 1. Produktion simulieren
    1. Story:
      1. die Performance des Modells degradiert
@@ -75,3 +81,7 @@ kubectl apply -f job.yaml
    ```
    1. `http://localhost:30080/metrics/`
    1. `http://localhost:30031/d/U54hsxv7k/evidently-data-drift-dashboard?orgId=1&refresh=5s`
+1. Drift in der Reihenfolge, alle 3 nach ca. 5 Minuten gedriftet 
+   1. miles
+   1. emergency_braking 
+   1. age  
