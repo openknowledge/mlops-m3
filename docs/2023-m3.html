@@ -400,7 +400,6 @@ funktionsfähiges Modell entwickelt.
 * Stabilität, Funktionalität und Reproduzierbarkeit gewährleisten
 * Wie schaffen wir die Grundlage für die Inbetriebnahme
 * Ziel der Phase II:
-TODO: Passt nicht zum Diagramm?
   * Code und Modell mit dem man in Phase III (Betrieb) übergeht oder
   * dem Iterieren zurück in Phase I mit neu gewonnenen Erkenntnissen oder falls Rahmenbedingungen nicht erfüllt werden
 </section>
@@ -411,7 +410,7 @@ TODO: Passt nicht zum Diagramm?
 ### Mit Notebooks in Produktion?
 * Von Phase I zu Phase III abkürzen?
 * À la Voilá?
-* Performance, Security, Wartbarkeit, Versionierbarkeit, ...
+* Performance, Security, Wartbarkeit, Versionierbarkeit, ...?
   </textarea>
 </section>
 
@@ -468,6 +467,7 @@ voila notebook.ipynb
  * Hochverfügbarkeit, Performance, Skalierbarkeit
  * Reproduzierbarkeit der Ergebnisse
  * Wie bemerke ich, wenn sich die Daten verändern?
+ * UI/UX nicht sicherstellbar
  * Developer-Experience
 
 </textarea>
@@ -478,7 +478,7 @@ voila notebook.ipynb
   <textarea data-template>
 ### Mit Notebooks in Produktion? - Architektur?
 
-<img src="img/professionalization/notebook_architecture.svg" class="fragment">
+<img src="img/professionalization/notebook_architecture.png" class="fragment" style="height: 80vh;">
 
 </textarea>
 
@@ -487,11 +487,12 @@ voila notebook.ipynb
 
 <section data-markdown class="fragments">
   <textarea data-template>
-### Mit Notebooks in Produktion? - Zwischenfazit
+### Mit Notebooks in Produktion? - Fazit
 
  * Notebooks as it is sollten nicht in Produktion
  * Anbindung externer Systeme in den meisten Anwendungsfällen nötig
- * UI/UX nicht sicherstellbar
+ * Geringe Kompatibilität zu ML-Ops
+ * ...
 </textarea>
 
 </section>
@@ -555,7 +556,7 @@ https://www.docker.com/resources/what-container/
 </textarea>
 </section>
 
-<section data-markdown style="font-size: large;" class="todo hands-on">
+<section data-markdown class="hands-on">
 	<textarea data-template>
 ## Hands-On - Docker Installation überprüfen oder herstellen
 
@@ -574,16 +575,17 @@ Helft bitte euren Nachbarn, falls eure Installation schon läuft
 </textarea>
 </section>
 
-<section data-markdown style="font-size: large;" class="hands-on">
+<section data-markdown  class="hands-on">
 	<textarea data-template>
-## Hands-On IIb - Projekt vorbereiten
+## Hands-On - Projekt vorbereiten
 
 1. Projekt klonen
    * https://github.com/openknowledge/mlops-m3
    * `git clone git@github.com:openknowledge/mlops-m3.git`
-1. Docker images starten
+1. Docker images bauen
    * Im Projekt-Verzeichnis unter `insurance-prediction`:
      * `docker build -t insurance_prediction_interactive -f interactive.Dockerfile .`
+     * `docker build -t insurance-prediction .`
    * Das kann (gerade bei überlastetem Netz) lange dauern
    * Zwingend brauchen wir das Image erst in Hands-On IIc
 </textarea>
@@ -593,11 +595,11 @@ Helft bitte euren Nachbarn, falls eure Installation schon läuft
 <textarea data-template>
 ### Vom Notebook zum Projekt
 
-<img src="img/professionalization/notebook_architecture.svg" class="fragment">
+<img src="img/professionalization/notebook_architecture.png" class="fragment" style="height: 80vh;">
 
 </textarea>
 </section>
-
+<!--
 	<section data-markdown class="fragments">
 		<textarea data-template>
 ### Was gehört in Module/Bibliotheken und Skripte ausgelagert?
@@ -613,6 +615,7 @@ Helft bitte euren Nachbarn, falls eure Installation schon läuft
 * Manche (Teile von) Notebooks werden in Phase II zu Skripten, die eine dünne API um die Module sind
 </textarea>
 	</section>
+-->
 
 <section data-markdown>
   <textarea data-template>
@@ -636,11 +639,49 @@ Helft bitte euren Nachbarn, falls eure Installation schon läuft
 </textarea>
 </section>
 
-
-<section data-markdown class="fragments">
+<section data-markdown>
 <textarea data-template>
-### Hands-On IIc - Training und Validierung
+# Demo - Training und Validierung
+</textarea>
+</section>
+  
+<section data-markdown class="hands-on" id="hands-on-professionalisierung">
+	<textarea data-template>
+### Hands-On - Training und Validierung
 
+* Entwicklungsumgebung über Docker starten
+
+```sh
+cd insurance-prediction
+```
+
+```
+# Linux/Mac-Shell
+docker run -v "$(pwd)/output:/output" --rm -it insurance_prediction_interactive
+
+# Windows-Cmd
+docker run -v "%cd%/output:/output" --rm -it insurance_prediction_interactive
+
+# Powershell
+docker run -v "$(Get-Location)/output:/output" --rm -it insurance_prediction_interactive
+```
+
+*Aufgabe:* Was ist passiert, was ist zu sehen?
+
+</textarea>
+</section>
+
+
+<section data-markdown class="hands-on" id="hands-on-professionalisierung">
+	<textarea data-template>
+### Hands-On - Training und Validierung
+
+* Training und Validierung im interaktiven Container durchführen
+
+```
+poetry run train --dataset ./datasets/insurance_prediction --model /output/model.h5
+poetry run validate --dataset ./datasets/insurance_prediction/ --model /output/model.h5
+```
 </textarea>
 </section>
 
@@ -656,115 +697,48 @@ Helft bitte euren Nachbarn, falls eure Installation schon läuft
 </textarea>
 </section>
 
-<section data-markdown>
-	<textarea data-template>
-### Übersicht Container
-
-<img src="img/containers-desktop.png">
-
-Das sollte bei dir laufen
-</textarea>
-</section>
-
 <section data-markdown class="fragments">
 <textarea data-template>
-### Vom Modell in die Welt - API
+### Demo: Vom Modell in die Welt - API
 
 </textarea>
 </section>
 
 <section data-markdown class="fragments">
 <textarea data-template>
-### Hands-On IId - ML-Service
+### Hands-On - ML-Service
+
+```sh
+cd insurance-prediction
+
+docker run --rm -p 8080:80 insurance-prediction
+```
+
+*Aufgabe 1:* Was ist im dazugehörigen Dockerfile passiert? 
+
+*Aufgabe 2:* Rufe `http://localhost:8080/` im Browser auf
+
+*Aufgabe 3:* Führe dort eine Prediction durch
 
 </textarea>
 </section>
 
-<section data-markdown>
-	<textarea data-template>
-### Übersicht Container
-
-<img src="img/containers-desktop.png">
-
-Das sollte bei dir laufen
-</textarea>
-</section>
-
-<section data-markdown>
-		<textarea data-template>
-<img src='img/sketch/ml-dev-prozess.png' style="height: 650px;">
-</textarea>
-	</section>
-
-	<section data-markdown class="fragments">
-		<textarea data-template>
-### Was gehört in Bibliotheken ausgelagert?
-
-* Wir können nicht mit einem Notebook in Produktion gehen
-  * also muss alles was wir in Produktion brauchen aus den Notebooks herausgezogen werden
-* Bestimmte Teile eines Notebooks haben sich als stabil herausgestellt und sollten nicht bei jeder Kopie entkoppelt werden
-* Alles was sich nach Software anfühlt (Klassen, Funktionen, etc.) ist auch Software
-  * diese Teile sollten auch wie solche behandelt werden
-* Professionalisierung muss oft gut abhängen
-  * Es stellt sich erst langsam heraus, was in ein Modul gehört
-  * erste Version der extrahierten Module ist mit Sicherheit nicht endgültig
-</textarea>
-	</section>
-
-<section data-markdown>
-### Scripte
-
-* Manche Notebooks werden in Phase II zu Skripten, die eine dünne API um die Module sind.
-* Können auch in CI/CD eingebaut werden.
-
-</section>
-
-<section data-markdown class="hands-on">
-	<textarea data-template>
-## Hands-On IIa - wie wollen wir das Modell validieren?
-
-* bei automatisiertem Training können wir ein erfolgreiches Training nicht mehr manuell überwachen
-* wie könnten automatisierte Tests auf dem Modell aussehen?
-* Diskutiert mit euren Nachbarn und schreibt eure Vorschläge auf
-* Inspiration: https://storage.googleapis.com/pub-tools-public-publication-data/pdf/45742.pdf
-
-</textarea>
-</section>
-
-<section data-markdown class="hands-on" style="font-size: x-large;">
-	<textarea data-template>
-## Hands-On - Scripte, manuelles CI/CD
-
-_Wir führen unsere Pipeline aus und sehen uns gemeinsam die Scripte an_
-
-1. Öffne ein Terminal aus deinem Notebook Server heraus (New->Terminal)
-1. `cd scripts`
-1. Modell trainieren: `./train.py -d ../data/reference.csv -m classifier`
-   <!-- * Windows: `python train.py -d ..\data\reference.csv -m classifier` -->
-1. Modell validieren: `./validate.py -d ../data/reference.csv -m classifier`
-   <!-- * Windows: `python validate.py -d ..\data\reference.csv -m classifier` -->
-1. Deploy: Modell in `/model` Ordner schieben
-
-*Aufgabe*
-1. Sieh dir die Scripte über die IDE oder den Notebook Server an
-1. Welche Validierungen werden verwendet?
-1. Passe ggf. die Werte an, sodass alle Scripte durchlaufen
-1. Ergänz das Validation Script mit euren Validierungen, wenn sie einfach umzusetzen sind
-</textarea>
-</section>
-
-<section data-markdown class="todo hands-on">
+<section data-markdown class="fragments">
   <textarea data-template>
-## Hands-On - Produktionsumgebung
+<img src="img/mlops/swagger-sample-request.jpg" style="height: 60vh;">
 
-1. Im Ordner `app` setzen wir den Rating Service komplett mit Adapter um
-1. In `app.py` ist ein einfacher Flask Server implementiert
-1. Der Server wird bereits über Docker compose gestartet
-1. Checken, ob der Service läuft: http://localhost:8080/ping
-1. Über http://localhost:8000/client.html simulieren wir den orchestrierenden/nutzenden Service und machen einfache Requests
-1. in `app/client.html` Werte anpassen
- * auf dich als Fahrer
- * außerhalb des gültigen Bereichs des Models
+*Beispiel Ergebnis*
+```
+{
+  "prediction": "LOW",
+  "probabilities": {
+    "HIGH": 0.0003246392006985843,
+    "MEDIUM": 0.022435296326875687,
+    "LOW": 0.9772400259971619
+  },
+  "predictor_type": "MODEL"
+}
+```
 </textarea>
 </section>
 
@@ -811,6 +785,13 @@ _Wir führen unsere Pipeline aus und sehen uns gemeinsam die Scripte an_
 </textarea>
 </section>
 
+<section data-markdown class="todo hands-on">
+  <textarea data-template>
+## Hands-On - Ausblick auf den Block nach der Mittagspause
+
+</textarea>
+</section>
+
 <section data-markdown>
 	<textarea data-template>
 ## Agenda
@@ -832,63 +813,6 @@ _Wir führen unsere Pipeline aus und sehen uns gemeinsam die Scripte an_
 https://twitter.com/karpathy/status/1486215976559398915
 </small>
 
-</textarea>
-</section>
-
-  <section data-markdown class="todo hands-on" style="font-size: small;" id="hands-on-professionalisierung">
-	<textarea data-template>
-
-### Hands On: Professionalisierung
-
-#### Modell clonen
-
-
-```
-git clone git@github.com:openknowledge/mlops-m3.git
-cd mlops-m3/insurance-prediction
-```
-
-#### Modell bauen und validieren
-
-Wir brauchen noch ein Dev-Image
-- Started nur shell oder führt train und validate aus?
-- Würde wie der Server die Volumes mounten
-
-
-```
-poetry run train --dataset /datasets/insurance_prediction --model /model/model.h5
-poetry run validate --dataset datasets/insurance_prediction/ --model /model/model.h5
-
-```
-#### Docker container starten
-```
-cd insurance-prediction
-
-docker build -t insurance-prediction .
-bash: docker run -d -p 8080:80 -e MODEL_PATH=/model/model.h5 -v $(pwd):/model -v $(pwd)/../datasets:/datasets -e REFERENCE_PATH=/datasets/insurance_prediction/reference.csv insurance-prediction
-cmd: docker run -d -p 8080:80 -e MODEL_PATH=/model/model.h5 -v %cd%:/model -v %cd%/../datasets:/datasets -e REFERENCE_PATH=/datasets/insurance_prediction/reference.csv insurance-prediction
-PS: docker run -d -p 8080:80 -e MODEL_PATH=/model/model.h5 -v "$(Get-Location):/model" -v "$(Get-Location)/../datasets:/datasets" -e REFERENCE_PATH=/datasets/insurance_prediction/reference.csv insurance-prediction
-```
-
-#### Requests über Swagger UI absetzen
-
-http://localhost:8080/docs
-http://localhost:8080/docs#/default/put_predict_risk_predict__put
-
-
-<img src="img/mlops/swagger-sample-request.png" style="height: 200px;">
-
-```
-{
-  "prediction": "LOW",
-  "probabilities": {
-    "HIGH": 0.0003246392006985843,
-    "MEDIUM": 0.022435296326875687,
-    "LOW": 0.9772400259971619
-  },
-  "predictor_type": "MODEL"
-}
-```
 </textarea>
 </section>
 

@@ -11,6 +11,15 @@ RUN echo "echo ICAgX18gIF9fIF8gICAgIF9fXyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI
 RUN echo "echo '\n\nWelcome to the insurance-prediction example'" >> /info.sh
 RUN echo "echo 'You can run the training using\n\tpoetry run train --dataset ./datasets/insurance_prediction/ --model /output/model.h5'" >> /info.sh
 RUN echo "echo 'You can run the validation using\n\tpoetry run validate --dataset ./datasets/insurance_prediction/ --model /output/model.h5'" >> /info.sh
+RUN echo "echo;echo" >> /info.sh
+RUN echo "echo 'Your current directory is $(pwd)'" >> /info.sh
+RUN echo "echo" >> /info.sh
+RUN echo "echo 'The directory contains the following directories:'" >> /info.sh
+RUN echo "ls -d */" >> /info.sh
+RUN echo "echo" >> /info.sh
+RUN echo "echo 'The directory contains the following files:'" >> /info.sh
+RUN echo "ls -p | grep -v / | tr '\n' ' '; echo" >> /info.sh
+RUN echo "echo;echo" >> /info.sh
 RUN echo "echo '\nTo show this info again type ""info""'" >> /info.sh
 RUN chmod +x /info.sh
 
