@@ -1,12 +1,13 @@
 resource "helm_release" "gitea-registry" {
   name             = "gitea"
-  namespace        = kubernetes_namespace.infrastructure.metadata.0.name
+  namespace        = var.namespace
   create_namespace = false
 
   repository = "https://dl.gitea.io/charts"
   chart      = "gitea"
+  version = "8.3.0"
 
   values = [
-    file("gitea-values.yml")
+    file("${path.module}/gitea-values.yml")
   ]
 }
