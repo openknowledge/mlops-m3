@@ -1,4 +1,4 @@
-# Local installation for development
+# Local installation for development (not needed in the workshop)
 
 
 ## Prerequisites
