@@ -1,11 +1,16 @@
-variable "gitea_username" {
+variable "gitea_user_name" {
   description = "Gitea username"
-  default     = "gitea"
+  default     = "user"
+}
+
+variable "gitea_user_email" {
+  description = "Gitea user email"
+  default     = "user@user.dev"
 }
 
 variable "gitea_password" {
   description = "Gitea password"
-  default     = "gitea"
+  default     = "user"
 }
 
 variable "gitea_repository_name" {

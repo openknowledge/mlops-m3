@@ -73,7 +73,11 @@ spec:
       claimName: ${kubernetes_persistent_volume_claim.m3-demo-files.metadata.0.name}
   params:
   - name: repo-url
-    value: http://gitea-http.infrastructure:3000/${var.gitea_username}/${var.gitea_repository_name}.git
+    value: http://gitea-http.infrastructure:3000/${var.gitea_user_name}/${var.gitea_repository_name}.git
+  - name: git-user
+    value: ${var.gitea_user_name}
+  - name: git-user-email
+    value: ${var.gitea_user_email}
 YAML
 }
 
@@ -109,7 +113,11 @@ spec:
       claimName: ${kubernetes_persistent_volume_claim.m3-env-files.metadata.0.name}
   params:
   - name: repo-url
-    value: http://gitea-http.infrastructure:3000/${var.gitea_username}/${var.gitea_env_repository_name}.git
+    value: http://gitea-http.infrastructure:3000/${var.gitea_user_name}/${var.gitea_env_repository_name}.git
+  - name: git-user
+    value: ${var.gitea_user_name}
+  - name: git-user-email
+    value: ${var.gitea_user_email}
 YAML
 }
 
@@ -124,7 +132,7 @@ resource "kubernetes_secret" "git_credentials" {
 [credential "http://gitea-http.infrastructure:3000"]
   helper = store
 EOT
-    ".git-credentials" = "http://${var.gitea_username}:${var.gitea_password}@gitea-http.infrastructure:3000"
+    ".git-credentials" = "http://${var.gitea_user_name}:${var.gitea_password}@gitea-http.infrastructure:3000"
   }
 
   type = "Opaque"
@@ -316,7 +324,7 @@ spec:
     - name: gitrepositoryurl
       value: "http://gitea-http.infrastructure:3000/$(body.repository.full_name)"
     - name: envgitrepositoryurl
-      value: "http://gitea-http.infrastructure:3000/ok-user/environment-repository.git"
+      value: "http://gitea-http.infrastructure:3000/${var.gitea_user_name}/${var.gitea_env_repository_name}.git"
     - name: imagereference
       value: "insurance-prediction:$(body.head_commit.id)"
     - name: path-to-patch-file

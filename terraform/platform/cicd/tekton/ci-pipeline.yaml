@@ -10,6 +10,12 @@ spec:
     - name: repo-url
       type: string
       description: The git repo URL to clone from.
+    - name: git-user
+      type: string
+      description: The git user that will do the commit.
+    - name: git-user-email
+      type: string
+      description: The git user email that will be used for the commit.
   workspaces:
     - name: shared-data
       description: |
@@ -46,9 +52,9 @@ spec:
           workspace: input
       params:
         - name: GIT_USER_NAME
-          value: "ok-user"
+          value: $(params.git-user)
         - name: GIT_USER_EMAIL
-          value: "ok-user@user.dev"
+          value: $(params.git-user-email)
         - name: GIT_SCRIPT
           value: |
             git fetch

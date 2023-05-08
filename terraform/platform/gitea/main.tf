@@ -1,14 +1,14 @@
 resource "gitea_user" "ok-user" {
-  username             = "ok-user"
-  login_name           = "ok-user"
-  password             = "Password1234!"
-  email                = "ok-user@user.dev"
+  username             = var.gitea_user_name
+  login_name           = var.gitea_user_name
+  password             = var.gitea_user_password
+  email                = var.gitea_user_email
   must_change_password = false
 }
 
 resource "gitea_repository" "ok-gitea-repository" {
   username     = gitea_user.ok-user.username
-  name         = "ok-gitea-repository"
+  name         = var.gitea_application_repository_name
   private      = false
   issue_labels = "Default"
   license      = "MIT"
@@ -16,7 +16,7 @@ resource "gitea_repository" "ok-gitea-repository" {
 
 resource "gitea_repository" "environment-repository" {
   username     = gitea_user.ok-user.username
-  name         = "environment-repository"
+  name         = var.gitea_environment_repository_name
   private      = false
   issue_labels = "Default"
   license      = "MIT"
