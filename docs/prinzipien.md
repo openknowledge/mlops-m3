@@ -1,6 +1,7 @@
 # Didaktische Prinzipien
 
 - Wir zeigen nicht funktionierende Software, sondern möchten Leuten die wichtigen Punte erklären
+- Wir suchen den Dialog
 - Phasen klar haben, und klar kommunizieren, z.B. Übung: 
   - was sollen die Leute machen
   - ist die Aufgabenstellung klar?
