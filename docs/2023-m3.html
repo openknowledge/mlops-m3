@@ -145,6 +145,18 @@ ML Architekt
 
 <section data-markdown>
 	<textarea data-template>
+## Zeiten
+
+* 10:00 Uhr: Beginn
+* 12:30 - 13:30 Uhr: Mittagspause
+* 15:00 - 15:15 Uhr: Kaffeepause
+* 16:15 - 16:30 Uhr: Kaffeepause
+* ca. 17:00 Uhr: Ende
+</textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
 ## 2er Teams bilden
 
 _Tut euch mit euren Nachbaren zusammen_
@@ -174,18 +186,6 @@ Fragen:
 
 <section data-markdown>
 	<textarea data-template>
-## Agenda
-
-1. Einleitung / Grundlagen
-2. Professionalisierung
-3. Betrieb
-4. Monitoring
-5. Abschluss
-	</textarea>
-</section>
-
-<section data-markdown>
-	<textarea data-template>
 ### Handout
 
 <a href="https://www.embarc.de/architektur-spicker/11-container-anwendungen/">
@@ -203,6 +203,18 @@ https://www.embarc.de/architektur-spicker/11-container-anwendungen
 https://github.com/openknowledge/mlops-m3/blob/main/docs/glossar.md
 
 </textarea>
+</section>
+
+<section data-markdown>
+	<textarea data-template>
+## Agenda
+
+1. Einleitung / Grundlagen
+2. Professionalisierung
+3. Betrieb
+4. Monitoring
+5. Abschluss
+	</textarea>
 </section>
 
 <section data-markdown>
@@ -296,7 +308,19 @@ Notebook auf Colab: https://colab.research.google.com/github/openknowledge/mlops
 </section>  
 
 <section data-markdown class="fragments">
-### Was ist MLOps?
+### Ein Modell ist erst der Anfang
+
+* im akademischen Leben zählt für einen Wettbewerb häufig nur der Score (Güte) des Modells
+* dieser Ansatz hat sich im Bereich des Data Science auch in der Praxis breit gemacht
+* die Praxis ist aber keine Kaggle Competition
+* In-Sample Evaluation (auch wenn wir die vorher abgetrennt haben) sagt nur bedingt etwas für Eignung in
+einer praktsichen Anwendung aus
+* Out-Of-Sample Evaluation häufig erst im produktiven Betrieb möglich (evtl nur mitlaufen lassen)
+</section>
+
+
+<section data-markdown class="fragments">
+### MLOps
 
 * MLOps ist abgeleitet von DevOps
 * Durch MLOps kommt ML in Produktion und wird in Betrieb gehalten
@@ -305,17 +329,6 @@ Notebook auf Colab: https://colab.research.google.com/github/openknowledge/mlops
   * Softwareentwicklung
   * Operations
   * Data Science
-</section>
-
-<section data-markdown class="fragments">
-### Warum MLOps?
-
-* im akademischen Leben zählt für einen Wettbewerb häufig nur der Score (Güte) des Modells
-* dieser Ansatz hat sich im Bereich des Data Science auch in der Praxis breit gemacht
-* die Praxis ist aber keine Kaggle Competition
-* In-Sample Evaluation (auch wenn wir die vorher abgetrennt haben) sagt nur bedingt etwas für Eignung in
-einer praktsichen Anwendung aus
-* Out-Of-Sample Evaluation häufig erst im produktiven Betrieb möglich (evtl nur mitlaufen lassen)
 </section>
 
 <section data-markdown>
@@ -344,7 +357,7 @@ funktionsfähiges Modell entwickelt.
 
 	</section>
 
-<section data-markdown>
+<!-- <section data-markdown>
 	<textarea data-template>
 ### Exploration hinterlässt gern einen Wust an Notebooks
 
@@ -367,7 +380,7 @@ funktionsfähiges Modell entwickelt.
   * Solange wir aber nicht wissen was die relevant gemeinsamen Teile sind müssen wir damit weiter machen
 * welcher Ansatz mehr Liebe verdient wird erst am Ende dieser Phase klar
 </textarea>
-	</section>
+	</section> -->
 
 <section data-markdown>
 	<textarea data-template>
@@ -478,7 +491,7 @@ voila notebook.ipynb
   <textarea data-template>
 ### Mit Notebooks in Produktion? - Architektur?
 
-<img src="img/professionalization/notebook_architecture.png" class="fragment" style="height: 80vh;">
+<img src="img/professionalization/notebook_architecture.png" class="fragment" style="height: 70vh;">
 
 </textarea>
 
@@ -556,7 +569,7 @@ https://www.docker.com/resources/what-container/
 </textarea>
 </section>
 
-<section data-markdown class="hands-on">
+<!-- <section data-markdown class="hands-on">
 	<textarea data-template>
 ## Hands-On - Docker Installation überprüfen oder herstellen
 
@@ -574,7 +587,7 @@ Helft bitte euren Nachbarn, falls eure Installation schon läuft
 
 </textarea>
 </section>
-
+ -->
 <section data-markdown  class="hands-on">
 	<textarea data-template>
 ## Hands-On - Projekt vorbereiten
@@ -587,7 +600,7 @@ Helft bitte euren Nachbarn, falls eure Installation schon läuft
      * `docker build -t insurance_prediction_interactive -f interactive.Dockerfile .`
      * `docker build -t insurance-prediction .`
    * Das kann (gerade bei überlastetem Netz) lange dauern
-   * Zwingend brauchen wir das Image erst in Hands-On IIc
+   * Wir müssen jetzt noch nicht bis zum Abschluss warten 
 </textarea>
 </section>
 
@@ -595,7 +608,7 @@ Helft bitte euren Nachbarn, falls eure Installation schon läuft
 <textarea data-template>
 ### Vom Notebook zum Projekt
 
-<img src="img/professionalization/notebook_architecture.png" class="fragment" style="height: 80vh;">
+<img src="img/professionalization/notebook_architecture.png" class="fragment" style="height: 70vh;">
 
 </textarea>
 </section>
@@ -635,7 +648,7 @@ Helft bitte euren Nachbarn, falls eure Installation schon läuft
 
 <section data-markdown>
 <textarea data-template>
-<img src="img/professionalization/architecture.png" style="height: 80vh;"/>
+<img src="img/professionalization/architecture.png" style="height: 70vh;"/>
 </textarea>
 </section>
 
@@ -725,7 +738,7 @@ docker run --rm -p 8080:80 insurance-prediction
 
 <section data-markdown class="fragments">
   <textarea data-template>
-<img src="img/mlops/swagger-sample-request.jpg" style="height: 60vh;">
+<img src="img/mlops/swagger-sample-request.jpg" style="height: 40vh;">
 
 *Beispiel Ergebnis*
 ```
@@ -742,7 +755,7 @@ docker run --rm -p 8080:80 insurance-prediction
 </textarea>
 </section>
 
-<section data-markdown class="todo">
+<!-- <section data-markdown class="todo">
 	<textarea data-template>
 ### Ein ML Modell geht nicht für sich allein in Produktion
 
@@ -784,7 +797,7 @@ docker run --rm -p 8080:80 insurance-prediction
 1. Passe sie deinen Vorstellungen an und probiere das Modell wieder über den Client aus
 </textarea>
 </section>
-
+ -->
 <section data-markdown class="todo hands-on">
   <textarea data-template>
 ## Hands-On - Ausblick auf den Block nach der Mittagspause
