@@ -1,4 +1,4 @@
-resource "kind_cluster" "m3-demo-cluster" {
+resource "kind_cluster" "m3_demo_cluster" {
   name           = "m3-demo-cluster"
   wait_for_ready = true
   kubeconfig_path = pathexpand("~/.kube/config")
@@ -11,17 +11,17 @@ resource "kind_cluster" "m3-demo-cluster" {
       role = "control-plane"
 
       extra_mounts {
-          host_path      = var.repository-path
-          container_path = "/m3-demo"
+        host_path      = var.repository_path
+        container_path = "/m3-demo"
       }
 
       extra_mounts {
-        host_path      = var.env-repo-path
+        host_path      = var.env_repo_path
         container_path = "/m3-env"
       }
 
       extra_mounts {
-        host_path      = "./docker-daemon.json"
+        host_path      = var.docker_daemon_json_path
         container_path = "/etc/docker/daemon.json"
       }
 
@@ -95,24 +95,5 @@ resource "kind_cluster" "m3-demo-cluster" {
         protocol       = "TCP"
       }
     }
-  }
-}
-
-variable "repository-path" {
-  default = "../../../../insurance-prediction"
-}
-
-variable "env-repo-path" {
-  default = "../../../../environment-repository"
-}
-
-output "m3-demo-cluster" {
-  value = {
-    endpoint = kind_cluster.m3-demo-cluster.endpoint
-    cluster_ca_certificate = kind_cluster.m3-demo-cluster.cluster_ca_certificate
-    client_certificate = kind_cluster.m3-demo-cluster.client_certificate
-    client_key = kind_cluster.m3-demo-cluster.client_key
-    kubeconfig_path = kind_cluster.m3-demo-cluster.kubeconfig_path
-    kube_context = jsondecode(jsonencode(yamldecode(kind_cluster.m3-demo-cluster.kubeconfig).contexts))[0].name
   }
 }

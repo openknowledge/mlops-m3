@@ -1,7 +1,7 @@
 resource "kubernetes_deployment" "registry" {
   metadata {
     name      = "docker-registry"
-    namespace = kubernetes_namespace.infrastructure.metadata.0.name
+    namespace = var.namespace
     labels = {
       app = "docker-registry"
     }
@@ -36,7 +36,7 @@ resource "kubernetes_deployment" "registry" {
 resource "kubernetes_service" "registry" {
   metadata {
     name      = "registry-service"
-    namespace = kubernetes_namespace.infrastructure.metadata.0.name
+    namespace = var.namespace
   }
 
   spec {
@@ -57,7 +57,7 @@ resource "kubernetes_service" "registry" {
 resource "kubernetes_ingress_v1" "registry" {
   metadata {
     name      = "registry-ingress"
-    namespace = kubernetes_namespace.infrastructure.metadata.0.name
+    namespace = var.namespace
   }
 
   spec {

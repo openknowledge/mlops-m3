@@ -1,50 +1,75 @@
-terraform {
-  required_providers {
-    helm = {
-      source = "hashicorp/helm"
-      version = "2.9.0"
+module "kind_cluster" {
+  source = "./kind"
+
+  env_repo_path = var.env_repo_path
+  docker_daemon_json_path = var.docker_daemon_json_path
+  repository_path = var.repository_path
+}
+
+resource "kubernetes_namespace" "infrastructure" {
+  metadata {
+    annotations = {
+      name = "infrastructure-namespace"
     }
-    kubernetes = {
-      source = "hashicorp/kubernetes"
-    }
-    kind = {
-      source = "tehcyx/kind"
-      version = "0.0.16"
-    }
-    kubectl = {
-      source  = "gavinbunney/kubectl"
-      version = ">= 1.7.0"
-    }
-    http = {
-      source = "hashicorp/http"
-      version = "3.2.1"
-    }
+    name = "infrastructure"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["operator.tekton.dev/prune.hash"]
+    ]
   }
 }
 
-provider "kind" {
-}
+resource "kubernetes_namespace" "production" {
+  metadata {
+    annotations = {
+      name = "production-namespace"
+    }
+    name = "production"
+  }
 
-provider "kubectl" {
-  host                   = kind_cluster.m3-demo-cluster.endpoint
-  cluster_ca_certificate = kind_cluster.m3-demo-cluster.cluster_ca_certificate
-  client_certificate     = kind_cluster.m3-demo-cluster.client_certificate
-  client_key             = kind_cluster.m3-demo-cluster.client_key
-
-  load_config_file       = false
-}
-
-provider "helm" {
-  kubernetes {
-    config_path = kind_cluster.m3-demo-cluster.kubeconfig_path
-    config_context = jsondecode(jsonencode(yamldecode(kind_cluster.m3-demo-cluster.kubeconfig).contexts))[0].name
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["operator.tekton.dev/prune.hash"]
+    ]
   }
 }
 
-provider "kubernetes" {
-  host = kind_cluster.m3-demo-cluster.endpoint
+module "gitea" {
+  depends_on = [module.kind_cluster]
 
-  client_certificate     = kind_cluster.m3-demo-cluster.client_certificate
-  client_key             = kind_cluster.m3-demo-cluster.client_key
-  cluster_ca_certificate = kind_cluster.m3-demo-cluster.cluster_ca_certificate
+  source = "./gitea-registry"
+
+  namespace = kubernetes_namespace.infrastructure.metadata.0.name
+}
+
+module "docker_registry" {
+  depends_on = [module.kind_cluster]
+
+  source = "./docker-registry"
+
+  namespace = kubernetes_namespace.infrastructure.metadata.0.name
+}
+
+module "ingress-controller" {
+  depends_on = [module.kind_cluster]
+
+  source = "./ingress-controller"
+}
+
+data "http" "tekton_operator_release" {
+  url = "https://storage.googleapis.com/tekton-releases/operator/previous/v0.64.0/release.yaml"
+}
+
+data "kubectl_file_documents" "tekton_operator_release" {
+  content = data.http.tekton_operator_release.response_body
+}
+
+module "tekton_operator" {
+  depends_on = [module.kind_cluster, module.ingress-controller]
+
+  source = "./tekton-operator"
+
+  tekton_operator_release = data.kubectl_file_documents.tekton_operator_release.manifests
 }

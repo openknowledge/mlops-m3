@@ -1,5 +1,6 @@
 # mlops-m3
-An MLOps Plattform for a local k8s minikube setup to demo a Machine Learning Application and how to keep a model in production.
+An MLOps Plattform for a local k8s minikube setup to demo a Machine Learning Application and how to 
+keep a model in production.
 
 ## Local k8s platform
 
@@ -21,22 +22,30 @@ Add some routes like this to your /etc/hosts so that you don't have to bother wi
     127.0.0.1       grafana.localhost
     127.0.0.1       gitea.local
     127.0.0.1       tekton.localhost
+    127.0.0.1       insurance-prediction.localhost
+    127.0.0.1       docker.localhost
 ```
 
 #### Hosts on Windows (including WSL)
 
-Add those routes to `C:/WINDOWS/system32/drivers/etc/hosts` as admin (e.g. by starting PowerShell as Admin and start editor from there). It is safest to reboot Windows after doing so. Routes will automatically be added to WSL `/etc/hosts` as well.
+Add those routes to `C:/WINDOWS/system32/drivers/etc/hosts` as admin (e.g. by starting PowerShell 
+as Admin and start editor from there). 
+It is safest to reboot Windows after doing so. 
+Routes will automatically be added to WSL `/etc/hosts` as well.
 
-#### If you dont have Admin permissions or dont want to edit your hosts file
+#### If you don't have Admin permissions or don't want to edit your hosts file
 
 All of the services required and listed above are also exposed via NodePorts and extra Portmappings
-in the KinD Cluster. So you can also use the following URLs to access the services.
+in the KinD Cluster. 
+So you can also use the following URLs to access the services.
 
 ```
     For Prometheus: http://localhost:30090
     For Gitea: http://localhost:30030
     For Grafana http://localhost:30031
     For Tekton Dashboard: http://localhost:30097
+    For the deployed Application: http://localhost:30080
+    For the Docker Registry: http://localhost:30050
 ```
 
 ### Creating a Cluster and its Infrastructure

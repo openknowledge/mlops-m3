@@ -1,12 +1,4 @@
-data "http" "tekton_operator_release" {
-  url = "https://storage.googleapis.com/tekton-releases/operator/previous/v0.64.0/release.yaml"
-}
-
-data "kubectl_file_documents" "tekton_operator_release" {
-  content = data.http.tekton_operator_release.response_body
-}
-
-resource "kubernetes_namespace" "tekton-operator" {
+resource "kubernetes_namespace" "tekton_operator" {
   metadata {
     name = "tekton-operator"
   }
@@ -17,7 +9,7 @@ resource "kubernetes_namespace" "tekton-operator" {
   }
 }
 
-resource "kubernetes_namespace" "tekton-pipelines" {
+resource "kubernetes_namespace" "tekton_pipelines" {
   metadata {
     name = "tekton-pipelines"
   }
@@ -29,9 +21,9 @@ resource "kubernetes_namespace" "tekton-pipelines" {
 }
 
 resource "kubectl_manifest" "tekton_operator" {
-  depends_on = [kubernetes_namespace.tekton-operator, kubernetes_namespace.tekton-pipelines]
+  depends_on = [kubernetes_namespace.tekton_operator, kubernetes_namespace.tekton_pipelines]
 
-  for_each  = data.kubectl_file_documents.tekton_operator_release.manifests
+  for_each  = var.tekton_operator_release
   yaml_body = each.value
 }
 
@@ -43,7 +35,7 @@ resource "kubectl_manifest" "tekton_operator_config" {
 resource "kubernetes_service_v1" "tekton_dashboard" {
   metadata {
     name      = "tekton-dashboard"
-    namespace = kubernetes_namespace.tekton-pipelines.metadata.0.name
+    namespace = kubernetes_namespace.tekton_pipelines.metadata.0.name
   }
 
   spec {
@@ -64,11 +56,11 @@ resource "kubernetes_service_v1" "tekton_dashboard" {
 }
 
 resource "kubernetes_ingress_v1" "tekton_dashboard" {
-  depends_on = [kubectl_manifest.tekton_operator, null_resource.wait_for_ingress_nginx]
+  depends_on = [kubectl_manifest.tekton_operator]
 
   metadata {
     name      = "tekton-dashboard-ingress"
-    namespace = kubernetes_namespace.tekton-pipelines.metadata.0.name
+    namespace = kubernetes_namespace.tekton_pipelines.metadata.0.name
   }
 
   spec {

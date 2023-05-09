@@ -1,14 +1,24 @@
+resource "kubernetes_namespace" "ingress_nginx" {
+  metadata {
+    name = "ingress-nginx"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["operator.tekton.dev/prune.hash"]
+    ]
+  }
+}
+
 resource "helm_release" "ingress_nginx" {
   name       = "ingress-nginx"
   repository = "https://kubernetes.github.io/ingress-nginx"
   chart      = "ingress-nginx"
 
-  namespace        = "ingress-nginx"
-  create_namespace = true
+  namespace        = kubernetes_namespace.ingress_nginx.metadata.0.name
+  create_namespace = false
 
-  values = [file("ingress-nginx-values.yml")]
-
-  depends_on = [kind_cluster.m3-demo-cluster]
+  values = [file("${path.module}/ingress-nginx-values.yml")]
 }
 
 resource "null_resource" "wait_for_ingress_nginx" {
@@ -20,7 +30,7 @@ resource "null_resource" "wait_for_ingress_nginx" {
         --selector=app.kubernetes.io/component=controller \
         --timeout=90s
       printf "\nNow waiting for the nginx ingress validatingwebhookconfigurations...\n"
-      for i in 1 2 3 4 5; do kubectl create --filename test-ingress.yaml && kubectl delete --filename test-ingress.yaml && break || sleep 15; done
+      for i in 1 2 3 4 5; do kubectl create --filename ${path.module}/test-ingress.yaml && kubectl delete --filename ${path.module}/test-ingress.yaml && break || sleep 15; done
     EOF
   }
 

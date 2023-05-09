@@ -581,10 +581,6 @@
           "text": "None",
           "value": ""
         },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "F3N4YrEVk"
-        },
         "definition": "label_values(dataset_name)",
         "hide": 0,
         "includeAll": false,
