@@ -830,6 +830,24 @@ docker run --rm -p 8080:80 insurance-prediction
 	</textarea>
 </section>
 
+	<section data-markdown class="fragments">
+### Phase III: Produktion / Betrieb
+
+in der dritten Phase wird die Lösung in Betrieb genommen
+
+* alle Regeln des produktiven Einsatzes von Software gelten auch hier
+* Monitoring hat zusätzliche Herausforderungen
+  * Natur und Verteilung der Anfragen und auch Vorhersagen muss permanent überwacht werden
+* Phase III endet entweder mit
+  * der Abschaltung
+    * entweder bald weil nutzlos oder
+    * später weil durch neues System ersetzt
+  * dem Iterieren zurück in Phase II mit neu gewonnenen Erkenntnissen
+  * dem Iterieren zurück in Phase I mit neu gewonnenen Erkenntnissen oder einem Neuansatz (häufig ebenfalls ein Zeichen für einen Fehlschlag)
+
+			</section>
+
+
 <section data-markdown>
 	<textarea data-template>
 <img src='img/everybody-gansta.png' style="height: 600px">
@@ -853,31 +871,14 @@ https://www.redhat.com/en/topics/devops/what-is-ci-cd
 	</textarea>
 </section>
 
-<section data-markdown>
+<!-- <section data-markdown>
 	<textarea data-template>
 ### DevOps vs MLOps
 
 <img src="img/devops-vs-mlops.png" style="height: 600px">
 </textarea>
-</section>
+</section> -->
 
-
-	<section data-markdown class="fragments">
-### Phase III: Produktion / Betrieb
-
-in der dritten Phase wird die Lösung in Betrieb genommen
-
-* alle Regeln des produktiven Einsatzes von Software gelten auch hier
-* Monitoring hat zusätzliche Herausforderungen
-  * Natur und Verteilung der Anfragen und auch Vorhersagen muss permanent überwacht werden
-* Phase III endet entweder mit
-  * der Abschaltung
-    * entweder bald weil nutzlos oder
-    * später weil durch neues System ersetzt
-  * dem Iterieren zurück in Phase II mit neu gewonnenen Erkenntnissen
-  * dem Iterieren zurück in Phase I mit neu gewonnenen Erkenntnissen oder einem Neuansatz (häufig ebenfalls ein Zeichen für einen Fehlschlag)
-
-			</section>
 
 <section data-markdown>
 	<textarea data-template>
@@ -1230,7 +1231,7 @@ https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence
 1. Requests simulieren als k8s Job
 ```
 cd drift_demo/
-kubectl apply -f job.yaml
+kubectl create -f job.yaml
 ```
 1. Stelle sicher, dass sich das Dashboard aktualisiert
 1. Was beobachtest du?
