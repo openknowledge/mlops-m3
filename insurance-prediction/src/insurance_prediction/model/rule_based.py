@@ -20,7 +20,7 @@ class _RulesBasedPredictor(InsurancePredictor):
                 return Risk.MEDIUM
         if driver.age > 50:
             return Risk.HIGH
-        if vehicle.emergency_breaking:
+        if vehicle.emergency_braking:
             return Risk.LOW
         if driver.miles > 50:
             return Risk.HIGH
