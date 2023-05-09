@@ -29,12 +29,12 @@ def test_prediction():
     insurance.insurance_model = mock_model
 
     prediction_input = RiskPredictionInputDto(
-        driver= DriverInformationDto(
+        driver = DriverInformationDto(
             age=35,
             training=True,
             miles=45.9
         ),
-        vehicle= VehicleInformationDto(
+        vehicle = VehicleInformationDto(
             braking_distance=45.,
             power=90.,
             emergency_braking=False            
@@ -45,7 +45,6 @@ def test_prediction():
     response = client.post('/predict', content=prediction_input.json())
 
     # assert
-
     assert response.status_code == 200
     assert mock_model.prediction_input == prediction_input.to_domain()
 
@@ -56,12 +55,12 @@ def test_metrics():
     insurance.insurance_model = mock_model
 
     prediction_input = RiskPredictionInputDto(
-        driver= DriverInformationDto(
+        driver = DriverInformationDto(
             age=35,
             training=True,
             miles=45.9
         ),
-        vehicle= VehicleInformationDto(
+        vehicle = VehicleInformationDto(
             braking_distance=45.,
             power=90.,
             emergency_braking=False            

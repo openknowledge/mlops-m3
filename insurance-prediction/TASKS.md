@@ -35,7 +35,7 @@ cd insurance-prediction
 ```
 
 ```
-# Linux/Mac-Shell
+# Linux/Mac/WSL-Shell
 docker run -v "$(pwd)/output:/output" --rm -it insurance_prediction_interactive
 
 # Windows-Cmd

@@ -495,7 +495,7 @@ voila notebook.ipynb
   <textarea data-template>
 ### Mit Notebooks in Produktion? - Architektur?
 
-<img src="img/professionalization/notebook_architecture.png" class="fragment" style="height: 70vh;">
+<img src="img/professionalization/notebook_architecture.png" class="fragment" style="height: 40vh;">
 
 </textarea>
 
@@ -535,7 +535,7 @@ voila notebook.ipynb
 ### Und in der Python-Welt?
 
  * Architekturen sind Sprachenunabhängig
- * `pytest`, `unittest`, ..
+ * `pytest`, `unittest`, ...
  * `pylint`, `flake8`, `bandit`, ...
  * `poetry`, `hatch`, `kedro`, ...
  * `FastAPI`, `django`, `flask`
@@ -564,7 +564,6 @@ voila notebook.ipynb
 * Einheitliche, leichtgewichtige Form der Virtualisierung
 * Es werden Images gebaut, die die benötigte Software beinhalten und diese werden in einem Container ausgeführt
 * Container isolieren die Software von der Umgebung und sind unabhängig von der Infrastruktur
-* "docker compose" lässt uns mehrere Container gleichzeitig starten
 
 <img src='img/docker-vm-vergleich.png'  style="height: 250px;">
 
@@ -578,7 +577,7 @@ https://www.docker.com/resources/what-container/
 	<textarea data-template>
 ## Hands-On
 
-*Alle Hands-Ons für diesen Teil findet ihr auch im Repository: <br>`insurance-prediction/TASKS.md`*
+*Alle Hands-On-Tasks für diesen Teil findet ihr auch im Repository: <br>`insurance-prediction/TASKS.md`*
   </textarea>
 </section>
 <section data-markdown class="hands-on">
@@ -682,7 +681,7 @@ cd insurance-prediction
 ```
 
 ```
-# Linux/Mac-Shell
+# Linux/Mac/WSL-Shell
 docker run -v "$(pwd)/output:/output" --rm -it insurance_prediction_interactive
 
 # Windows-Cmd
