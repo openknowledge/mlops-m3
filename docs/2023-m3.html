@@ -902,6 +902,45 @@ https://www.datarevenue.com/de-blog/kubeflow-noch-nicht-bereit-fur-produktion
 </textarea>
 </section>
 
+            <section data-markdown>
+	<textarea data-template>
+### Hands-On 7: KinD Cluster mit CI/CD aufsetzen
+
+Ablauf:
+1. Die README.md beschreibt was zu tun ist und welche Befehle ausgeführt werden müssen.
+1. Wenn das erste init und apply erfolgreich durchgelaufen ist der sanity check:
+   1. http://gitea.local/explore/repos / http://localhost:30030/explore/repos
+   1. http://tekton.localhost/#/pipelineruns - http://localhost:30097/#/pipelineruns
+1. Zurück zur README.md - Die zweite stage ausführen.
+   1. In Tekton sollten nun 2 Pipelines angestoßen worden sein. Eine davon stößt direkt nach Durchlauf
+        eine dritte an.
+   1. In Gitea können wir nun die Repositories checken.
+   1. Ist der Build komplett durchgelaufen, können wir jetzt auch die Anwendung checken.
+        http://insurance-prediction.localhost / http://localhost:30080
+1. Den build failen lassen, indem wir das Modell verschlechtern, so dass die Tests nicht mehr durchlaufen.
+
+</textarea>
+            </section>
+
+            <section data-markdown>
+	<textarea data-template>
+### Hands-On 7: KinD Cluster mit CI/CD aufsetzen
+
+Wie geht das?
+
+1. Falls ihr Gitea nicht mehr im Tab offen habt: Hier liegt unser Source-Code http://gitea.local/explore/repos
+   1. Login: ok-user / Password1234!
+   1. Insurance Prediction Repository öffnen (Das heißt aktuell ok-gitea-repository)
+        http://gitea.local/ok-user/ok-gitea-repository/src/branch/main/src/insurance_prediction/train/train.py
+   1. Hier die Kapazität herunter schrauben
+   1. Auf Tekton läuft die Pipeline, die durch den push getriggert wird:
+        http://tekton.localhost/#/namespaces/cicd/pipelineruns
+
+</textarea>
+            </section>
+
+
+
 <section data-markdown>
 	<textarea data-template>
 ## Agenda
