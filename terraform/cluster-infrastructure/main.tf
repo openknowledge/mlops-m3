@@ -1,9 +1,10 @@
-module "kind_cluster" {
+module "kind" {
   source = "./kind"
 
   env_repo_path = var.env_repo_path
   docker_daemon_json_path = var.docker_daemon_json_path
   repository_path = var.repository_path
+  cluster_name = var.cluster_name
 }
 
 resource "kubernetes_namespace" "infrastructure" {
@@ -37,15 +38,17 @@ resource "kubernetes_namespace" "production" {
 }
 
 module "gitea" {
-  depends_on = [module.kind_cluster]
+  depends_on = [module.kind]
 
   source = "./gitea-registry"
 
   namespace = kubernetes_namespace.infrastructure.metadata.0.name
+  admin_username = var.gitea_admin_username
+  admin_password = var.gitea_admin_password
 }
 
 module "docker_registry" {
-  depends_on = [module.kind_cluster]
+  depends_on = [module.kind]
 
   source = "./docker-registry"
 
@@ -53,7 +56,7 @@ module "docker_registry" {
 }
 
 module "ingress-controller" {
-  depends_on = [module.kind_cluster]
+  depends_on = [module.kind]
 
   source = "./ingress-controller"
 }
@@ -67,7 +70,7 @@ data "kubectl_file_documents" "tekton_operator_release" {
 }
 
 module "tekton_operator" {
-  depends_on = [module.kind_cluster, module.ingress-controller]
+  depends_on = [module.kind, module.ingress-controller]
 
   source = "./tekton-operator"
 

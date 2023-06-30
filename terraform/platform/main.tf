@@ -1,4 +1,4 @@
-data "terraform_remote_state" "kind_cluster" {
+data "terraform_remote_state" "cluster_infrastructure" {
   backend = "local"
 
   config = {
@@ -22,11 +22,11 @@ module "gitea" {
 
 module "cicd" {
   depends_on = [module.gitea]
-  source = "./cicd"
+  source     = "./cicd"
 
   gitea_env_repository_name = module.gitea.gitea_registry.gitea_env_repository_name
-  gitea_repository_name = module.gitea.gitea_registry.gitea_repository_name
-  gitea_user_name = module.gitea.gitea_registry.gitea_user_name
-  gitea_user_email = module.gitea.gitea_registry.gitea_user_email
-  gitea_password = module.gitea.gitea_registry.gitea_password
+  gitea_repository_name     = module.gitea.gitea_registry.gitea_repository_name
+  gitea_user_name           = module.gitea.gitea_registry.gitea_user_name
+  gitea_user_email          = module.gitea.gitea_registry.gitea_user_email
+  gitea_password            = module.gitea.gitea_registry.gitea_password
 }

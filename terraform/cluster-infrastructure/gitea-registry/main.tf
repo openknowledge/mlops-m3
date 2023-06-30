@@ -7,7 +7,8 @@ resource "helm_release" "gitea-registry" {
   chart      = "gitea"
   version = "8.3.0"
 
-  values = [
-    file("${path.module}/gitea-values.yml")
-  ]
+  values = [templatefile("${path.module}/gitea-values.yml", {
+    gitea_admin_username = var.admin_username
+    gitea_admin_password = var.admin_password
+  })]
 }

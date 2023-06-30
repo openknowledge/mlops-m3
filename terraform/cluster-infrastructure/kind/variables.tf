@@ -10,3 +10,8 @@ variable "docker_daemon_json_path" {
   description = "The path to the docker daemon json file"
   default     = "docker-registry/docker-daemon.json"
 }
+
+variable "cluster_name" {
+  description = "The name of the cluster"
+  default = "demo-cluster"
+}
